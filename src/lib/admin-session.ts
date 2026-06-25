@@ -1,7 +1,7 @@
 import { createHmac, timingSafeEqual } from 'crypto'
 import type { NextRequest } from 'next/server'
 
-export const ADMIN_COOKIE_NAME = 'pleno_admin'
+export const ADMIN_COOKIE_NAME = 'ymar_admin'
 
 function getSecret(): string {
   return process.env.ADMIN_PASSWORD || ''

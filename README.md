@@ -1,4 +1,4 @@
-# PlenoCasa — Inmobiliaria Web
+# YMAR Inmobiliaria — Web
 
 Next.js + TypeScript + Tailwind + **Supabase** (Postgres + cliente oficial)
 
