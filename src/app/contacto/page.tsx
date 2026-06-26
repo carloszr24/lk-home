@@ -176,7 +176,7 @@ export default function ContactoPage() {
 
                 <p className="text-xs text-stone-400 text-center">
                   Al enviar aceptas nuestra{' '}
-                  <Link href="/aviso-legal" className="underline hover:text-stone-600">
+                  <Link href="/politica-privacidad" className="underline hover:text-stone-600">
                     política de privacidad
                   </Link>
                   .
