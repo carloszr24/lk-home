@@ -54,6 +54,25 @@ function normalizeUrls(value: unknown): string[] {
     .slice(0, 50)
 }
 
+/** Convierte true/false y variantes a Sí/No; conserva textos descriptivos (ej. plaza de garaje). */
+function normalizeYesNoField(value: unknown): string {
+  const v = str(value)
+  if (!v) return ''
+  const lower = v.toLowerCase()
+  if (['false', 'no', '0', 'none', 'null'].includes(lower)) return 'No'
+  if (['true', 'si', 'sí', 'yes', '1'].includes(lower)) return 'Sí'
+  return v
+}
+
+/** La ficha ya muestra la etiqueta «Planta»; el valor debe ser solo «2º», «3ª», «Bajo», etc. */
+function normalizeFloor(value: unknown): string {
+  let v = str(value)
+  if (!v) return ''
+  v = v.replace(/\s+planta\s*$/i, '').trim()
+  v = v.replace(/^planta\s+/i, '').trim()
+  return v
+}
+
 export function normalizeParsedListing(raw: Record<string, unknown>): ParsedListingDraft {
   return {
     title: str(raw.title),
@@ -72,10 +91,10 @@ export function normalizeParsedListing(raw: Record<string, unknown>): ParsedList
     heating: str(raw.heating),
     condition: str(raw.condition),
     propertyAge: str(raw.propertyAge),
-    floor: str(raw.floor),
-    garage: str(raw.garage),
-    elevator: str(raw.elevator),
-    furnished: str(raw.furnished),
+    floor: normalizeFloor(raw.floor),
+    garage: normalizeYesNoField(raw.garage),
+    elevator: normalizeYesNoField(raw.elevator),
+    furnished: normalizeYesNoField(raw.furnished),
     energyRating: str(raw.energyRating).toUpperCase().slice(0, 1),
     energyValue: str(raw.energyValue),
     emissionsRating: str(raw.emissionsRating).toUpperCase().slice(0, 1),
@@ -117,6 +136,8 @@ Reglas:
 - description: texto limpio para la ficha web (párrafos, sin relleno de marketing ajeno).
 - imageUrls: solo URLs http(s) que aparezcan literalmente en el texto.
 - fotocasaUrl: enlace al portal si aparece (Fotocasa, Idealista, etc.).
+- garage, elevator, furnished: si no hay o es negativo, escribe "No" (nunca "false"). Si sí hay, "Sí" o una descripción breve (ej. "Plaza de garaje"). Nunca uses true/false.
+- floor: solo el número u ordinal de planta (ej. "2º", "3ª", "Bajo", "Ático"). No incluyas la palabra "planta" porque la web ya la muestra como etiqueta.
 
 Texto del anuncio:
 """
