@@ -84,6 +84,9 @@ export default function AdminPage() {
   const [deleteId, setDeleteId] = useState<string | null>(null)
   const [featuredCapError, setFeaturedCapError] = useState<string | null>(null)
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const [listingPaste, setListingPaste] = useState('')
+  const [parsingListing, setParsingListing] = useState(false)
+  const [parseError, setParseError] = useState<string | null>(null)
 
   const debugLog = (
     hypothesisId: string,
@@ -186,6 +189,8 @@ export default function AdminPage() {
     setEditingId(null)
     setImageItems([])
     setInitialImageUrls([])
+    setListingPaste('')
+    setParseError(null)
     setFeaturedCapError(null)
     setSubmitError(null)
     setShowForm(true)
@@ -223,6 +228,8 @@ export default function AdminPage() {
     setEditingId(p.id)
     setInitialImageUrls(urls)
     setImageItems(urls.map((url) => ({ id: crypto.randomUUID(), kind: 'existing', url })))
+    setListingPaste('')
+    setParseError(null)
     setFeaturedCapError(null)
     setSubmitError(null)
     setShowForm(true)
@@ -249,6 +256,95 @@ export default function AdminPage() {
       URL.revokeObjectURL(item.previewUrl)
     }
     setImageItems((prev) => prev.filter((x) => x.id !== id))
+  }
+
+  const handleParseListing = async () => {
+    setParsingListing(true)
+    setParseError(null)
+    try {
+      const res = await fetch('/api/admin/parse-listing', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: listingPaste }),
+      })
+      const data = (await res.json().catch(() => ({}))) as Record<string, unknown> & { error?: string }
+      if (!res.ok) {
+        setParseError(data.error || 'No se pudo analizar el anuncio')
+        return
+      }
+
+      const { imageUrls, ...fields } = data as {
+        imageUrls?: string[]
+        title?: string
+        price?: string
+        location?: string
+        type?: string
+        operation?: string
+        status?: string
+        description?: string
+        fotocasaUrl?: string
+        bedrooms?: string
+        bathrooms?: string
+        sqMeters?: string
+        availability?: string
+        hotWater?: string
+        heating?: string
+        condition?: string
+        propertyAge?: string
+        floor?: string
+        garage?: string
+        elevator?: string
+        furnished?: string
+        energyRating?: string
+        energyValue?: string
+        emissionsRating?: string
+        emissionsValue?: string
+      }
+
+      setForm((prev) => ({
+        ...prev,
+        title: fields.title ?? prev.title,
+        price: fields.price ?? prev.price,
+        location: fields.location ?? prev.location,
+        type: fields.type ?? prev.type,
+        operation: fields.operation ?? prev.operation,
+        status: fields.status ?? prev.status,
+        description: fields.description ?? prev.description,
+        fotocasaUrl: fields.fotocasaUrl ?? prev.fotocasaUrl,
+        bedrooms: fields.bedrooms ?? prev.bedrooms,
+        bathrooms: fields.bathrooms ?? prev.bathrooms,
+        sqMeters: fields.sqMeters ?? prev.sqMeters,
+        availability: fields.availability ?? prev.availability,
+        hotWater: fields.hotWater ?? prev.hotWater,
+        heating: fields.heating ?? prev.heating,
+        condition: fields.condition ?? prev.condition,
+        propertyAge: fields.propertyAge ?? prev.propertyAge,
+        floor: fields.floor ?? prev.floor,
+        garage: fields.garage ?? prev.garage,
+        elevator: fields.elevator ?? prev.elevator,
+        furnished: fields.furnished ?? prev.furnished,
+        energyRating: fields.energyRating ?? prev.energyRating,
+        energyValue: fields.energyValue ?? prev.energyValue,
+        emissionsRating: fields.emissionsRating ?? prev.emissionsRating,
+        emissionsValue: fields.emissionsValue ?? prev.emissionsValue,
+      }))
+
+      const urls = (imageUrls ?? []).filter((u) => typeof u === 'string' && u.startsWith('http'))
+      if (urls.length > 0) {
+        setImageItems((prev) => {
+          const existing = prev.filter((i) => i.kind === 'existing').map((i) => i.url)
+          const merged = [...existing, ...urls.filter((u) => !existing.includes(u))]
+            .slice(0, MAX_PROPERTY_IMAGES)
+            .map((url) => ({ id: crypto.randomUUID(), kind: 'existing' as const, url }))
+          return merged
+        })
+      }
+    } catch {
+      setParseError('Error de conexión al analizar el anuncio')
+    } finally {
+      setParsingListing(false)
+    }
   }
 
   const moveItem = (from: number, to: number) => {
@@ -476,6 +572,42 @@ export default function AdminPage() {
             <button onClick={() => setShowForm(false)} className="text-stone-400 hover:text-stone-900 text-xl leading-none">×</button>
           </div>
           <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="md:col-span-2 border border-dashed border-stone-200 bg-stone-50 p-4 space-y-3">
+              <div>
+                <p className="text-sm font-medium text-stone-800">Rellenar con IA (Gemini)</p>
+                <p className="text-xs text-stone-500 mt-1">
+                  Pega el texto del anuncio (Fotocasa, Idealista, Word…) y la IA completará el formulario. Revisa siempre antes de guardar.
+                </p>
+              </div>
+              <textarea
+                value={listingPaste}
+                onChange={(e) => setListingPaste(e.target.value)}
+                rows={6}
+                placeholder="Pega aquí el anuncio completo…"
+                className="w-full border border-stone-200 px-3 py-2.5 text-sm focus:outline-none focus:border-stone-900 resize-y bg-white"
+              />
+              <div className="flex flex-wrap items-center gap-3">
+                <button
+                  type="button"
+                  onClick={handleParseListing}
+                  disabled={parsingListing || listingPaste.trim().length < 40}
+                  className="btn-primary text-xs px-5 py-2.5 disabled:opacity-50"
+                >
+                  {parsingListing ? 'Analizando…' : 'Rellenar formulario con IA'}
+                </button>
+                {listingPaste && (
+                  <button
+                    type="button"
+                    onClick={() => { setListingPaste(''); setParseError(null) }}
+                    className="text-xs text-stone-500 hover:text-stone-900"
+                  >
+                    Limpiar texto
+                  </button>
+                )}
+              </div>
+              {parseError && <p className="text-red-600 text-xs">{parseError}</p>}
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div className="md:col-span-2">
                 <label className="text-xs text-stone-500 block mb-1.5">Título *</label>
