@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { getAdminTokenFromRequest, verifyAdminSessionToken } from '@/lib/admin-session'
 import {
   assertFeaturedHomeLimit,
@@ -50,6 +51,9 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
   try {
     const row = await updatePropertyRow(params.id, insert)
+    revalidatePath('/')
+    revalidatePath('/propiedades')
+    revalidatePath(`/propiedades/${params.id}`)
     return NextResponse.json(rowToProperty(row))
   } catch (e) {
     const message = e instanceof Error ? e.message : 'Error al actualizar'
@@ -68,6 +72,9 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
 
   try {
     await deletePropertyRow(params.id)
+    revalidatePath('/')
+    revalidatePath('/propiedades')
+    revalidatePath(`/propiedades/${params.id}`)
     return NextResponse.json({ ok: true })
   } catch (e) {
     const message = e instanceof Error ? e.message : 'Error al eliminar'

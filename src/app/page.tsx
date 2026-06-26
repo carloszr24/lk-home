@@ -7,6 +7,8 @@ import { ScrollHint } from '@/components/home/ScrollHint'
 import { ValoracionGratuitaModal } from '@/components/home/ValoracionGratuitaModal'
 import { BrandName } from '@/components/BrandName'
 
+export const dynamic = 'force-dynamic'
+
 function HomeIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-6 w-6" aria-hidden="true">

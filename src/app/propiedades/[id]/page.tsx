@@ -1,15 +1,12 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { CONTACT, phoneHref, whatsappHref } from '@/lib/contact'
-import { getAllProperties, getPropertyById } from '@/lib/properties-store'
+import { getPropertyById } from '@/lib/properties-store'
 import { formatPrice, OPERATION_LABELS, parseImages, STATUS_LABELS, TYPE_LABELS } from '@/lib/utils'
 import { cn } from '@/lib/utils'
 import { PropertyImageViewer } from '@/components/properties/PropertyImageViewer'
 
-export async function generateStaticParams() {
-  const properties = await getAllProperties()
-  return properties.map((p) => ({ id: p.id }))
-}
+export const dynamic = 'force-dynamic'
 
 function PhoneIcon() {
   return (

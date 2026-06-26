@@ -3,6 +3,8 @@ import { filterProperties, getAllProperties } from '@/lib/properties-store'
 import { PropertyCard } from '@/components/properties/PropertyCard'
 import { PropertyFilters } from '@/components/properties/PropertyFilters'
 
+export const dynamic = 'force-dynamic'
+
 interface SearchParams {
   type?: string
   operation?: string
