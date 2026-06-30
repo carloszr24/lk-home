@@ -1,26 +1,34 @@
 import { createHmac, timingSafeEqual } from 'crypto'
 import type { NextRequest } from 'next/server'
+import {
+  getAdminSessionMaxAgeSeconds,
+  getSessionSecret,
+  passwordSessionVersion,
+} from '@/lib/admin-security'
 
 export const ADMIN_COOKIE_NAME = 'ymar_admin'
 
-function getSecret(): string {
-  return process.env.ADMIN_PASSWORD || ''
-}
-
 export function createAdminSessionToken(): string {
-  const exp = Date.now() + 7 * 24 * 60 * 60 * 1000
-  const payload = Buffer.from(JSON.stringify({ exp }), 'utf8').toString('base64url')
-  const sig = createHmac('sha256', getSecret()).update(payload).digest('base64url')
+  const secret = getSessionSecret()
+  const version = passwordSessionVersion()
+  if (!secret || !version) return ''
+
+  const exp = Date.now() + getAdminSessionMaxAgeSeconds() * 1000
+  const payload = Buffer.from(JSON.stringify({ exp, v: version }), 'utf8').toString('base64url')
+  const sig = createHmac('sha256', secret).update(payload).digest('base64url')
   return `${payload}.${sig}`
 }
 
 export function verifyAdminSessionToken(token: string | undefined): boolean {
-  if (!token || !getSecret()) return false
+  const secret = getSessionSecret()
+  const version = passwordSessionVersion()
+  if (!token || !secret || !version) return false
+
   const dot = token.indexOf('.')
   if (dot === -1) return false
   const payload = token.slice(0, dot)
   const sig = token.slice(dot + 1)
-  const expected = createHmac('sha256', getSecret()).update(payload).digest('base64url')
+  const expected = createHmac('sha256', secret).update(payload).digest('base64url')
   try {
     const a = Buffer.from(sig, 'utf8')
     const b = Buffer.from(expected, 'utf8')
@@ -30,8 +38,11 @@ export function verifyAdminSessionToken(token: string | undefined): boolean {
     return false
   }
   try {
-    const { exp } = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8')) as { exp: number }
-    return typeof exp === 'number' && exp > Date.now()
+    const { exp, v } = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8')) as {
+      exp: number
+      v: string
+    }
+    return typeof exp === 'number' && exp > Date.now() && v === version
   } catch {
     return false
   }

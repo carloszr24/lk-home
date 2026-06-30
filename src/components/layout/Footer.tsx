@@ -85,7 +85,6 @@ export function Footer() {
         </div>
         <div className="border-t border-stone-800 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-stone-500">
           <span>© {new Date().getFullYear()} {AGENT.name}. Todos los derechos reservados.</span>
-          <Link href="/admin" className="transition-colors hover:text-white">Panel Admin</Link>
         </div>
       </div>
     </footer>

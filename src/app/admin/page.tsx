@@ -84,26 +84,12 @@ export default function AdminPage() {
   const [deleteId, setDeleteId] = useState<string | null>(null)
   const [featuredCapError, setFeaturedCapError] = useState<string | null>(null)
   const [submitError, setSubmitError] = useState<string | null>(null)
-
-  const debugLog = (
-    hypothesisId: string,
-    location: string,
-    message: string,
-    data: Record<string, unknown>,
-    runId = 'run1'
-  ) => {
-    // #region agent log
-    fetch('http://127.0.0.1:7469/ingest/9fce4d37-ece9-4a64-80a2-f7181108eb3e',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'f55194'},body:JSON.stringify({sessionId:'f55194',runId,hypothesisId,location,message,data,timestamp:Date.now()})}).catch(()=>{})
-    // #endregion
-  }
+  const [pwErrorMsg, setPwErrorMsg] = useState<string | null>(null)
 
   useEffect(() => {
     fetch('/api/admin/session', { credentials: 'include' })
       .then(async (r) => {
         const data = await r.json().catch(() => ({}))
-        // #region agent log
-        debugLog('A', 'admin/page.tsx:session-check', 'session check response', { ok: r.ok, status: r.status, authed: (data as { authed?: boolean }).authed })
-        // #endregion
         return data
       })
       .then((data: { authed?: boolean }) => {
@@ -114,6 +100,7 @@ export default function AdminPage() {
 
   const login = async () => {
     setPwError(false)
+    setPwErrorMsg(null)
     try {
       const res = await fetch('/api/admin/login', {
         method: 'POST',
@@ -121,14 +108,25 @@ export default function AdminPage() {
         credentials: 'include',
         body: JSON.stringify({ password }),
       })
+      const data = (await res.json().catch(() => ({}))) as { error?: string }
       if (res.ok) {
         setAuthed(true)
         setPassword('')
-      } else {
-        setPwError(true)
+        return
       }
+      if (res.status === 429) {
+        setPwErrorMsg(data.error || 'Demasiados intentos. Espera unos minutos.')
+        return
+      }
+      if (res.status === 403) {
+        setPwErrorMsg('Acceso no permitido desde esta red.')
+        return
+      }
+      setPwError(true)
+      setPwErrorMsg(data.error || 'Contraseña incorrecta')
     } catch {
       setPwError(true)
+      setPwErrorMsg('No se pudo conectar. Inténtalo de nuevo.')
     }
   }
 
@@ -138,14 +136,6 @@ export default function AdminPage() {
     try {
       const res = await fetch('/api/propiedades', { credentials: 'include' })
       const data = await res.json().catch(() => ([]))
-      // #region agent log
-      debugLog('B', 'admin/page.tsx:fetchProperties', 'properties fetch result', {
-        ok: res.ok,
-        status: res.status,
-        count: Array.isArray(data) ? data.length : -1,
-        firstIds: Array.isArray(data) ? data.slice(0, 5).map((p: { id?: string }) => p.id) : [],
-      })
-      // #endregion
       if (res.ok && Array.isArray(data)) setProperties(data)
     } finally {
       setLoading(false)
@@ -299,14 +289,6 @@ export default function AdminPage() {
     e.preventDefault()
     setSaving(true)
     setSubmitError(null)
-    // #region agent log
-    debugLog('C', 'admin/page.tsx:handleSubmit-start', 'submit start', {
-      mode: editingId ? 'edit' : 'create',
-      editingId,
-      featured: form.featured,
-      imageItems: imageItems.length,
-    })
-    // #endregion
     try {
       const existingUrlsInOrder = imageItems
         .filter((i): i is Extract<ImageItem, { kind: 'existing' }> => i.kind === 'existing')
@@ -322,17 +304,11 @@ export default function AdminPage() {
         })
         if (!createRes.ok) {
           const errBody = (await createRes.json().catch(() => ({}))) as { error?: string }
-          // #region agent log
-          debugLog('D', 'admin/page.tsx:createRes-error', 'create failed', { status: createRes.status, error: errBody.error || null })
-          // #endregion
           setSubmitError(errBody.error || 'Error al crear propiedad')
           return
         }
         const created = await createRes.json() as { id: string }
         const propertyId = created.id
-        // #region agent log
-        debugLog('D', 'admin/page.tsx:createRes-ok', 'create ok', { propertyId })
-        // #endregion
 
         // 2) Subir imágenes nuevas y actualizar orden final
         const uploaded = await uploadNewImages(propertyId)
@@ -350,15 +326,9 @@ export default function AdminPage() {
         })
         if (!putAfterCreate.ok) {
           const errBody = (await putAfterCreate.json().catch(() => ({}))) as { error?: string }
-          // #region agent log
-          debugLog('E', 'admin/page.tsx:putAfterCreate-error', 'put after create failed', { status: putAfterCreate.status, error: errBody.error || null, propertyId })
-          // #endregion
           setSubmitError(errBody.error || 'Error al guardar la propiedad')
           return
         }
-        // #region agent log
-        debugLog('E', 'admin/page.tsx:putAfterCreate-ok', 'put after create ok', { status: putAfterCreate.status, propertyId })
-        // #endregion
       } else {
         const propertyId = editingId
 
@@ -378,15 +348,9 @@ export default function AdminPage() {
         })
         if (!putRes.ok) {
           const errBody = (await putRes.json().catch(() => ({}))) as { error?: string }
-          // #region agent log
-          debugLog('E', 'admin/page.tsx:putEdit-error', 'put edit failed', { status: putRes.status, error: errBody.error || null, propertyId })
-          // #endregion
           setSubmitError(errBody.error || 'Error al guardar la propiedad')
           return
         }
-        // #region agent log
-        debugLog('E', 'admin/page.tsx:putEdit-ok', 'put edit ok', { status: putRes.status, propertyId })
-        // #endregion
 
         await deleteRemovedImages(finalUrls)
       }
@@ -394,9 +358,6 @@ export default function AdminPage() {
       setShowForm(false)
       setEditingId(null)
       await fetchProperties()
-      // #region agent log
-      debugLog('B', 'admin/page.tsx:postSubmit-refetch', 'refetch after submit complete', { mode: editingId ? 'edit' : 'create' })
-      // #endregion
     } finally {
       setSaving(false)
     }
@@ -426,7 +387,7 @@ export default function AdminPage() {
                 pwError ? 'border-red-300 bg-red-50' : 'border-stone-200 focus:border-stone-900'
               )}
             />
-            {pwError && <p className="text-red-500 text-xs">Contraseña incorrecta</p>}
+            {pwErrorMsg && <p className="text-red-500 text-xs">{pwErrorMsg}</p>}
             <button onClick={login} className="btn-primary w-full py-3 text-sm">
               Entrar
             </button>
