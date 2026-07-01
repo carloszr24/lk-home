@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react'
 import { Property } from '@/types'
 import { MAX_FEATURED_ON_HOME, MAX_PROPERTY_IMAGES } from '@/lib/property-db'
-import { formatPrice, OPERATION_LABELS, PROPERTY_OPERATIONS, PROPERTY_STATUSES, PROPERTY_TYPES, STATUS_LABELS, TYPE_LABELS } from '@/lib/utils'
+import { formatPrice, OPERATION_LABELS, PROPERTY_OPERATIONS, PROPERTY_PROVINCES, PROPERTY_STATUSES, PROPERTY_TYPES, STATUS_LABELS, TYPE_LABELS } from '@/lib/utils'
+import { getPropertyProvince } from '@/lib/property-location'
 import { cn } from '@/lib/utils'
 
 type ImageItem =
@@ -38,6 +39,7 @@ const emptyForm = {
   title: '',
   price: '',
   location: '',
+  province: '',
   type: 'piso',
   operation: 'venta',
   status: 'disponible',
@@ -74,6 +76,7 @@ export default function AdminPage() {
   const [pwError, setPwError] = useState(false)
 
   const [properties, setProperties] = useState<Property[]>([])
+  const [adminProvinceFilter, setAdminProvinceFilter] = useState('')
   const [loading, setLoading] = useState(false)
   const [showForm, setShowForm] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
@@ -187,6 +190,7 @@ export default function AdminPage() {
       title: p.title,
       price: p.price.toString(),
       location: p.location,
+      province: p.province || getPropertyProvince(p) || '',
       type: p.type,
       operation: p.operation || 'venta',
       status: p.status,
@@ -369,6 +373,10 @@ export default function AdminPage() {
     await fetchProperties()
   }
 
+  const visibleProperties = adminProvinceFilter
+    ? properties.filter((p) => getPropertyProvince(p) === adminProvinceFilter)
+    : properties
+
   // PASSWORD SCREEN
   if (!authed) {
     return (
@@ -409,9 +417,22 @@ export default function AdminPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="font-display text-3xl font-light text-stone-900">Propiedades</h1>
-          <p className="text-stone-400 text-sm mt-1">{properties.length} inmuebles en total</p>
+          <p className="text-stone-400 text-sm mt-1">{visibleProperties.length} inmueble{visibleProperties.length !== 1 ? 's' : ''} en total</p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
+          <label className="flex items-center gap-2 text-xs text-stone-500">
+            Provincia
+            <select
+              value={adminProvinceFilter}
+              onChange={(e) => setAdminProvinceFilter(e.target.value)}
+              className="border border-stone-200 bg-white px-3 py-2 text-sm text-stone-900 focus:outline-none focus:border-stone-900"
+            >
+              <option value="">Todas</option>
+              {PROPERTY_PROVINCES.map((p) => (
+                <option key={p} value={p}>{p}</option>
+              ))}
+            </select>
+          </label>
           <button
             type="button"
             onClick={async () => {
@@ -454,7 +475,19 @@ export default function AdminPage() {
               <div>
                 <label className="text-xs text-stone-500 block mb-1.5">Ubicación *</label>
                 <input name="location" value={form.location} onChange={handleChange} required
+                  placeholder="Ej: Fuente Cisneros, Alcorcón"
                   className="w-full border border-stone-200 px-3 py-2.5 text-sm focus:outline-none focus:border-stone-900" />
+              </div>
+
+              <div>
+                <label className="text-xs text-stone-500 block mb-1.5">Provincia *</label>
+                <select name="province" value={form.province} onChange={handleChange} required
+                  className="w-full border border-stone-200 px-3 py-2.5 text-sm focus:outline-none focus:border-stone-900 bg-white">
+                  <option value="">Seleccionar provincia</option>
+                  {PROPERTY_PROVINCES.map((p) => (
+                    <option key={p} value={p}>{p}</option>
+                  ))}
+                </select>
               </div>
 
               <div>
@@ -702,12 +735,19 @@ export default function AdminPage() {
               Crear la primera
             </button>
           </div>
+        ) : visibleProperties.length === 0 ? (
+          <div className="p-12 text-center">
+            <p className="text-stone-400 mb-4">No hay propiedades en esta provincia.</p>
+            <button type="button" onClick={() => setAdminProvinceFilter('')} className="text-sm text-stone-600 hover:text-stone-900">
+              Ver todas
+            </button>
+          </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead className="bg-stone-50 border-b border-stone-200">
                 <tr>
-                  {['Título', 'Precio', 'Operación', 'Tipo', 'Estado', 'Ubicación', 'Dest.', 'Acciones'].map(h => (
+                  {['Título', 'Precio', 'Operación', 'Tipo', 'Estado', 'Provincia', 'Ubicación', 'Dest.', 'Acciones'].map(h => (
                     <th key={h} className="text-left text-xs text-stone-500 font-medium px-4 py-3 tracking-wide">
                       {h}
                     </th>
@@ -715,7 +755,7 @@ export default function AdminPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-stone-100">
-                {properties.map((p) => (
+                {visibleProperties.map((p) => (
                   <tr key={p.id} className="hover:bg-stone-50 transition-colors">
                     <td className="px-4 py-3">
                       <span className="font-medium text-stone-900 line-clamp-1 max-w-[200px] block">
@@ -735,6 +775,9 @@ export default function AdminPage() {
                       <span className={cn('text-xs px-2 py-0.5 font-medium', statusColors[p.status] || '')}>
                         {STATUS_LABELS[p.status] || p.status}
                       </span>
+                    </td>
+                    <td className="px-4 py-3 text-stone-500 text-xs">
+                      {getPropertyProvince(p) || '—'}
                     </td>
                     <td className="px-4 py-3 text-stone-500 text-xs max-w-[150px] truncate">
                       {p.location}

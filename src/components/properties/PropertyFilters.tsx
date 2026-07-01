@@ -68,7 +68,7 @@ export function PropertyFilters() {
     const params = new URLSearchParams(searchParams.toString())
     mutate(params)
     params.delete('extra')
-    router.push(`/propiedades?${params.toString()}`)
+    router.replace(`/propiedades?${params.toString()}`, { scroll: false })
   }, [router, searchParams])
 
   const updateParam = useCallback((key: string, value: string) => {
@@ -78,19 +78,15 @@ export function PropertyFilters() {
     })
   }, [updateParams])
 
-  const toggleExtra = useCallback((value: string) => {
+  const setExtras = useCallback((values: string[]) => {
     updateParams((params) => {
-      const current = parseSelectedExtras(params.get('extras'), params.get('extra'))
-      const next = new Set(current)
-      if (next.has(value)) next.delete(value)
-      else next.add(value)
-      if (next.size > 0) params.set('extras', Array.from(next).join(','))
+      if (values.length > 0) params.set('extras', values.join(','))
       else params.delete('extras')
     })
   }, [updateParams])
 
   const clearAll = () => {
-    router.push('/propiedades')
+    router.replace('/propiedades', { scroll: false })
     setMobileOpen(false)
   }
 
@@ -228,36 +224,38 @@ export function PropertyFilters() {
                 />
               </div>
             </div>
-          </div>
-
-          <div className="mt-4">
-            <div className="flex items-center justify-between gap-3 mb-2">
-              <label className="text-xs text-stone-500">Extras</label>
-              {selectedExtras.length > 0 && (
-                <span className="text-[11px] text-stone-400">
-                  {selectedExtras.length} seleccionado{selectedExtras.length !== 1 ? 's' : ''}
-                </span>
-              )}
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {EXTRA_FILTER_OPTIONS.map((option) => {
-                const active = selectedExtras.includes(option.value)
-                return (
-                  <button
-                    key={option.value}
-                    type="button"
-                    onClick={() => toggleExtra(option.value)}
-                    className={`rounded-full border px-3.5 py-2 text-sm transition-colors ${
-                      active
-                        ? 'border-brand-red bg-brand-red text-white'
-                        : 'border-stone-200 bg-white text-stone-700 hover:border-stone-400'
-                    }`}
-                    aria-pressed={active}
-                  >
-                    {option.label}
-                  </button>
-                )
-              })}
+            <div className="sm:col-span-2 lg:col-span-3 xl:col-span-4">
+              <label className="text-xs text-stone-500 mb-1.5 block">Extras</label>
+              <div className="rounded-2xl border border-stone-200 bg-white p-3">
+                <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                  {EXTRA_FILTER_OPTIONS.map((option) => {
+                    const checked = selectedExtras.includes(option.value)
+                    return (
+                      <label
+                        key={option.value}
+                        className={`flex cursor-pointer items-center gap-2 rounded-full border px-3 py-2 text-sm transition-colors ${
+                          checked
+                            ? 'border-brand-red bg-brand-red/5 text-stone-900'
+                            : 'border-transparent text-stone-700 hover:bg-stone-50'
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={checked}
+                          onChange={() => {
+                            const next = checked
+                              ? selectedExtras.filter((value) => value !== option.value)
+                              : [...selectedExtras, option.value]
+                            setExtras(next)
+                          }}
+                          className="accent-brand-red"
+                        />
+                        {option.label}
+                      </label>
+                    )
+                  })}
+                </div>
+              </div>
             </div>
           </div>
         </div>

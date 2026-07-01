@@ -42,6 +42,7 @@ export type PropertyRow = {
   title: string
   price: number
   location: string
+  province: string | null
   type: string
   operation: string | null
   status: string
@@ -75,6 +76,7 @@ export function rowToProperty(r: PropertyRow): Property {
     title: r.title,
     price: r.price,
     location: r.location,
+    province: r.province,
     type: r.type,
     operation: r.operation || 'venta',
     status: r.status,
@@ -112,6 +114,7 @@ export type PropertyInsert = {
   title: string
   price: number
   location: string
+  province: string | null
   type: string
   operation: string
   status: string
@@ -141,6 +144,7 @@ export function bodyToInsert(body: {
   title: string
   price: string | number
   location: string
+  province?: string | null
   type: string
   operation?: string
   status?: string
@@ -166,10 +170,12 @@ export function bodyToInsert(body: {
   featured?: boolean
 }): PropertyInsert {
   const imagesStr = Array.isArray(body.images) ? JSON.stringify(body.images) : String(body.images)
+  const province = body.province?.trim() || null
   return {
     title: body.title,
     price: typeof body.price === 'number' ? body.price : parseFloat(String(body.price)),
     location: body.location,
+    province,
     type: body.type,
     operation: body.operation || 'venta',
     status: body.status || 'disponible',
@@ -227,6 +233,18 @@ async function uniquePropertyId(base: string): Promise<string> {
     candidate = `${base}-${n}`
     n += 1
   }
+}
+
+export async function listFeaturedPropertyRows(): Promise<PropertyRow[]> {
+  const supabase = createAdminSupabase()
+  const { data, error } = await supabase
+    .from('properties')
+    .select('*')
+    .eq('featured', true)
+    .order('created_at', { ascending: true })
+    .limit(MAX_FEATURED_ON_HOME)
+  if (error) throw new Error(error.message)
+  return (data ?? []) as PropertyRow[]
 }
 
 export async function listPropertyRows(): Promise<PropertyRow[]> {

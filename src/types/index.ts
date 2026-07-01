@@ -3,6 +3,7 @@ export interface Property {
   title: string
   price: number
   location: string
+  province?: string | null
   type: string
   operation?: string
   status: string
@@ -77,6 +78,7 @@ export interface PropertyFormData {
   title: string
   price: string
   location: string
+  province?: string | null
   type: string
   operation: string
   status: string

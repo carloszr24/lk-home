@@ -3,12 +3,14 @@ import {
   getPropertyRowById,
   isFeaturedFlag,
   isSupabaseConfigured,
+  listFeaturedPropertyRows,
   listPropertyRows,
   MAX_FEATURED_ON_HOME,
   rowsToProperties,
   rowToProperty,
 } from '@/lib/property-db'
 import type { Property } from '@/types'
+import { getPropertyProvince } from '@/lib/property-location'
 import type { PropertyFilters } from '@/types'
 
 function hasExtra(value?: string | null): boolean {
@@ -16,11 +18,6 @@ function hasExtra(value?: string | null): boolean {
   const normalized = value.trim().toLowerCase()
   if (!normalized) return false
   return normalized === 'si' || normalized === 'sí' || normalized === 'true' || normalized.startsWith('con ')
-}
-
-function extractProvince(location: string): string | null {
-  const match = location.match(/\(([^)]+)\)\s*$/)
-  return match ? match[1].trim() : null
 }
 
 function matchesBedrooms(property: Property, minBedrooms: string): boolean {
@@ -122,7 +119,7 @@ export function filterProperties(
   }
 
   if (searchParams.province) {
-    list = list.filter((p) => extractProvince(p.location) === searchParams.province)
+    list = list.filter((p) => getPropertyProvince(p) === searchParams.province)
   }
   if (searchParams.bedrooms) {
     list = list.filter((p) => matchesBedrooms(p, searchParams.bedrooms!))
@@ -140,8 +137,14 @@ export function filterProperties(
 }
 
 export async function getFeaturedPropertiesForHome(): Promise<Property[]> {
-  const catalog = await getAllProperties()
-  return catalog.filter((p) => isFeaturedFlag(p.featured)).slice(0, MAX_FEATURED_ON_HOME)
+  if (!isSupabaseConfigured()) {
+    return demoCatalog()
+      .filter((p) => isFeaturedFlag(p.featured))
+      .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
+      .slice(0, MAX_FEATURED_ON_HOME)
+  }
+  const rows = await listFeaturedPropertyRows()
+  return rowsToProperties(rows)
 }
 
 export function applyPropertyFilters(properties: Property[], filters: PropertyFilters): Property[] {
