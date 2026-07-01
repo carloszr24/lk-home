@@ -18,12 +18,12 @@ export function FeaturedPropertiesGrid({ properties }: FeaturedPropertiesGridPro
     <div>
       <div className="overflow-x-auto lg:overflow-visible snap-x snap-mandatory scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pb-1">
         <div className={`flex gap-5 md:gap-7 lg:grid ${gridCols} lg:gap-7`}>
-          {properties.map((property) => (
+          {properties.map((property, index) => (
             <div
               key={property.id}
               className="snap-start shrink-0 w-[86vw] sm:w-[68vw] md:w-[52%] lg:w-auto lg:min-w-0"
             >
-              <PropertyCard property={property} variant="featuredMinimal" />
+              <PropertyCard property={property} variant="featuredMinimal" priority={index === 0} />
             </div>
           ))}
         </div>

@@ -70,6 +70,7 @@ export function PropertyImageViewer({ images, title }: PropertyImageViewerProps)
           fill
           className="object-cover"
           priority
+          quality={80}
           sizes="(max-width: 1024px) 100vw, 60vw"
         />
         <button
@@ -138,7 +139,9 @@ export function PropertyImageViewer({ images, title }: PropertyImageViewerProps)
                 alt={`${title} miniatura ${i + 1}`}
                 fill
                 className="object-cover"
-                sizes="15vw"
+                quality={60}
+                loading="lazy"
+                sizes="96px"
               />
             </button>
           ))}
@@ -154,7 +157,9 @@ export function PropertyImageViewer({ images, title }: PropertyImageViewerProps)
                 alt=""
                 fill
                 className="object-cover scale-110 blur-[3px] brightness-75"
-                sizes="15vw"
+                quality={50}
+                loading="lazy"
+                sizes="96px"
                 aria-hidden
               />
               <span className="absolute inset-0 flex items-center justify-center bg-black/35 text-white text-xs font-medium tracking-wide uppercase">
@@ -213,6 +218,7 @@ export function PropertyImageViewer({ images, title }: PropertyImageViewerProps)
                   alt={`${title} ampliada ${index + 1}`}
                   fill
                   className="object-contain"
+                  quality={85}
                   sizes="100vw"
                 />
               </div>

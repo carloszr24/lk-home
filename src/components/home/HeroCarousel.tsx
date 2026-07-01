@@ -6,10 +6,12 @@ export function HeroCarousel() {
   return (
     <div className="absolute inset-0 z-0">
       <Image
-        src="/images/mostoles.png"
+        src="/images/mostoles.webp"
         alt="Vista urbana de Móstoles"
         fill
         priority
+        quality={80}
+        sizes="100vw"
         className="object-cover brightness-[1.08] saturate-[1.12]"
       />
       <div

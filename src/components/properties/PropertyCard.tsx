@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils'
 interface PropertyCardProps {
   property: Property
   variant?: 'default' | 'featuredMinimal'
+  priority?: boolean
 }
 
 const statusColors: Record<string, string> = {
@@ -15,7 +16,7 @@ const statusColors: Record<string, string> = {
   vendido: 'bg-stone-100 text-stone-500 border-stone-200',
 }
 
-export function PropertyCard({ property, variant = 'default' }: PropertyCardProps) {
+export function PropertyCard({ property, variant = 'default', priority = false }: PropertyCardProps) {
   const images = parseImages(property.images)
   const firstImage = images[0] || 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800'
   const isFeaturedMinimal = variant === 'featuredMinimal'
@@ -29,6 +30,8 @@ export function PropertyCard({ property, variant = 'default' }: PropertyCardProp
             src={firstImage}
             alt={property.title}
             fill
+            priority={priority}
+            quality={75}
             className="object-cover transition-transform duration-500 group-hover:scale-105"
             sizes={isFeaturedMinimal ? '(max-width: 768px) 86vw, (max-width: 1024px) 68vw, 31vw' : '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'}
           />

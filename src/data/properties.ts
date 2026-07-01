@@ -63,9 +63,9 @@ Zona inmejorable en el Valle del Gévalo, Parque Natural de Cabañeros.
 
 Contacto: Angel · ${'606 62 07 76'}.`,
     images: JSON.stringify([
-      '/images/solar_navaltoril_1.png',
-      '/images/solar_navaltoril_2.png',
-      '/images/solar_navaltoril_3.png',
+      '/images/solar_navaltoril_1.webp',
+      '/images/solar_navaltoril_2.webp',
+      '/images/solar_navaltoril_3.webp',
     ]),
     fotocasaUrl: 'https://www.fotocasa.es/es/comprar/terrenos/robledo-del-mazo/todas-las-zonas/l',
     bedrooms: null,
