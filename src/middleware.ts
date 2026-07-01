@@ -1,25 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { ADMIN_COOKIE_NAME, verifyAdminSessionToken } from '@/lib/admin-session'
 import {
   adminAccessDeniedResponse,
   applyAdminSecurityHeaders,
   isAdminIpAllowed,
 } from '@/lib/admin-security'
 
-function isAuthed(request: NextRequest): boolean {
-  return verifyAdminSessionToken(request.cookies.get(ADMIN_COOKIE_NAME)?.value)
-}
-
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
-  const method = request.method
 
   const touchesAdmin =
     pathname.startsWith('/admin') ||
     pathname.startsWith('/api/admin') ||
-    (pathname.startsWith('/api/propiedades') && method !== 'GET') ||
+    pathname.startsWith('/api/propiedades') ||
     pathname.startsWith('/api/uploads') ||
-    (pathname.startsWith('/api/leads') && method !== 'POST')
+    pathname.startsWith('/api/leads')
 
   if (!touchesAdmin) {
     return NextResponse.next()
@@ -29,14 +23,7 @@ export function middleware(request: NextRequest) {
     return adminAccessDeniedResponse(403)
   }
 
-  const isPublicAdminRoute =
-    (pathname === '/api/admin/login' && method === 'POST') ||
-    (pathname === '/api/admin/session' && method === 'GET')
-
-  if (!isPublicAdminRoute && pathname.startsWith('/api/') && !isAuthed(request)) {
-    return adminAccessDeniedResponse(401)
-  }
-
+  // La autenticación la validan las API routes (Node). Aquí solo IP + cabeceras.
   return applyAdminSecurityHeaders(NextResponse.next())
 }
 
