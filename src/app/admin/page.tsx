@@ -71,7 +71,6 @@ const statusColors: Record<string, string> = {
 export default function AdminPage() {
   const [authed, setAuthed] = useState(false)
   const [password, setPassword] = useState('')
-  const [pin, setPin] = useState('')
   const [pwError, setPwError] = useState(false)
 
   const [properties, setProperties] = useState<Property[]>([])
@@ -107,13 +106,12 @@ export default function AdminPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({ password, pin }),
+        body: JSON.stringify({ password }),
       })
       const data = (await res.json().catch(() => ({}))) as { error?: string }
       if (res.ok) {
         setAuthed(true)
         setPassword('')
-        setPin('')
         return
       }
       if (res.status === 429) {
@@ -125,7 +123,7 @@ export default function AdminPage() {
         return
       }
       setPwError(true)
-      setPwErrorMsg(data.error || 'Contraseña o PIN incorrectos')
+      setPwErrorMsg(data.error || 'Contraseña incorrecta')
     } catch {
       setPwError(true)
       setPwErrorMsg('No se pudo conectar. Inténtalo de nuevo.')
@@ -376,47 +374,27 @@ export default function AdminPage() {
     return (
       <div className="min-h-[80vh] flex items-center justify-center">
         <div className="w-full max-w-sm">
-          <h1 className="font-display text-3xl font-light text-stone-900 mb-2 text-center">Acceso admin</h1>
-          <p className="text-xs text-stone-500 text-center mb-8">Introduce la contraseña y el PIN de seguridad</p>
+          <h1 className="font-display text-3xl font-light text-stone-900 mb-8 text-center">Acceso admin</h1>
           <div className="space-y-4">
-            <div>
-              <label className="text-xs text-stone-500 block mb-1.5">Contraseña</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => { setPassword(e.target.value); setPwError(false); setPwErrorMsg(null) }}
-                onKeyDown={(e) => e.key === 'Enter' && login()}
-                placeholder="Contraseña"
-                autoComplete="current-password"
-                className={cn(
-                  'w-full border px-4 py-3 text-sm focus:outline-none transition-colors',
-                  pwError ? 'border-red-300 bg-red-50' : 'border-stone-200 focus:border-stone-900'
-                )}
-              />
-            </div>
-            <div>
-              <label className="text-xs text-stone-500 block mb-1.5">PIN de seguridad</label>
-              <input
-                type="password"
-                inputMode="numeric"
-                value={pin}
-                onChange={(e) => { setPin(e.target.value); setPwError(false); setPwErrorMsg(null) }}
-                onKeyDown={(e) => e.key === 'Enter' && login()}
-                placeholder="PIN"
-                autoComplete="one-time-code"
-                className={cn(
-                  'w-full border px-4 py-3 text-sm focus:outline-none transition-colors tracking-widest',
-                  pwError ? 'border-red-300 bg-red-50' : 'border-stone-200 focus:border-stone-900'
-                )}
-              />
-            </div>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => { setPassword(e.target.value); setPwError(false); setPwErrorMsg(null) }}
+              onKeyDown={(e) => e.key === 'Enter' && login()}
+              placeholder="Contraseña"
+              autoComplete="current-password"
+              className={cn(
+                'w-full border px-4 py-3 text-sm focus:outline-none transition-colors',
+                pwError ? 'border-red-300 bg-red-50' : 'border-stone-200 focus:border-stone-900'
+              )}
+            />
             {pwErrorMsg && <p className="text-red-500 text-xs">{pwErrorMsg}</p>}
             <button onClick={login} className="btn-primary w-full py-3 text-sm">
               Entrar
             </button>
             {process.env.NODE_ENV === 'development' && (
               <p className="text-xs text-stone-400 text-center">
-                Local: <code className="bg-stone-100 px-1">ADMIN_PASSWORD</code> y <code className="bg-stone-100 px-1">ADMIN_PIN</code> en <code className="bg-stone-100 px-1">.env</code>
+                Local: usa <code className="bg-stone-100 px-1">ADMIN_PASSWORD</code> en <code className="bg-stone-100 px-1">.env</code>
               </p>
             )}
           </div>

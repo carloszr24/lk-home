@@ -9,7 +9,7 @@ import {
   isAdminAuthConfigured,
   isAdminIpAllowed,
   recordLoginFailure,
-  verifyAdminCredentials,
+  verifyAdminPassword,
 } from '@/lib/admin-security'
 
 export async function POST(request: Request) {
@@ -35,11 +35,10 @@ export async function POST(request: Request) {
   try {
     const body = await request.json()
     const password = typeof body?.password === 'string' ? body.password : ''
-    const pin = typeof body?.pin === 'string' ? body.pin : ''
 
-    if (!verifyAdminCredentials(password, pin)) {
+    if (!verifyAdminPassword(password)) {
       recordLoginFailure(ip)
-      return NextResponse.json({ ok: false, error: 'Contraseña o PIN incorrectos' }, { status: 401 })
+      return NextResponse.json({ ok: false, error: 'Contraseña incorrecta' }, { status: 401 })
     }
 
     const token = createAdminSessionToken()

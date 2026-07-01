@@ -114,26 +114,20 @@ export function getSessionSecret(): string {
   )
 }
 
-export function credentialsSessionVersion(): string {
+export function passwordSessionVersion(): string {
   const password = process.env.ADMIN_PASSWORD?.trim() || ''
-  const pin = process.env.ADMIN_PIN?.trim() || ''
-  if (!password || !pin || !getSessionSecret()) return ''
-  return createHmac('sha256', getSessionSecret()).update(`${password}:${pin}`).digest('base64url').slice(0, 16)
+  if (!password || !getSessionSecret()) return ''
+  return createHmac('sha256', getSessionSecret()).update(password).digest('base64url').slice(0, 16)
 }
 
 export function isAdminAuthConfigured(): boolean {
-  return Boolean(
-    process.env.ADMIN_PASSWORD?.trim() &&
-      process.env.ADMIN_PIN?.trim() &&
-      getSessionSecret()
-  )
+  return Boolean(process.env.ADMIN_PASSWORD?.trim() && getSessionSecret())
 }
 
-export function verifyAdminCredentials(password: string, pin: string): boolean {
+export function verifyAdminPassword(password: string): boolean {
   const expectedPassword = process.env.ADMIN_PASSWORD?.trim() || ''
-  const expectedPin = process.env.ADMIN_PIN?.trim() || ''
-  if (!expectedPassword || !expectedPin) return false
-  return safeCompareStrings(password, expectedPassword) && safeCompareStrings(pin, expectedPin)
+  if (!expectedPassword) return false
+  return safeCompareStrings(password, expectedPassword)
 }
 
 export function getAdminSessionMaxAgeSeconds(): number {
