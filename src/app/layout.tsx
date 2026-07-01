@@ -22,11 +22,6 @@ export const metadata: Metadata = {
     'Compra, venta y alquiler en todo el territorio nacional. Oficina principal en Móstoles.',
   keywords:
     'ymar inmobiliaria, inmobiliaria mostoles, agencia inmobiliaria madrid, compra vivienda, venta vivienda, alquiler, terrenos, locales',
-  icons: {
-    icon: [{ url: '/images/ymar.png', type: 'image/png' }],
-    apple: '/images/ymar.png',
-    shortcut: '/images/ymar.png',
-  },
 }
 
 export default function RootLayout({
