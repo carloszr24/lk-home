@@ -121,13 +121,27 @@ export function passwordSessionVersion(): string {
 }
 
 export function isAdminAuthConfigured(): boolean {
-  return Boolean(process.env.ADMIN_PASSWORD?.trim() && getSessionSecret())
+  return Boolean(
+    process.env.ADMIN_PASSWORD?.trim() &&
+    process.env.ADMIN_PIN?.trim() &&
+    getSessionSecret()
+  )
 }
 
 export function verifyAdminPassword(password: string): boolean {
   const expectedPassword = process.env.ADMIN_PASSWORD?.trim() || ''
   if (!expectedPassword) return false
   return safeCompareStrings(password, expectedPassword)
+}
+
+export function verifyAdminPin(pin: string): boolean {
+  const expectedPin = process.env.ADMIN_PIN?.trim() || ''
+  if (!expectedPin) return false
+  return safeCompareStrings(pin, expectedPin)
+}
+
+export function verifyAdminLogin(password: string, pin: string): boolean {
+  return verifyAdminPassword(password) && verifyAdminPin(pin)
 }
 
 export function getAdminSessionMaxAgeSeconds(): number {

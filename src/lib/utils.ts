@@ -90,11 +90,11 @@ export const STATUS_LABELS: Record<string, string> = {
   vendido: 'Vendido',
 }
 
-/** Etiquetas de estado en fichas y listado público (con borde). */
+/** Etiquetas de estado en fichas y listado público (mismos colores que el admin). */
 export const STATUS_BADGE_CLASSES: Record<string, string> = {
-  disponible: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-  reservado: 'bg-stone-100 text-stone-600 border-stone-300',
-  vendido: 'bg-red-50 text-red-700 border-red-200',
+  disponible: 'text-emerald-600 bg-emerald-50 border-emerald-200',
+  reservado: 'text-stone-600 bg-stone-100 border-stone-300',
+  vendido: 'text-red-600 bg-red-50 border-red-200',
 }
 
 /** Etiquetas de estado en el panel admin (sin borde). */
