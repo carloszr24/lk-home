@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { AdminNav } from '@/components/admin/AdminNav'
 
 export const metadata: Metadata = {
   title: 'Panel Admin | Ymar',
@@ -10,11 +11,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     <div className="min-h-screen bg-stone-50">
       {/* Admin navbar */}
       <header className="bg-stone-950 text-white px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-6">
+        <div className="flex items-center">
           <span className="font-display text-lg font-medium">
             <span className="text-gold">Ymar</span>
             <span className="text-stone-400 text-xs ml-2 font-sans font-normal tracking-widest uppercase">Admin</span>
           </span>
+          <AdminNav />
         </div>
         <a href="/" className="text-xs text-stone-400 hover:text-white transition-colors">
           ← Ver web
