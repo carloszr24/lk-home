@@ -66,6 +66,7 @@ export default function AdminLeadsPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [sourceFilter, setSourceFilter] = useState<SourceFilter>('all')
+  const [deletingId, setDeletingId] = useState<string | null>(null)
 
   useEffect(() => {
     fetch('/api/admin/session', { credentials: 'include' })
@@ -154,6 +155,28 @@ export default function AdminLeadsPage() {
           : lead
       )
     )
+  }
+
+  const deleteLead = async (lead: Lead) => {
+    const ok = window.confirm(`¿Eliminar el lead de ${lead.fullName}? Esta acción no se puede deshacer.`)
+    if (!ok) return
+
+    setDeletingId(lead.id)
+    setError('')
+    try {
+      const res = await fetch('/api/leads', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ id: lead.id }),
+      })
+      if (!res.ok) throw new Error('Error al eliminar')
+      setLeads((prev) => prev.filter((item) => item.id !== lead.id))
+    } catch {
+      setError('No se pudo eliminar el lead')
+    } finally {
+      setDeletingId(null)
+    }
   }
 
   const filteredLeads = useMemo(() => {
@@ -317,23 +340,35 @@ export default function AdminLeadsPage() {
                     )}
                   </div>
 
-                  <div className="shrink-0">
-                    <label className="text-[11px] text-stone-500 uppercase tracking-wide block mb-1">Estado</label>
-                    <select
-                      value={lead.status}
-                      className="border border-stone-200 bg-white px-3 py-2 text-sm min-w-[160px]"
-                      onChange={async (e) => {
-                        try {
-                          await updateLeadStatus(lead.id, e.target.value)
-                        } catch {
-                          setError('No se pudo actualizar el estado')
-                        }
-                      }}
+                  <div className="shrink-0 flex flex-col sm:items-end gap-3">
+                    <div>
+                      <label className="text-[11px] text-stone-500 uppercase tracking-wide block mb-1">Estado</label>
+                      <select
+                        value={lead.status}
+                        className="border border-stone-200 bg-white px-3 py-2 text-sm min-w-[160px]"
+                        onChange={async (e) => {
+                          try {
+                            await updateLeadStatus(lead.id, e.target.value)
+                          } catch {
+                            setError('No se pudo actualizar el estado')
+                          }
+                        }}
+                      >
+                        {Object.entries(LEAD_STATUS_LABELS).map(([value, label]) => (
+                          <option key={value} value={value}>{label}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => deleteLead(lead)}
+                      disabled={deletingId === lead.id}
+                      className="inline-flex items-center gap-2 text-xs text-red-600 hover:text-red-700 disabled:opacity-50"
+                      title="Eliminar lead"
                     >
-                      {Object.entries(LEAD_STATUS_LABELS).map(([value, label]) => (
-                        <option key={value} value={value}>{label}</option>
-                      ))}
-                    </select>
+                      <TrashIcon />
+                      {deletingId === lead.id ? 'Eliminando...' : 'Eliminar'}
+                    </button>
                   </div>
                 </div>
 
@@ -362,5 +397,15 @@ function StatCard({ label, value, highlight = false }: { label: string; value: s
       <p className="text-[11px] text-stone-500 uppercase tracking-wide">{label}</p>
       <p className="text-2xl font-light text-stone-900 mt-1">{value}</p>
     </article>
+  )
+}
+
+function TrashIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4" aria-hidden="true">
+      <path d="M4 7h16" />
+      <path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+      <path d="M7 7l1 12a1 1 0 0 0 1 .9h6a1 1 0 0 0 1-.9l1-12" />
+    </svg>
   )
 }

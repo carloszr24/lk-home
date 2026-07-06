@@ -158,3 +158,23 @@ export async function PATCH(request: NextRequest) {
   }
 }
 
+export async function DELETE(request: NextRequest) {
+  if (!verifyAdminSessionToken(getAdminTokenFromRequest(request))) {
+    return unauthorized()
+  }
+
+  try {
+    const body = await request.json()
+    const id = String(body.id || '').trim()
+    if (!id) return NextResponse.json({ error: 'ID no valido' }, { status: 400 })
+
+    const supabase = createAdminSupabase()
+    const { error } = await supabase.from('leads').delete().eq('id', id)
+
+    if (error) throw error
+    return NextResponse.json({ ok: true })
+  } catch {
+    return NextResponse.json({ error: 'Error al eliminar lead' }, { status: 500 })
+  }
+}
+
