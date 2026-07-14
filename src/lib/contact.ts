@@ -1,37 +1,41 @@
-import { SITE_NAME, SITE_TAGLINE } from '@/lib/brand'
+import { SITE_FULL_NAME, SITE_NAME, SITE_TAGLINE } from '@/lib/brand'
 
 export const CONTACT_EMAIL = ''
 
 export const AGENT = {
   name: SITE_NAME,
+  fullName: SITE_FULL_NAME,
   title: SITE_TAGLINE,
   tagline:
-    'Más de 30 años de experiencia en compra, venta y alquiler en todo el territorio nacional.',
+    'Compra y venta de viviendas, hipotecas, asesoría personalizada y créditos empresariales y personales.',
 } as const
 
 export const LEGAL = {
-  ownerName: 'Ángel García del Valle',
-  legalForm: 'autónomo',
-  taxId: '50066862W',
-  address: 'Av. de la Constitución, 62, 28931 Móstoles, Madrid',
+  ownerName: SITE_NAME,
+  legalForm: '',
+  taxId: '',
+  address: 'Avda. Europa Nº68, 23600 Martos, Jaén',
 } as const
 
 export const OFFICES = {
   primary: {
-    label: 'Oficina principal',
-    line1: 'Av. de la Constitución, 62',
-    line2: '28931 Móstoles, Madrid',
-    full: 'Av. de la Constitución, 62, 28931 Móstoles, Madrid',
-    mapsQuery: 'Av.+de+la+Constitucion,+62,+28931+Mostoles,+Madrid',
-  },
-  secondary: {
-    label: 'Segunda oficina',
-    line1: 'C/ Veracruz, 10',
-    line2: '28936 Móstoles, Madrid',
-    full: 'C/ Veracruz, 10, 28936 Móstoles, Madrid',
-    mapsQuery: 'Calle+Veracruz+10,+28936+Mostoles,+Madrid',
+    label: 'Oficina',
+    line1: 'Avda. Europa Nº68',
+    line2: '23600 Martos, Jaén',
+    full: 'Avda. Europa Nº68, 23600 Martos, Jaén',
+    mapsQuery: 'Avda.+Europa+68,+23600+Martos,+Jaen',
   },
 } as const
+
+export const OPENING_HOURS = [
+  { day: 'Lunes', hours: '10:00–14:00, 18:00–20:00' },
+  { day: 'Martes', hours: '10:00–14:00, 18:00–20:00' },
+  { day: 'Miércoles', hours: '10:00–14:00, 18:00–20:00' },
+  { day: 'Jueves', hours: '10:00–14:00, 18:00–20:00' },
+  { day: 'Viernes', hours: '10:00–14:00, 18:00–20:00' },
+  { day: 'Sábado', hours: 'Cerrado' },
+  { day: 'Domingo', hours: 'Cerrado' },
+] as const
 
 const contactEmail = (process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? CONTACT_EMAIL).trim()
 
@@ -39,23 +43,16 @@ export const CONTACT = {
   address: OFFICES.primary,
   offices: OFFICES,
   phone: {
-    display: '606 620 776',
-    e164: '+34606620776',
-    wa: '34606620776',
-    label: 'Móvil',
-  },
-  landline: {
-    display: '91 613 60 36',
-    e164: '+34916136036',
-    label: 'Fijo',
+    display: '603 92 96 04',
+    e164: '+34603929604',
+    wa: '34603929604',
+    label: 'Teléfono',
   },
   email: contactEmail,
 } as const
 
 export const mapsHref = `https://maps.google.com/?q=${CONTACT.address.mapsQuery}`
-export const secondaryMapsHref = `https://maps.google.com/?q=${OFFICES.secondary.mapsQuery}`
 export const phoneHref = `tel:${CONTACT.phone.e164}`
-export const landlineHref = `tel:${CONTACT.landline.e164}`
 export const hasEmail = CONTACT.email.length > 0
 export const emailHref = hasEmail ? `mailto:${CONTACT.email}` : ''
 export const whatsappHref = `https://wa.me/${CONTACT.phone.wa}`

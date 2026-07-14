@@ -1,26 +1,18 @@
 export const SERVICE_ITEMS = [
   {
-    title: 'Compra y venta',
-    desc: 'Acompañamiento integral en operaciones de compraventa en todo el territorio nacional.',
+    title: 'Compra y venta de viviendas',
+    desc: 'Te acompañamos en todo el proceso de compra o venta con un servicio personalizado y transparente.',
   },
   {
-    title: 'Alquiler',
-    desc: 'Gestión de alquileres residenciales y comerciales con acompañamiento completo en todo el proceso.',
+    title: 'Hipotecas',
+    desc: 'Buscamos la mejor financiación adaptada a tu perfil y te guiamos en cada paso del trámite.',
   },
   {
-    title: 'Certificados energéticos',
-    desc: 'Gestión de certificados energéticos para cumplir con la normativa en compraventa y alquiler.',
+    title: 'Asesoría personalizada',
+    desc: 'Analizamos tu situación y te proponemos la estrategia más adecuada para tu operación.',
   },
   {
-    title: 'Gestión documental',
-    desc: 'Asesoramiento y acompañamiento en documentación, trámites en registro de la propiedad y notaría.',
-  },
-  {
-    title: 'Venta por cuenta propia',
-    desc: 'Apoyo a propietarios que prefieren vender por su cuenta pero necesitan ayuda con el papeleo o adjudicaciones de herencias.',
-  },
-  {
-    title: 'Cobertura nacional',
-    desc: 'Oficina principal en Móstoles, con desplazamiento y operaciones en cualquier punto del territorio nacional.',
+    title: 'Créditos empresariales y personales',
+    desc: 'Soluciones de financiación para particulares y empresas con un trato cercano y profesional.',
   },
 ] as const

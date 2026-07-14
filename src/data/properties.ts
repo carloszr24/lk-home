@@ -1,46 +1,46 @@
 import type { Property } from '@/types'
 
-const now = new Date('2026-05-28T12:00:00.000Z')
+const now = new Date('2026-07-14T12:00:00.000Z')
 
-/** Catálogo demo en archivo local. Añade URLs en `images` cuando tengas las fotos. */
+/** Catálogo demo en archivo local. Se copia a `.data/properties.json` en el primer arranque. */
 export const DEMO_PROPERTIES: Property[] = [
   {
-    id: 'alcorcon-fuente-cisneros',
-    title: 'Piso de 3 dormitorios en Fuente Cisneros, Alcorcón',
-    price: 450_000,
-    location: 'Alcorcón (Madrid)',
-    type: 'piso',
+    id: 'casa-los-villares-ref-1246',
+    title: 'Casa con piscina en Los Villares — entrega inmediata',
+    price: 250_000,
+    location: 'Los Villares (Jaén)',
+    province: 'Jaén',
+    type: 'casa',
     operation: 'venta',
     status: 'disponible',
-    description: `Ref: 555768252 · Ref: 920.
+    description: `Ref. 1246 · Los Villares (Jaén)
 
-En la exclusiva y tranquila zona de Fuente Cisneros, en Alcorcón, a escasos minutos de Móstoles y el Parque Oeste, se vende esta fantástica vivienda de 3 dormitorios y 2 baños completos, uno de ellos en suite.
+Casa unifamiliar en urbanización tranquila y consolidada, con todos los servicios a mano y a unos 10 minutos en coche de Jaén capital. Lista para entrar a vivir.
 
-El piso cuenta con puerta de acceso acorazada, suelo porcelánico en todas las estancias, ventanas climalit oscilobatientes, aire acondicionado por conductos, calefacción de gas natural con caldera nueva, tomas de internet en todas las habitaciones y terraza cerrada con vistas a zonas comunes.
+La vivienda se distribuye en dos plantas más sótano. En la planta principal encontrarás recibidor, salón-comedor, cocina amplia y un gran patio con porche y piscina privada. La zona de noche cuenta con tres dormitorios, tres baños completos y un aseo adicional, además de lavadero.
 
-La urbanización dispone de dos piscinas, dos pistas de pádel, zonas infantiles, mesas de ping-pong, salas de reunión, Citibox y portería con vigilancia 24 h.
+En el sótano dispone de cochera para dos vehículos —con cocina y chimenea—, trastero y sala de calderas. Calefacción por aerotermia y aire acondicionado por split en todas las estancias.
 
-Incluye trastero (~6 m²), plaza de garaje (~40 m², dos vehículos) e instalación para cargador de vehículo eléctrico. Portal con doble ascensor.
-
-Contacto: Angel · ${'606 62 07 76'}.`,
+Precio negociable. En Olmo & Cobo te ayudamos también a encontrar la hipoteca que mejor encaje contigo.`,
     images: JSON.stringify([
-      '/images/casa-alcorcon-1.webp',
-      '/images/casa-alcorcon-2.webp',
-      '/images/casa-alcorcon-3.webp',
+      '/images/olmo-cobo1.jpg',
+      '/images/olmo-cobo1-1.jpg',
+      '/images/olmo-cobo1-2.jpg',
     ]),
-    fotocasaUrl:
-      'https://www.fotocasa.es/es/comprar/vivienda/alcorcon/aire-acondicionado-calefaccion-terraza-zona-comunitaria-ascensor-internet-piscina-no-amueblado/187435568/d',
+    fotocasaUrl: null,
     bedrooms: 3,
-    bathrooms: 2,
-    sqMeters: 117,
-    availability: 'Sin restricciones',
-    hotWater: 'Gas natural',
-    heating: 'Gas natural',
-    condition: 'Buen estado',
-    floor: '2ª planta',
-    garage: 'Plaza de garaje (2 vehículos)',
-    elevator: 'Sí',
-    furnished: 'No',
+    bathrooms: 4,
+    sqMeters: null,
+    availability: 'Entrega inmediata',
+    hotWater: null,
+    heating: 'Aerotermia',
+    condition: 'Excelente estado',
+    propertyAge: null,
+    floor: null,
+    garage: 'Cochera para 2 vehículos',
+    elevator: 'No',
+    furnished: null,
+    extras: ['pool', 'garage', 'storage', 'heating'],
     featured: true,
     archived: false,
     sortOrder: 0,
@@ -48,32 +48,42 @@ Contacto: Angel · ${'606 62 07 76'}.`,
     updatedAt: now,
   },
   {
-    id: 'solar-navaltoril',
-    title: 'Solar en Navaltoril, Robledo del Mazo',
-    price: 35_000,
-    location: 'Navaltoril, Robledo del Mazo (Toledo)',
-    type: 'terreno',
+    id: 'casa-martos-piscina-ref-1260',
+    title: 'Casa con piscina en zona residencial de Martos',
+    price: 380_000,
+    location: 'Martos (Jaén)',
+    province: 'Jaén',
+    type: 'casa',
     operation: 'venta',
     status: 'disponible',
-    description: `Ref: 595285839 · Ref: 301.
+    description: `Ref. 1260 · Martos (Jaén)
 
-Solar en Navaltoril, pedanía de Robledo del Mazo, vallado y de semiesquina. Superficie de 625 m².
+Chalet en una de las zonas residenciales más demandadas de Martos: tranquila, con parques, áreas de juego y ocio en los alrededores.
 
-Posibilidad de adquirir, de manera adicional, otro solar de semiesquina de 625 m² justo enfrente de la vivienda por 40.000 € adicionales (consultar con la agencia).
+La casa ofrece cuatro dormitorios amplios y luminosos, cinco baños completos —uno en suite con bañera de hidromasaje— y dos cocinas, una junto al salón y otra en el sótano. El exterior incluye patio con piscina y solárium, además de cochera doble.
 
-Zona inmejorable en el Valle del Gévalo, Parque Natural de Cabañeros.
+Entre sus extras destacan ventanas con doble acristalamiento, calefacción por suelo radiante, aire acondicionado central y acabados de diseño. Entrega inmediata.
 
-Contacto: Angel · ${'606 62 07 76'}.`,
+Consulta financiación a medida: en Olmo & Cobo te acompañamos para conseguir la mejor hipoteca.`,
     images: JSON.stringify([
-      '/images/solar_navaltoril_1.webp',
-      '/images/solar_navaltoril_2.webp',
-      '/images/solar_navaltoril_3.webp',
+      '/images/olmo-cobo-2.jpg',
+      '/images/olmo-cobo-2-1.jpg',
+      '/images/olmo-cobo-2-2.jpg',
     ]),
-    fotocasaUrl: 'https://www.fotocasa.es/es/comprar/terrenos/robledo-del-mazo/todas-las-zonas/l',
-    bedrooms: null,
-    bathrooms: null,
-    sqMeters: 625,
-    availability: 'Sin restricciones',
+    fotocasaUrl: null,
+    bedrooms: 4,
+    bathrooms: 5,
+    sqMeters: null,
+    availability: 'Entrega inmediata',
+    hotWater: null,
+    heating: 'Suelo radiante',
+    condition: 'Excelente estado',
+    propertyAge: null,
+    floor: null,
+    garage: 'Cochera doble',
+    elevator: 'No',
+    furnished: null,
+    extras: ['pool', 'garage', 'heating'],
     featured: true,
     archived: false,
     sortOrder: 1,
@@ -81,46 +91,40 @@ Contacto: Angel · ${'606 62 07 76'}.`,
     updatedAt: now,
   },
   {
-    id: 'casa-navaltoril-robledo',
-    title: 'Casa con parcela en Navaltoril, Robledo del Mazo',
-    price: 140_000,
-    location: 'Robledo del Mazo (Toledo)',
-    type: 'casa',
+    id: 'piso-martos-juzgados-ref-1256',
+    title: 'Piso en zona Juzgados, Martos',
+    price: 78_500,
+    location: 'Martos (Jaén)',
+    province: 'Jaén',
+    type: 'piso',
     operation: 'venta',
     status: 'disponible',
-    description: `En Navaltoril, pedanía de Robledo del Mazo, en un paraje de ensueño, se vende esta magnífica casa de altos techos con 4 habitaciones y baño con plato de ducha.
+    description: `Ref. 1256 · Zona Juzgados, Martos (Jaén)
 
-Completan la vivienda la zona de tránsito con dos armarios empotrados, el salón-comedor y una cocina con chimenea de piedra (también calefacción por gasóleo).
+Piso en primera planta de edificio sin ascensor, en una zona tranquila y bien comunicada de Martos. Una opción equilibrada tanto como vivienda habitual como para inversión.
 
-Parcela de 372 m², circundada por muro y con portón de acceso. En el exterior: porche, patio con horno-barbacoa y dos edificios anejos de almacén.
+Dispone de salón amplio y luminoso con acceso a balcón, tres dormitorios, baño completo y cocina independiente con lavadero y pequeña terraza interior. Incluye aire acondicionado, calefacción y ventanas de aluminio con cristal Climalit.
 
-Desde el patio hay acceso a finca agrícola «Las Hoyas» (+2.100 m²), que se vende de manera conjunta con la vivienda.
-
-Posibilidad de adquirir solar adicional de 625 m² enfrente por 40.000 € (consultar).
-
-Certificación energética G.
-
-Contacto: Angel · ${'606 62 07 76'}.`,
+Precio negociable. Solicita visita sin compromiso.`,
     images: JSON.stringify([
-      '/images/casa_chalet_robledo_mazo_1.webp',
-      '/images/casa_chalet_robledo_mazo_2.webp',
-      '/images/casa_chalet_robledo_mazo.webp',
+      '/images/olmo-cobo3.jpg',
+      '/images/olmo-cobo3-1.jpg',
+      '/images/olmo-cobo3-2.jpg',
     ]),
-    fotocasaUrl:
-      'https://www.fotocasa.es/es/comprar/vivienda/robledo-del-mazo/calefaccion-patio-amueblado/189680916/d',
-    bedrooms: 4,
+    fotocasaUrl: null,
+    bedrooms: 3,
     bathrooms: 1,
-    sqMeters: 372,
-    availability: 'Sin restricciones',
-    hotWater: 'Gasóleo',
-    heating: 'Gasóleo',
+    sqMeters: null,
+    availability: 'Disponible',
+    hotWater: null,
+    heating: 'Calefacción instalada',
     condition: 'Buen estado',
+    propertyAge: null,
+    floor: '1ª planta',
+    garage: null,
     elevator: 'No',
-    furnished: 'Sí',
-    energyRating: 'G',
-    energyValue: 999,
-    emissionsRating: 'G',
-    emissionsValue: 999,
+    furnished: null,
+    extras: ['heating'],
     featured: true,
     archived: false,
     sortOrder: 2,

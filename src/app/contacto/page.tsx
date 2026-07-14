@@ -5,15 +5,15 @@ import Link from 'next/link'
 import {
   CONTACT,
   OFFICES,
+  OPENING_HOURS,
   emailHref,
   hasEmail,
-  landlineHref,
   mapsHref,
   phoneHref,
-  secondaryMapsHref,
   whatsappDisplay,
   whatsappHref,
 } from '@/lib/contact'
+import { HEADER_OFFSET_CLASS } from '@/lib/logo'
 
 function MapPinIcon() {
   return (
@@ -81,8 +81,8 @@ export default function ContactoPage() {
   }
 
   return (
-    <div className="pt-24 md:pt-[8.5rem]">
-      <div className="bg-stone-950 text-white py-20 px-6 md:px-10">
+    <div className={HEADER_OFFSET_CLASS}>
+      <div className="bg-brand-black text-white py-20 px-6 md:px-10">
         <div className="max-w-7xl mx-auto">
           <p className="text-gold text-xs tracking-[0.3em] uppercase mb-4">Contacto</p>
           <h1 className="font-display text-5xl md:text-6xl font-light">Estamos aquí para ayudarte</h1>
@@ -199,16 +199,6 @@ export default function ContactoPage() {
                   </div>
                 </div>
 
-                <div className="flex gap-4">
-                  <span className="shrink-0 text-stone-500"><PhoneIcon /></span>
-                  <div>
-                    <p className="text-xs text-stone-400 tracking-wide mb-1">{CONTACT.landline.label}</p>
-                    <a href={landlineHref} className="text-stone-700 text-sm hover:text-stone-900 transition-colors">
-                      {CONTACT.landline.display}
-                    </a>
-                  </div>
-                </div>
-
                 {hasEmail && (
                   <div className="flex gap-4">
                     <span className="shrink-0 text-stone-500"><MailIcon /></span>
@@ -257,21 +247,16 @@ export default function ContactoPage() {
                   </div>
                 </div>
 
-                <div className="flex gap-4">
-                  <span className="shrink-0 text-stone-500"><MapPinIcon /></span>
-                  <div>
-                    <p className="text-xs text-stone-400 tracking-wide mb-1">{OFFICES.secondary.label}</p>
-                    <a
-                      href={secondaryMapsHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-stone-700 text-sm hover:text-stone-900 transition-colors"
-                    >
-                      {OFFICES.secondary.line1}
-                      <br />
-                      {OFFICES.secondary.line2}
-                    </a>
-                  </div>
+                <div className="border-t border-stone-100 pt-6">
+                  <p className="text-xs text-stone-400 tracking-widest uppercase mb-4">Horario de atención</p>
+                  <ul className="space-y-2 text-sm text-stone-600">
+                    {OPENING_HOURS.map((slot) => (
+                      <li key={slot.day} className="flex justify-between gap-4">
+                        <span className="text-stone-500">{slot.day}</span>
+                        <span>{slot.hours}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </div>

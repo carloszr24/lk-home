@@ -6,6 +6,7 @@ import { getExtraLabel, getPropertyExtras, propertyHasExtra } from '@/lib/proper
 import { formatPrice, OPERATION_LABELS, parseImages, STATUS_BADGE_CLASSES, STATUS_LABELS, TYPE_LABELS } from '@/lib/utils'
 import { cn } from '@/lib/utils'
 import { PropertyImageViewer } from '@/components/properties/PropertyImageViewer'
+import { HEADER_OFFSET_CLASS } from '@/lib/logo'
 
 export const dynamic = 'force-dynamic'
 
@@ -63,7 +64,7 @@ export default async function PropertyDetailPage({
   ].filter((item) => item.value)
 
   return (
-    <div className="pt-24 md:pt-[8.5rem]">
+    <div className={HEADER_OFFSET_CLASS}>
       {/* Breadcrumb */}
       <div className="max-w-7xl mx-auto px-6 md:px-10 pt-8 pb-4">
         <nav className="flex items-center gap-2 text-xs text-stone-400">

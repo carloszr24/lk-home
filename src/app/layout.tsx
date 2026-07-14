@@ -20,9 +20,9 @@ const display = DM_Sans({
 export const metadata: Metadata = {
   title: `${SITE_NAME} | ${SITE_TAGLINE}`,
   description:
-    'Compra, venta y alquiler en todo el territorio nacional. Oficina principal en Móstoles.',
+    'Compra y venta de viviendas, hipotecas, asesoría personalizada y créditos en Martos (Jaén).',
   keywords:
-    'inmobiliaria mostoles, agencia inmobiliaria madrid, compra vivienda, venta vivienda, alquiler, terrenos, locales',
+    'inmobiliaria martos, hipotecas jaen, agencia inmobiliaria, compra vivienda, venta vivienda, creditos, olmo cobo',
 }
 
 export default function RootLayout({
