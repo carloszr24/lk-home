@@ -1,3 +1,4 @@
+import { SITE_NAME } from '@/lib/brand'
 import { cn } from '@/lib/utils'
 
 type Props = {
@@ -5,5 +6,5 @@ type Props = {
 }
 
 export function BrandName({ className }: Props) {
-  return <span className={cn('font-brand', className)}>YMAR</span>
+  return <span className={cn('font-brand', className)}>{SITE_NAME}</span>
 }

@@ -6,7 +6,7 @@ import {
   passwordSessionVersion,
 } from '@/lib/admin-security'
 
-export const ADMIN_COOKIE_NAME = 'ymar_admin'
+export const ADMIN_COOKIE_NAME = 'olmo_admin'
 
 export function createAdminSessionToken(): string {
   const secret = getSessionSecret()

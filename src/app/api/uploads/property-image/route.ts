@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createAdminSupabase } from '@/lib/supabase/admin'
+import fs from 'fs/promises'
+import path from 'path'
 import { getAdminTokenFromRequest, verifyAdminSessionToken } from '@/lib/admin-session'
 import { optimizePropertyImage } from '@/lib/optimize-image'
 
-const BUCKET = 'property-images'
+const UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads', 'properties')
 const MAX_BYTES = 5 * 1024 * 1024
 const ALLOWED_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp'])
 
@@ -31,19 +32,15 @@ export async function POST(request: NextRequest) {
 
   const originalBuffer = Buffer.from(await file.arrayBuffer())
   const optimized = await optimizePropertyImage(originalBuffer)
-  const objectPath = `properties/${propertyId}/${crypto.randomUUID()}.${optimized.ext}`
+  const filename = `${crypto.randomUUID()}.${optimized.ext}`
+  const relativePath = `uploads/properties/${propertyId}/${filename}`
+  const absolutePath = path.join(process.cwd(), 'public', relativePath)
 
-  const supabase = createAdminSupabase()
-  const { error: upErr } = await supabase.storage
-    .from(BUCKET)
-    .upload(objectPath, optimized.data, { contentType: optimized.contentType, upsert: false })
+  await fs.mkdir(path.dirname(absolutePath), { recursive: true })
+  await fs.writeFile(absolutePath, optimized.data)
 
-  if (upErr) {
-    return NextResponse.json({ error: upErr.message }, { status: 500 })
-  }
-
-  const { data } = supabase.storage.from(BUCKET).getPublicUrl(objectPath)
-  return NextResponse.json({ url: data.publicUrl, path: objectPath })
+  const url = `/${relativePath}`
+  return NextResponse.json({ url, path: relativePath })
 }
 
 export async function DELETE(request: NextRequest) {
@@ -58,15 +55,18 @@ export async function DELETE(request: NextRequest) {
     body = null
   }
 
-  const path = (body as { path?: string } | null)?.path?.trim()
-  if (!path) return badRequest('Falta path')
+  const relativePath = (body as { path?: string } | null)?.path?.trim()
+  if (!relativePath) return badRequest('Falta path')
+  if (!relativePath.startsWith('uploads/properties/')) {
+    return badRequest('Ruta no válida')
+  }
 
-  const supabase = createAdminSupabase()
-  const { error } = await supabase.storage.from(BUCKET).remove([path])
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 })
+  const absolutePath = path.join(process.cwd(), 'public', relativePath)
+  try {
+    await fs.unlink(absolutePath)
+  } catch {
+    return NextResponse.json({ error: 'No se pudo eliminar la imagen' }, { status: 404 })
   }
 
   return NextResponse.json({ ok: true })
 }
-

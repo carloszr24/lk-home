@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createAdminSupabase } from '@/lib/supabase/admin'
 import { getAdminTokenFromRequest, verifyAdminSessionToken } from '@/lib/admin-session'
 import { LEAD_INTENTS, LEAD_PRIORITIES, LEAD_SOURCES, LEAD_STATUSES, rowsToLeads, type LeadRow } from '@/lib/leads'
+import { deleteLeadRow, insertLeadRow, listLeadRows, updateLeadRow } from '@/lib/leads-store'
 import { sendLeadNotificationEmail } from '@/lib/lead-notification'
 
 function unauthorized() {
@@ -14,15 +14,8 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const supabase = createAdminSupabase()
-    const { data, error } = await supabase
-      .from('leads')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .limit(500)
-
-    if (error) throw error
-    return NextResponse.json(rowsToLeads(data as LeadRow[] | null))
+    const rows = await listLeadRows()
+    return NextResponse.json(rowsToLeads(rows.slice(0, 500)))
   } catch {
     return NextResponse.json({ error: 'Error al obtener leads' }, { status: 500 })
   }
@@ -61,27 +54,20 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Prioridad no valida' }, { status: 400 })
     }
 
-    const supabase = createAdminSupabase()
-    const { data, error } = await supabase
-      .from('leads')
-      .insert({
-        full_name: fullName,
-        phone,
-        email,
-        notes,
-        source,
-        intent,
-        priority,
-        property_ref: propertyRef,
-        sale_timeline: saleTimeline,
-        status: 'nuevo',
-      })
-      .select('*')
-      .single()
+    const row = await insertLeadRow({
+      full_name: fullName,
+      phone,
+      email,
+      notes,
+      source: source as LeadRow['source'],
+      intent: intent as LeadRow['intent'],
+      priority: priority as LeadRow['priority'],
+      property_ref: propertyRef,
+      sale_timeline: saleTimeline,
+      status: 'nuevo',
+    })
 
-    if (error) throw error
-
-    const lead = rowsToLeads([data as LeadRow])[0]
+    const lead = rowsToLeads([row])[0]
     const emailResult = await sendLeadNotificationEmail({
       full_name: fullName,
       phone,
@@ -120,13 +106,13 @@ export async function PATCH(request: NextRequest) {
     const id = String(body.id || '').trim()
     if (!id) return NextResponse.json({ error: 'ID no valido' }, { status: 400 })
 
-    const updates: Record<string, string | null> = {}
+    const updates: Partial<LeadRow> = {}
     if (body.status) {
       const status = String(body.status)
       if (!LEAD_STATUSES.includes(status as (typeof LEAD_STATUSES)[number])) {
         return NextResponse.json({ error: 'Estado no valido' }, { status: 400 })
       }
-      updates.status = status
+      updates.status = status as LeadRow['status']
       if (status === 'contactado' && !body.firstResponseAt) {
         updates.first_response_at = new Date().toISOString()
       }
@@ -136,23 +122,15 @@ export async function PATCH(request: NextRequest) {
       if (!LEAD_PRIORITIES.includes(priority as (typeof LEAD_PRIORITIES)[number])) {
         return NextResponse.json({ error: 'Prioridad no valida' }, { status: 400 })
       }
-      updates.priority = priority
+      updates.priority = priority as LeadRow['priority']
     }
     if (body.notes !== undefined) updates.notes = String(body.notes || '').trim() || null
     if (body.assignedTo !== undefined) updates.assigned_to = String(body.assignedTo || '').trim() || null
     if (body.lastContactAt) updates.last_contact_at = new Date(body.lastContactAt).toISOString()
-    updates.updated_at = new Date().toISOString()
 
-    const supabase = createAdminSupabase()
-    const { data, error } = await supabase
-      .from('leads')
-      .update(updates)
-      .eq('id', id)
-      .select('*')
-      .single()
-
-    if (error) throw error
-    return NextResponse.json(rowsToLeads([data as LeadRow])[0])
+    const row = await updateLeadRow(id, updates)
+    if (!row) return NextResponse.json({ error: 'Lead no encontrado' }, { status: 404 })
+    return NextResponse.json(rowsToLeads([row])[0])
   } catch {
     return NextResponse.json({ error: 'Error al actualizar lead' }, { status: 500 })
   }
@@ -168,13 +146,10 @@ export async function DELETE(request: NextRequest) {
     const id = String(body.id || '').trim()
     if (!id) return NextResponse.json({ error: 'ID no valido' }, { status: 400 })
 
-    const supabase = createAdminSupabase()
-    const { error } = await supabase.from('leads').delete().eq('id', id)
-
-    if (error) throw error
+    const deleted = await deleteLeadRow(id)
+    if (!deleted) return NextResponse.json({ error: 'Lead no encontrado' }, { status: 404 })
     return NextResponse.json({ ok: true })
   } catch {
     return NextResponse.json({ error: 'Error al eliminar lead' }, { status: 500 })
   }
 }
-

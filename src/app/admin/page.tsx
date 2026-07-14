@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { Property } from '@/types'
-import { MAX_FEATURED_ON_HOME, MAX_PROPERTY_IMAGES } from '@/lib/property-db'
+import { MAX_FEATURED_ON_HOME, MAX_PROPERTY_IMAGES } from '@/lib/property-constants'
 import { formatPrice, OPERATION_LABELS, PROPERTY_OPERATIONS, PROPERTY_PROVINCES, PROPERTY_STATUSES, PROPERTY_TYPES, STATUS_BADGE_CLASSES_ADMIN, STATUS_LABELS, TYPE_LABELS } from '@/lib/utils'
 import { getPropertyProvince } from '@/lib/property-location'
 import { getPropertyExtras, type PropertyExtraId } from '@/lib/property-extras'
@@ -25,16 +25,13 @@ function safeParseImages(images: string): string[] {
   }
 }
 
-function isSupabasePublicUrl(url: string): boolean {
-  return url.includes('/storage/v1/object/public/property-images/')
+function isLocalUploadUrl(url: string): boolean {
+  return url.startsWith('/uploads/properties/')
 }
 
-function supabasePathFromPublicUrl(url: string): string | null {
-  // https://<ref>.supabase.co/storage/v1/object/public/property-images/<path>
-  const marker = '/storage/v1/object/public/property-images/'
-  const idx = url.indexOf(marker)
-  if (idx === -1) return null
-  return url.slice(idx + marker.length)
+function localPathFromUploadUrl(url: string): string | null {
+  if (!isLocalUploadUrl(url)) return null
+  return url.slice(1)
 }
 
 const emptyForm = {
@@ -275,8 +272,8 @@ export default function AdminPage() {
   const deleteRemovedImages = async (finalUrls: string[]) => {
     const removed = initialImageUrls.filter((u) => !finalUrls.includes(u))
     for (const url of removed) {
-      if (!isSupabasePublicUrl(url)) continue
-      const path = supabasePathFromPublicUrl(url)
+      if (!isLocalUploadUrl(url)) continue
+      const path = localPathFromUploadUrl(url)
       if (!path) continue
       await fetch('/api/uploads/property-image', {
         method: 'DELETE',

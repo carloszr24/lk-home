@@ -5,20 +5,12 @@ import {
   assertFeaturedHomeLimit,
   bodyToInsert,
   createPropertyRow,
-  isSupabaseConfigured,
   rowToProperty,
 } from '@/lib/property-db'
 import { getAllProperties } from '@/lib/properties-store'
 
 function unauthorized() {
   return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
-}
-
-function notConfigured() {
-  return NextResponse.json(
-    { error: 'Supabase no configurado. Añade las variables de entorno del proyecto.' },
-    { status: 503 }
-  )
 }
 
 export async function GET() {
@@ -30,7 +22,6 @@ export async function POST(request: NextRequest) {
   if (!verifyAdminSessionToken(getAdminTokenFromRequest(request))) {
     return unauthorized()
   }
-  if (!isSupabaseConfigured()) return notConfigured()
 
   let body: Parameters<typeof bodyToInsert>[0]
   try {

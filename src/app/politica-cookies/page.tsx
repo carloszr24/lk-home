@@ -3,7 +3,7 @@ import { LegalPageShell } from '@/components/legal/LegalPageShell'
 import { AGENT, CONTACT, LEGAL, hasEmail } from '@/lib/contact'
 import { ADMIN_COOKIE_NAME } from '@/lib/admin-session'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ymar-inmobiliaria.vercel.app'
+import { SITE_URL } from '@/lib/brand'
 
 export const metadata = {
   title: `Política de cookies | ${AGENT.name}`,

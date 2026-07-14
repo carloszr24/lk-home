@@ -2,7 +2,7 @@ import type { Property } from '@/types'
 
 const now = new Date('2026-05-28T12:00:00.000Z')
 
-/** Catálogo demo en archivo (sin Supabase). Añade URLs en `images` cuando tengas las fotos. */
+/** Catálogo demo en archivo local. Añade URLs en `images` cuando tengas las fotos. */
 export const DEMO_PROPERTIES: Property[] = [
   {
     id: 'alcorcon-fuente-cisneros',

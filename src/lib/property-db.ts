@@ -1,10 +1,23 @@
 import type { Property } from '@/types'
-import { createAdminSupabase } from '@/lib/supabase/admin'
+import { DEMO_PROPERTIES } from '@/data/properties'
+import { readJsonFile, writeJsonFile } from '@/lib/local-db'
 import { normalizeExtraIds, parseExtrasColumn, syncLegacyExtraFields } from '@/lib/property-extras'
+import {
+  isArchivedFlag,
+  isFeaturedFlag,
+  MAX_FEATURED_ON_HOME,
+  wouldExceedFeaturedHomeLimit,
+} from '@/lib/property-constants'
 
-export function isSupabaseConfigured(): boolean {
-  return Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY)
-}
+export {
+  isArchivedFlag,
+  isFeaturedFlag,
+  MAX_FEATURED_ON_HOME,
+  MAX_PROPERTY_IMAGES,
+  wouldExceedFeaturedHomeLimit,
+} from '@/lib/property-constants'
+
+const PROPERTIES_FILE = 'properties.json'
 
 function normalizeExternalUrl(value?: string | null): string | null {
   if (!value) return null
@@ -12,34 +25,6 @@ function normalizeExternalUrl(value?: string | null): string | null {
   if (!trimmed) return null
   if (/^https?:\/\//i.test(trimmed)) return trimmed
   return `https://${trimmed}`
-}
-
-/** Máximo de inmuebles destacados en la página de inicio (home). */
-export const MAX_FEATURED_ON_HOME = 3
-
-/** Máximo de fotos por propiedad en el panel admin. */
-export const MAX_PROPERTY_IMAGES = 50
-
-/** Coherente con el filtro de la home ante valores raros desde DB. */
-export function isFeaturedFlag(value: unknown): boolean {
-  return value === true || value === 'true' || value === 't' || value === 1
-}
-
-export function isArchivedFlag(value: unknown): boolean {
-  return value === true || value === 'true' || value === 't' || value === 1
-}
-
-/**
- * ¿Activar destacada superaría el cupo? Si esta fila ya es destacada, no ocupa “nuevo” cupo.
- */
-export function wouldExceedFeaturedHomeLimit(
-  rows: { id: string; featured: unknown }[],
-  opts: { wantFeatured: boolean; editingPropertyId: string | null }
-): boolean {
-  if (!opts.wantFeatured) return false
-  const featuredIds = rows.filter((r) => isFeaturedFlag(r.featured)).map((r) => r.id)
-  if (opts.editingPropertyId && featuredIds.includes(opts.editingPropertyId)) return false
-  return featuredIds.length >= MAX_FEATURED_ON_HOME
 }
 
 export type PropertyRow = {
@@ -76,6 +61,61 @@ export type PropertyRow = {
   sort_order?: number
   created_at: string
   updated_at: string
+}
+
+function propertyToRow(property: Property): PropertyRow {
+  return {
+    id: property.id,
+    title: property.title,
+    price: property.price,
+    location: property.location,
+    province: property.province ?? null,
+    type: property.type,
+    operation: property.operation ?? 'venta',
+    status: property.status,
+    description: property.description,
+    images: property.images,
+    fotocasa_url: property.fotocasaUrl ?? null,
+    bedrooms: property.bedrooms ?? null,
+    bathrooms: property.bathrooms ?? null,
+    sq_meters: property.sqMeters ?? null,
+    availability: property.availability ?? null,
+    hot_water: property.hotWater ?? null,
+    heating: property.heating ?? null,
+    condition: property.condition ?? null,
+    property_age: property.propertyAge ?? null,
+    floor: property.floor ?? null,
+    garage: property.garage ?? null,
+    elevator: property.elevator ?? null,
+    furnished: property.furnished ?? null,
+    extras: property.extras ?? [],
+    energy_rating: property.energyRating ?? null,
+    energy_value: property.energyValue ?? null,
+    emissions_rating: property.emissionsRating ?? null,
+    emissions_value: property.emissionsValue ?? null,
+    featured: Boolean(property.featured),
+    archived: Boolean(property.archived),
+    sort_order: property.sortOrder ?? 0,
+    created_at: property.createdAt.toISOString(),
+    updated_at: property.updatedAt.toISOString(),
+  }
+}
+
+async function ensurePropertiesSeeded(): Promise<PropertyRow[]> {
+  const existing = await readJsonFile<PropertyRow[] | null>(PROPERTIES_FILE, null)
+  if (existing && existing.length > 0) return existing
+
+  const seeded = DEMO_PROPERTIES.map(propertyToRow)
+  await writeJsonFile(PROPERTIES_FILE, seeded)
+  return seeded
+}
+
+async function readPropertyRows(): Promise<PropertyRow[]> {
+  return ensurePropertiesSeeded()
+}
+
+async function writePropertyRows(rows: PropertyRow[]): Promise<void> {
+  await writeJsonFile(PROPERTIES_FILE, rows)
 }
 
 export function rowToProperty(r: PropertyRow): Property {
@@ -254,131 +294,105 @@ export function slugifyTitle(title: string): string {
 }
 
 async function uniquePropertyId(base: string): Promise<string> {
-  const supabase = createAdminSupabase()
+  const rows = await readPropertyRows()
   let candidate = base
   let n = 2
-  while (true) {
-    const { data } = await supabase.from('properties').select('id').eq('id', candidate).maybeSingle()
-    if (!data) return candidate
+  while (rows.some((row) => row.id === candidate)) {
     candidate = `${base}-${n}`
     n += 1
   }
+  return candidate
 }
 
 export async function listFeaturedPropertyRows(): Promise<PropertyRow[]> {
-  const supabase = createAdminSupabase()
-  const { data, error } = await supabase
-    .from('properties')
-    .select('*')
-    .eq('featured', true)
-    .order('created_at', { ascending: true })
-    .limit(MAX_FEATURED_ON_HOME + 10)
-  if (error) throw new Error(error.message)
-  return sortRowsByDisplayOrder((data ?? []) as PropertyRow[])
-    .filter((row) => !isArchivedFlag(row.archived))
+  const rows = await readPropertyRows()
+  return sortRowsByDisplayOrder(rows)
+    .filter((row) => isFeaturedFlag(row.featured) && !isArchivedFlag(row.archived))
     .slice(0, MAX_FEATURED_ON_HOME)
 }
 
 export async function listPropertyRows(): Promise<PropertyRow[]> {
-  const supabase = createAdminSupabase()
-  const { data, error } = await supabase
-    .from('properties')
-    .select('*')
-    .order('created_at', { ascending: false })
-  if (error) throw new Error(error.message)
-  return sortRowsByDisplayOrder((data ?? []) as PropertyRow[])
+  const rows = await readPropertyRows()
+  return sortRowsByDisplayOrder(rows)
 }
 
 export async function getPropertyRowById(id: string): Promise<PropertyRow | null> {
-  const supabase = createAdminSupabase()
-  const { data, error } = await supabase.from('properties').select('*').eq('id', id).maybeSingle()
-  if (error) throw new Error(error.message)
-  return (data as PropertyRow | null) ?? null
+  const rows = await readPropertyRows()
+  return rows.find((row) => row.id === id) ?? null
 }
 
-async function nextSortOrder(): Promise<number | undefined> {
-  const supabase = createAdminSupabase()
-  const { data, error } = await supabase
-    .from('properties')
-    .select('sort_order')
-    .order('sort_order', { ascending: false })
-    .limit(1)
-    .maybeSingle()
-  if (error) {
-    if (/sort_order/i.test(error.message)) return undefined
-    throw new Error(error.message)
-  }
-  return ((data as { sort_order?: number } | null)?.sort_order ?? -1) + 1
+async function nextSortOrder(): Promise<number> {
+  const rows = await readPropertyRows()
+  const max = rows.reduce((acc, row) => Math.max(acc, row.sort_order ?? 0), -1)
+  return max + 1
 }
 
 export async function createPropertyRow(insert: PropertyInsert, titleForSlug: string): Promise<PropertyRow> {
-  const supabase = createAdminSupabase()
+  const rows = await readPropertyRows()
   const id = await uniquePropertyId(slugifyTitle(titleForSlug))
-  const sort_order = await nextSortOrder()
-  const payload = sort_order != null ? { ...insert, id, sort_order } : { ...insert, id }
-  const { data, error } = await supabase
-    .from('properties')
-    .insert(payload)
-    .select('*')
-    .single()
-  if (error) throw new Error(error.message)
-  return data as PropertyRow
+  const now = new Date().toISOString()
+  const row: PropertyRow = {
+    ...insert,
+    id,
+    sort_order: insert.sort_order ?? (await nextSortOrder()),
+    archived: false,
+    created_at: now,
+    updated_at: now,
+  }
+  rows.push(row)
+  await writePropertyRows(rows)
+  return row
 }
 
 export async function updatePropertyRow(id: string, insert: PropertyInsert): Promise<PropertyRow> {
-  const supabase = createAdminSupabase()
-  const { data, error } = await supabase
-    .from('properties')
-    .update({ ...insert, updated_at: new Date().toISOString() })
-    .eq('id', id)
-    .select('*')
-    .single()
-  if (error) throw new Error(error.message)
-  return data as PropertyRow
+  const rows = await readPropertyRows()
+  const index = rows.findIndex((row) => row.id === id)
+  if (index === -1) throw new Error('Propiedad no encontrada')
+
+  const updated: PropertyRow = {
+    ...rows[index],
+    ...insert,
+    id,
+    updated_at: new Date().toISOString(),
+  }
+  rows[index] = updated
+  await writePropertyRows(rows)
+  return updated
 }
 
 export async function deletePropertyRow(id: string): Promise<void> {
-  const supabase = createAdminSupabase()
-  const { error } = await supabase.from('properties').delete().eq('id', id)
-  if (error) throw new Error(error.message)
+  const rows = await readPropertyRows()
+  const filtered = rows.filter((row) => row.id !== id)
+  if (filtered.length === rows.length) throw new Error('Propiedad no encontrada')
+  await writePropertyRows(filtered)
 }
 
 export async function updatePropertySortOrders(ids: string[]): Promise<void> {
-  const supabase = createAdminSupabase()
-  const updates = ids.map((id, index) =>
-    supabase.from('properties').update({ sort_order: index, updated_at: new Date().toISOString() }).eq('id', id)
-  )
-  const results = await Promise.all(updates)
-  const failed = results.find((result) => result.error)
-  if (failed?.error) {
-    if (/sort_order/i.test(failed.error.message)) {
-      throw new Error('La columna sort_order no existe en Supabase. Ejecuta la migración SQL de orden.')
-    }
-    throw new Error(failed.error.message)
-  }
+  const rows = await readPropertyRows()
+  const now = new Date().toISOString()
+  const orderMap = new Map(ids.map((id, index) => [id, index]))
+  const updated = rows.map((row) => {
+    const order = orderMap.get(row.id)
+    if (order === undefined) return row
+    return { ...row, sort_order: order, updated_at: now }
+  })
+  await writePropertyRows(updated)
 }
 
 export async function setPropertyArchived(id: string, archived: boolean): Promise<PropertyRow> {
-  const supabase = createAdminSupabase()
-  const update: { archived: boolean; featured?: boolean; updated_at: string } = {
+  const rows = await readPropertyRows()
+  const index = rows.findIndex((row) => row.id === id)
+  if (index === -1) throw new Error('Propiedad no encontrada')
+
+  const updated: PropertyRow = {
+    ...rows[index],
     archived,
+    featured: archived ? false : rows[index].featured,
     updated_at: new Date().toISOString(),
   }
-  if (archived) update.featured = false
-
-  const { data, error } = await supabase
-    .from('properties')
-    .update(update)
-    .eq('id', id)
-    .select('*')
-    .single()
-  if (error) {
-    if (/archived/i.test(error.message)) {
-      throw new Error('La columna archived no existe en Supabase. Ejecuta la migración SQL de archivado.')
-    }
-    throw new Error(error.message)
-  }
-  return data as PropertyRow
+  rows[index] = updated
+  await writePropertyRows(rows)
+  return updated
 }
 
 export async function assertFeaturedHomeLimit(

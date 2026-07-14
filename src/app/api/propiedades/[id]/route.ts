@@ -6,7 +6,6 @@ import {
   bodyToInsert,
   deletePropertyRow,
   getPropertyRowById,
-  isSupabaseConfigured,
   rowToProperty,
   updatePropertyRow,
 } from '@/lib/property-db'
@@ -14,13 +13,6 @@ import { getPropertyById } from '@/lib/properties-store'
 
 function unauthorized() {
   return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
-}
-
-function notConfigured() {
-  return NextResponse.json(
-    { error: 'Supabase no configurado. Añade las variables de entorno del proyecto.' },
-    { status: 503 }
-  )
 }
 
 export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
@@ -33,7 +25,6 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   if (!verifyAdminSessionToken(getAdminTokenFromRequest(request))) {
     return unauthorized()
   }
-  if (!isSupabaseConfigured()) return notConfigured()
 
   let body: Parameters<typeof bodyToInsert>[0]
   try {
@@ -65,7 +56,6 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
   if (!verifyAdminSessionToken(getAdminTokenFromRequest(request))) {
     return unauthorized()
   }
-  if (!isSupabaseConfigured()) return notConfigured()
 
   const existing = await getPropertyRowById(params.id)
   if (!existing) return NextResponse.json({ error: 'No encontrada' }, { status: 404 })

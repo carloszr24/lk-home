@@ -1,8 +1,10 @@
-export const CONTACT_EMAIL = 'ymarinmobiliaria@gmail.com'
+import { SITE_NAME, SITE_TAGLINE } from '@/lib/brand'
+
+export const CONTACT_EMAIL = ''
 
 export const AGENT = {
-  name: 'YMAR Inmobiliaria',
-  title: 'Agencia inmobiliaria',
+  name: SITE_NAME,
+  title: SITE_TAGLINE,
   tagline:
     'Más de 30 años de experiencia en compra, venta y alquiler en todo el territorio nacional.',
 } as const

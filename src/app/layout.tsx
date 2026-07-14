@@ -3,6 +3,7 @@ import { DM_Sans } from 'next/font/google'
 import './globals.css'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
+import { SITE_NAME, SITE_TAGLINE } from '@/lib/brand'
 
 const sans = DM_Sans({
   subsets: ['latin'],
@@ -17,11 +18,11 @@ const display = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'YMAR Inmobiliaria | Agencia inmobiliaria',
+  title: `${SITE_NAME} | ${SITE_TAGLINE}`,
   description:
     'Compra, venta y alquiler en todo el territorio nacional. Oficina principal en Móstoles.',
   keywords:
-    'ymar inmobiliaria, inmobiliaria mostoles, agencia inmobiliaria madrid, compra vivienda, venta vivienda, alquiler, terrenos, locales',
+    'inmobiliaria mostoles, agencia inmobiliaria madrid, compra vivienda, venta vivienda, alquiler, terrenos, locales',
 }
 
 export default function RootLayout({

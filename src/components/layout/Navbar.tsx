@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { AGENT, phoneHref } from '@/lib/contact'
+import { SITE_NAME } from '@/lib/brand'
 import { HEADER_HEIGHT_CLASS, LOGO_IMAGE_CLASS, LOGO_RENDER, LOGO_SRC } from '@/lib/logo'
 import { cn } from '@/lib/utils'
 import { ValoracionGratuitaModal } from '@/components/home/ValoracionGratuitaModal'
@@ -73,7 +74,7 @@ export function Navbar() {
           <Link href="/" className="relative z-10 flex shrink-0 items-center py-3 md:py-4">
             <Image
               src={LOGO_SRC}
-              alt="YMAR"
+              alt={SITE_NAME}
               width={LOGO_RENDER.width}
               height={LOGO_RENDER.height}
               sizes="(max-width: 768px) 160px, 200px"

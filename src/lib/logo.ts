@@ -1,4 +1,4 @@
-export const LOGO_SRC = '/images/ymar.png'
+export const LOGO_SRC = '/images/logo.png'
 
 export const LOGO_RENDER = {
   width: 200,

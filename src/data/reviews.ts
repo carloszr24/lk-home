@@ -18,12 +18,12 @@ export const REVIEWS: Review[] = [
   {
     id: 3,
     name: 'Ivan Linares',
-    text: 'Ángel de YMAR Inmobiliaria hizo que la compra de nuestra parcela fuera fácil y transparente. La gestión fue impecable: rápido, proactivo y muy eficaz en toda la negociación y papeleo con el vendedor y notaría. Estamos totalmente satisfechos con su servicio y los recomendamos al 100% para la compraventa de terrenos e inmuebles. ¡Un servicio de 5 estrellas!',
+    text: 'Ángel hizo que la compra de nuestra parcela fuera fácil y transparente. La gestión fue impecable: rápido, proactivo y muy eficaz en toda la negociación y papeleo con el vendedor y notaría. Estamos totalmente satisfechos con su servicio y los recomendamos al 100% para la compraventa de terrenos e inmuebles. ¡Un servicio de 5 estrellas!',
   },
   {
     id: 4,
     name: 'Diego',
-    text: 'Muy buena experiencia con YMAR Inmobiliaria. Ángel nos ha acompañado durante todo el proceso de compra con total transparencia, cercanía y un trato excelente. Siempre ha estado disponible para resolver dudas y atender cualquier petición. Su amabilidad y profesionalidad han hecho que todo sea mucho más fácil. ¡Muy recomendable!',
+    text: 'Muy buena experiencia con la agencia. Ángel nos ha acompañado durante todo el proceso de compra con total transparencia, cercanía y un trato excelente. Siempre ha estado disponible para resolver dudas y atender cualquier petición. Su amabilidad y profesionalidad han hecho que todo sea mucho más fácil. ¡Muy recomendable!',
   },
   {
     id: 5,
@@ -73,7 +73,7 @@ export const REVIEWS: Review[] = [
   {
     id: 14,
     name: 'Bea Cm',
-    text: 'Muy contenta con la atención de Ángel; hoy en día es muy difícil encontrar inmobiliarias que realmente merezcan la pena, y sin duda YMAR es una de ellas. Muchas gracias, Ángel, por tu disposición a la hora de enseñar los inmuebles.',
+    text: 'Muy contenta con la atención de Ángel; hoy en día es muy difícil encontrar inmobiliarias que realmente merezcan la pena, y sin duda esta agencia es una de ellas. Muchas gracias, Ángel, por tu disposición a la hora de enseñar los inmuebles.',
   },
   {
     id: 15,
