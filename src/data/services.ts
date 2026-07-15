@@ -39,15 +39,3 @@ export const WHY_CHOOSE_US = [
     desc: 'Unimos ambos mundos para ofrecerte más opciones y mejores resultados.',
   },
 ] as const
-
-export const VELTARA_FINANCING = {
-  headline: '¿Tu empresa necesita financiación y tu banco no te da respuesta?',
-  intro:
-    'En Olmo & Cobo, en colaboración con Veltara Capital, intermediamos con diferentes entidades para encontrar la solución que tu negocio necesita.',
-  benefits: [
-    'Liquidez para tu negocio',
-    'Promotores, constructores, pymes y particulares que necesitan financiación',
-    'Soluciones rápidas y personalizadas',
-  ],
-  closing: 'No pierdas más tiempo. Cuéntanos tu caso y buscamos la mejor vía.',
-} as const

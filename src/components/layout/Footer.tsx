@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import {
   AGENT,
@@ -7,25 +6,22 @@ import {
   OPENING_HOURS,
   emailHref,
   hasEmail,
+  hasPhone,
   mapsHref,
   phoneHref,
   whatsappHref,
 } from '@/lib/contact'
-import { LOGO_IMAGE_CLASS, LOGO_RENDER, LOGO_SRC_WHITE } from '@/lib/logo'
+import { SiteLogo } from '@/components/SiteLogo'
 
 export function Footer() {
+  const hasAddress = OFFICES.primary.full.length > 0
+
   return (
     <footer className="mt-24 border-t border-stone-800 bg-brand-black text-stone-400">
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           <div className="md:col-span-2">
-            <Image
-              src={LOGO_SRC_WHITE}
-              alt={`${AGENT.name} logo`}
-              width={LOGO_RENDER.width}
-              height={LOGO_RENDER.height}
-              className={LOGO_IMAGE_CLASS}
-            />
+            <SiteLogo variant="light" />
             <p className="mt-4 text-sm leading-relaxed text-stone-300 max-w-md">
               {AGENT.fullName}
               <br />
@@ -47,27 +43,33 @@ export function Footer() {
           <div>
             <h4 className="text-white text-xs tracking-widest uppercase mb-4">Contacto</h4>
             <ul className="space-y-3 text-sm">
-              <li>
-                <a href={phoneHref} className="transition-colors hover:text-gold">
-                  {CONTACT.phone.label}: {CONTACT.phone.display}
-                </a>
-              </li>
+              {hasPhone && (
+                <li>
+                  <a href={phoneHref} className="transition-colors hover:text-gold">
+                    {CONTACT.phone.label}: {CONTACT.phone.display}
+                  </a>
+                </li>
+              )}
               {hasEmail && (
                 <li>
                   <a href={emailHref} className="transition-colors hover:text-gold">{CONTACT.email}</a>
                 </li>
               )}
-              <li>
-                <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-gold">
-                  WhatsApp: +34 {CONTACT.phone.display}
-                </a>
-              </li>
-              <li className="pt-2">
-                <p className="text-stone-500 text-xs mb-0.5">{OFFICES.primary.label}</p>
-                <a href={mapsHref} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-gold">
-                  {OFFICES.primary.full}
-                </a>
-              </li>
+              {whatsappHref && (
+                <li>
+                  <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-gold">
+                    WhatsApp: +34 {CONTACT.phone.display}
+                  </a>
+                </li>
+              )}
+              {hasAddress && (
+                <li className="pt-2">
+                  <p className="text-stone-500 text-xs mb-0.5">{OFFICES.primary.label}</p>
+                  <a href={mapsHref} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-gold">
+                    {OFFICES.primary.full}
+                  </a>
+                </li>
+              )}
               <li className="pt-2">
                 <p className="text-stone-500 text-xs mb-1">Horario</p>
                 <ul className="space-y-0.5 text-xs text-stone-400">

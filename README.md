@@ -1,4 +1,4 @@
-# Olmo Cobo — Web
+# LK Home — Web
 
 Next.js + TypeScript + Tailwind. Datos en local (JSON + imágenes en disco).
 
@@ -20,9 +20,10 @@ cp .env.example .env
 
 Rellena al menos:
 
+- `NEXT_PUBLIC_SITE_NAME` (nombre de la marca)
 - `ADMIN_PASSWORD` (acceso a `/admin`)
 - `ADMIN_SESSION_SECRET` (genera uno con `openssl rand -base64 32`)
-- `NEXT_PUBLIC_CONTACT_EMAIL` (opcional, visible en la web)
+- `NEXT_PUBLIC_CONTACT_EMAIL`, `NEXT_PUBLIC_CONTACT_PHONE` (opcional, visible en la web)
 - `RESEND_API_KEY`, `LEADS_NOTIFICATION_EMAIL` (opcional, alertas por email de nuevos leads)
 
 ### 3. Desarrollo

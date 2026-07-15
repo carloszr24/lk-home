@@ -22,6 +22,11 @@ function StarRow() {
 }
 
 export function ReviewsCarousel() {
+  if (REVIEWS.length === 0) return null
+  return <ReviewsCarouselContent />
+}
+
+function ReviewsCarouselContent() {
   const [isVisible, setIsVisible] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
   const [reducedMotion, setReducedMotion] = useState(false)

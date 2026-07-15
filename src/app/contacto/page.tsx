@@ -8,6 +8,7 @@ import {
   OPENING_HOURS,
   emailHref,
   hasEmail,
+  hasPhone,
   mapsHref,
   phoneHref,
   whatsappDisplay,
@@ -189,15 +190,17 @@ export default function ContactoPage() {
             <div>
               <h2 className="font-display text-3xl font-light text-stone-900 mb-8">Información</h2>
               <div className="space-y-6">
-                <div className="flex gap-4">
-                  <span className="shrink-0 text-stone-500"><PhoneIcon /></span>
-                  <div>
-                    <p className="text-xs text-stone-400 tracking-wide mb-1">{CONTACT.phone.label}</p>
-                    <a href={phoneHref} className="text-stone-700 text-sm hover:text-stone-900 transition-colors">
-                      {CONTACT.phone.display}
-                    </a>
+                {hasPhone && (
+                  <div className="flex gap-4">
+                    <span className="shrink-0 text-stone-500"><PhoneIcon /></span>
+                    <div>
+                      <p className="text-xs text-stone-400 tracking-wide mb-1">{CONTACT.phone.label}</p>
+                      <a href={phoneHref} className="text-stone-700 text-sm hover:text-stone-900 transition-colors">
+                        {CONTACT.phone.display}
+                      </a>
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {hasEmail && (
                   <div className="flex gap-4">
@@ -211,6 +214,7 @@ export default function ContactoPage() {
                   </div>
                 )}
 
+                {whatsappHref && (
                 <div className="flex gap-4">
                   <span className="shrink-0 mt-0.5 text-[#25D366]" aria-hidden="true">
                     <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
@@ -229,8 +233,10 @@ export default function ContactoPage() {
                     </a>
                   </div>
                 </div>
+                )}
 
-                <div className="flex gap-4">
+                {OFFICES.primary.full && (
+                  <div className="flex gap-4">
                   <span className="shrink-0 text-stone-500"><MapPinIcon /></span>
                   <div>
                     <p className="text-xs text-stone-400 tracking-wide mb-1">{OFFICES.primary.label}</p>
@@ -245,7 +251,8 @@ export default function ContactoPage() {
                       {OFFICES.primary.line2}
                     </a>
                   </div>
-                </div>
+                  </div>
+                )}
 
                 <div className="border-t border-stone-100 pt-6">
                   <p className="text-xs text-stone-400 tracking-widest uppercase mb-4">Horario de atención</p>
@@ -265,8 +272,8 @@ export default function ContactoPage() {
               <p className="text-xs text-stone-400 tracking-widest uppercase mb-4">Otros canales</p>
               <div className="flex flex-wrap gap-4">
                 {[
-                  { name: 'WhatsApp', href: whatsappHref },
-                  { name: 'Google Maps', href: mapsHref },
+                  ...(whatsappHref ? [{ name: 'WhatsApp', href: whatsappHref }] : []),
+                  ...(mapsHref ? [{ name: 'Google Maps', href: mapsHref }] : []),
                   ...(hasEmail ? [{ name: 'Email', href: emailHref }] : []),
                 ].map((social) => (
                   <a

@@ -20,9 +20,9 @@ const display = DM_Sans({
 export const metadata: Metadata = {
   title: `${SITE_NAME} | ${SITE_TAGLINE}`,
   description:
-    'Compra y venta de viviendas, hipotecas, asesoría personalizada y créditos en Martos (Jaén).',
+    'Compra y venta de viviendas, hipotecas, asesoría personalizada y créditos.',
   keywords:
-    'inmobiliaria martos, hipotecas jaen, agencia inmobiliaria, compra vivienda, venta vivienda, creditos, olmo cobo',
+    'inmobiliaria, hipotecas, agencia inmobiliaria, compra vivienda, venta vivienda, creditos',
 }
 
 export default function RootLayout({

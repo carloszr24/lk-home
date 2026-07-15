@@ -104,7 +104,7 @@ export default async function HomePage() {
               Inmobiliaria y financiación en un solo equipo
             </h2>
             <p className="mt-4 text-sm text-stone-400 max-w-2xl mx-auto leading-relaxed">
-              Oficina en Martos (Jaén). Te acompañamos en vivienda, hipotecas y créditos con un trato cercano y profesional.
+              Te acompañamos en vivienda, hipotecas y créditos con un trato cercano y profesional.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">

@@ -1,12 +1,12 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
-import { SERVICE_ITEMS, VELTARA_FINANCING, WHY_CHOOSE_US } from '@/data/services'
+import { SERVICE_ITEMS, WHY_CHOOSE_US } from '@/data/services'
 import { BrandName } from '@/components/BrandName'
-import { AGENT, phoneHref, CONTACT } from '@/lib/contact'
+import { AGENT, hasPhone, phoneHref, CONTACT } from '@/lib/contact'
 import { ScrollHint } from '@/components/home/ScrollHint'
-import { HEADER_OFFSET_CLASS, LOGO_IMAGE_CLASS, LOGO_RENDER, LOGO_SRC_WHITE } from '@/lib/logo'
+import { HEADER_OFFSET_CLASS } from '@/lib/logo'
+import { SiteLogo } from '@/components/SiteLogo'
 
 function HomeIcon() {
   return (
@@ -63,14 +63,6 @@ function DiamondIcon() {
   )
 }
 
-function CheckIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5 shrink-0" aria-hidden="true">
-      <path d="M20 6 9 17l-5-5" />
-    </svg>
-  )
-}
-
 const serviceIcons = [HomeIcon, ChartIcon, HandshakeIcon, BuildingIcon, BriefcaseIcon]
 
 const services = SERVICE_ITEMS.map((service, index) => ({
@@ -85,19 +77,13 @@ export default function SobreNosotrosPage() {
       <section className="relative bg-brand-black text-white min-h-[calc(100svh-4.75rem)] md:min-h-[calc(100svh-5.75rem)] flex flex-col border-b border-gold/20">
         <div className="flex flex-1 flex-col items-center justify-center px-6 md:px-10 py-16 md:py-20">
           <div className="max-w-4xl mx-auto text-center">
-            <Image
-              src={LOGO_SRC_WHITE}
-              alt={AGENT.name}
-              width={LOGO_RENDER.width}
-              height={LOGO_RENDER.height}
-              className={`${LOGO_IMAGE_CLASS} mx-auto mb-8`}
-            />
+            <SiteLogo variant="light" className="mb-8 text-2xl md:text-3xl" />
             <p className="text-gold text-xs tracking-[0.35em] uppercase mb-4">Servicios</p>
             <h1 className="font-display text-4xl md:text-5xl font-light tracking-wide uppercase">
               <BrandName />
             </h1>
             <p className="mt-3 text-sm md:text-base tracking-[0.2em] uppercase text-gold/90">
-              Grupo Inmobiliario y Financiero
+              {AGENT.title}
             </p>
           </div>
         </div>
@@ -151,76 +137,17 @@ export default function SobreNosotrosPage() {
         </div>
       </section>
 
-      {/* Veltara Capital */}
-      <section className="relative overflow-hidden bg-brand-black py-20 md:py-28 px-6 md:px-10">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(196,160,53,0.08),transparent_55%)]" aria-hidden="true" />
-        <div className="relative max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <div className="flex flex-col items-center justify-center lg:items-center">
-              <Image
-                src="/images/veltara-capital.png"
-                alt="Veltara Capital"
-                width={240}
-                height={160}
-                className="w-full max-w-[220px] h-auto object-contain"
-              />
-              <span className="my-5 text-xl font-light text-gold/60" aria-hidden="true">×</span>
-              <Image
-                src={LOGO_SRC_WHITE}
-                alt={AGENT.name}
-                width={LOGO_RENDER.width}
-                height={LOGO_RENDER.height}
-                className={`${LOGO_IMAGE_CLASS} max-w-[200px]`}
-              />
-            </div>
-
-            <div>
-              <h2 className="font-display text-3xl md:text-4xl font-light text-white leading-tight mb-6">
-                {VELTARA_FINANCING.headline}
-              </h2>
-              <p className="text-stone-300 text-lg leading-relaxed mb-8">
-                {VELTARA_FINANCING.intro}
-              </p>
-
-              <p className="text-gold text-xs tracking-[0.25em] uppercase mb-4">Te ayudamos para</p>
-              <ul className="space-y-4 mb-8">
-                {VELTARA_FINANCING.benefits.map((benefit) => (
-                  <li key={benefit} className="flex items-start gap-3 text-stone-200">
-                    <span className="text-gold mt-0.5">
-                      <CheckIcon />
-                    </span>
-                    <span className="leading-relaxed">{benefit}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <p className="text-stone-400 mb-8">{VELTARA_FINANCING.closing}</p>
-
-              <div className="flex flex-col sm:flex-row gap-4">
-                <a href={phoneHref} className="btn-gold text-center px-8 py-3.5 text-sm">
-                  Llamar: {CONTACT.phone.display}
-                </a>
-                <Link
-                  href="/contacto"
-                  className="inline-flex items-center justify-center px-8 py-3.5 text-sm font-medium tracking-wide border border-gold/50 text-gold hover:bg-gold/10 transition-colors"
-                >
-                  Solicitar información
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* CTA */}
       <section className="bg-gradient-to-b from-stone-950 to-brand-black text-white py-20 px-6 md:px-10 text-center border-t border-gold/15">
         <h2 className="font-display text-3xl md:text-4xl font-light mb-4 tracking-wide uppercase text-gold">
           Contáctanos
         </h2>
         <p className="text-stone-400 mb-2">{AGENT.fullName}</p>
-        <a href={phoneHref} className="text-2xl md:text-3xl font-display text-white hover:text-gold transition-colors">
-          +34 {CONTACT.phone.display}
-        </a>
+        {hasPhone && (
+          <a href={phoneHref} className="text-2xl md:text-3xl font-display text-white hover:text-gold transition-colors">
+            +34 {CONTACT.phone.display}
+          </a>
+        )}
         <div className="mt-10">
           <Link href="/contacto" className="btn-gold px-10 py-4 text-sm">
             Escríbenos

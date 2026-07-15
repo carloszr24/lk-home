@@ -1,8 +1,8 @@
-export const SITE_NAME = (process.env.NEXT_PUBLIC_SITE_NAME ?? 'Olmo & Cobo').trim()
+export const SITE_NAME = (process.env.NEXT_PUBLIC_SITE_NAME ?? 'LK Home').trim()
 
-export const SITE_FULL_NAME = 'Olmo & Cobo Grupo Inmobiliario & Financiero'
+export const SITE_FULL_NAME = (process.env.NEXT_PUBLIC_SITE_FULL_NAME ?? SITE_NAME).trim()
 
-export const SITE_TAGLINE = 'Grupo Inmobiliario & Financiero'
+export const SITE_TAGLINE = (process.env.NEXT_PUBLIC_SITE_TAGLINE ?? 'Inmobiliaria').trim()
 
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000').trim()
 
