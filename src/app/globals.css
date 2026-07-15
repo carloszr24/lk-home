@@ -3,21 +3,25 @@
 @tailwind utilities;
 
 :root {
-  --brand-gold: #c4a035;
-  --brand-gold-light: #e0c56a;
-  --brand-gold-dark: #9a7b1f;
-  --brand-black: #0a0a0a;
+  --brand-charcoal: #333333;
+  --brand-charcoal-light: #5c5c5c;
+  --brand-charcoal-dark: #1a1a1a;
   --brand-white: #ffffff;
-  --gold: var(--brand-gold);
-  --gold-light: var(--brand-gold-light);
-  --gold-dark: var(--brand-gold-dark);
-  /* Backward-compatible tokens used throughout existing components */
-  --brand-red: var(--brand-gold);
-  --brand-red-light: var(--brand-gold-light);
-  --brand-red-dark: var(--brand-gold-dark);
-  --brand-blue: var(--brand-gold);
-  --brand-blue-light: var(--brand-gold-light);
-  --brand-blue-dark: var(--brand-gold-dark);
+  --brand-stone: #f5f5f4;
+  /* Backward-compatible tokens */
+  --brand-gold: var(--brand-charcoal);
+  --brand-gold-light: var(--brand-charcoal-light);
+  --brand-gold-dark: var(--brand-charcoal-dark);
+  --brand-black: var(--brand-charcoal-dark);
+  --gold: var(--brand-charcoal);
+  --gold-light: var(--brand-charcoal-light);
+  --gold-dark: var(--brand-charcoal-dark);
+  --brand-red: var(--brand-charcoal);
+  --brand-red-light: var(--brand-charcoal-light);
+  --brand-red-dark: var(--brand-charcoal-dark);
+  --brand-blue: var(--brand-charcoal);
+  --brand-blue-light: var(--brand-charcoal-light);
+  --brand-blue-dark: var(--brand-charcoal-dark);
 }
 
 @layer base {
@@ -49,11 +53,11 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center px-6 py-3 bg-brand-gold text-brand-black text-sm font-medium tracking-wide hover:bg-brand-gold-dark hover:text-white transition-colors duration-200;
+    @apply inline-flex items-center justify-center px-6 py-3 bg-brand-charcoal text-white text-sm font-medium tracking-wide hover:bg-brand-charcoal-dark transition-colors duration-200;
   }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center px-6 py-3 border border-brand-gold text-brand-gold text-sm font-medium tracking-wide hover:bg-brand-gold hover:text-brand-black transition-colors duration-200;
+    @apply inline-flex items-center justify-center px-6 py-3 border border-brand-charcoal text-brand-charcoal text-sm font-medium tracking-wide hover:bg-brand-charcoal hover:text-white transition-colors duration-200;
   }
 
   .btn-gold {
@@ -71,19 +75,23 @@
   .card-hover {
     @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
   }
+
+  .service-script {
+    @apply font-script text-2xl md:text-3xl text-brand-charcoal leading-tight;
+  }
 }
 
 .site-logo {
   display: block;
   width: auto !important;
-  height: 3.25rem !important;
-  max-height: 3.25rem !important;
+  height: 2.75rem !important;
+  max-height: 2.75rem !important;
 }
 
 @media (min-width: 768px) {
   .site-logo {
-    height: 4.5rem !important;
-    max-height: 4.5rem !important;
+    height: 3.25rem !important;
+    max-height: 3.25rem !important;
   }
 }
 
@@ -129,7 +137,7 @@
   max-height: 94dvh;
   overflow-y: auto;
   background: linear-gradient(180deg, #fff 0%, #fcfafc 100%);
-  border: 1px solid #e8dfc4;
+  border: 1px solid #e7e5e4;
   border-radius: 16px;
   box-shadow: 0 24px 80px rgba(12, 10, 9, 0.45);
   padding: 1rem 1rem 1.2rem;
@@ -164,7 +172,7 @@
 }
 
 .lead-modal-hero {
-  background: linear-gradient(135deg, var(--brand-gold-dark) 0%, var(--brand-gold) 100%);
+  background: linear-gradient(135deg, var(--brand-charcoal-dark) 0%, var(--brand-charcoal) 100%);
   border-radius: 10px;
   padding: 0.75rem 0.85rem 0.7rem;
   margin-bottom: 0.75rem;
@@ -172,7 +180,7 @@
 
 .lead-modal-kicker {
   margin: 0 0 0.25rem;
-  color: #faf5e6;
+  color: #d6d3d1;
   font-size: 0.72rem;
   letter-spacing: 0.09em;
   text-transform: uppercase;
@@ -186,7 +194,7 @@
 
 .lead-modal-subtitle {
   margin: 0.25rem 0 0;
-  color: #faf5e6;
+  color: #e7e5e4;
   font-size: 0.82rem;
   line-height: 1.45;
 }
@@ -218,19 +226,19 @@
   width: 100%;
   height: 0.45rem;
   border-radius: 999px;
-  background: #f3ede0;
+  background: #f5f5f4;
   overflow: hidden;
 }
 
 .lead-modal-progress-fill {
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, var(--brand-gold-dark) 0%, var(--brand-gold) 100%);
+  background: linear-gradient(90deg, var(--brand-charcoal-dark) 0%, var(--brand-charcoal) 100%);
   transition: width 0.25s ease;
 }
 
 .lead-modal-section {
-  border: 1px solid #efe8d6;
+  border: 1px solid #e7e5e4;
   background: #fff;
   border-radius: 10px;
   padding: 0.65rem 0.75rem;
@@ -276,7 +284,7 @@
 .lead-modal select:focus,
 .lead-modal textarea:focus {
   outline: none;
-  border-color: var(--brand-gold-dark);
+  border-color: var(--brand-charcoal);
 }
 
 .lead-modal-full {

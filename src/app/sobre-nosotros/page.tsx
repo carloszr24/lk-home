@@ -2,39 +2,11 @@
 
 import Link from 'next/link'
 import { SERVICE_ITEMS, WHY_CHOOSE_US } from '@/data/services'
-import { BrandName } from '@/components/BrandName'
-import { AGENT, hasPhone, phoneHref, CONTACT } from '@/lib/contact'
+import { AGENT, phoneHref, CONTACT } from '@/lib/contact'
 import { ScrollHint } from '@/components/home/ScrollHint'
 import { HEADER_OFFSET_CLASS } from '@/lib/logo'
 import { SiteLogo } from '@/components/SiteLogo'
-
-function HomeIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-5 w-5" aria-hidden="true">
-      <path d="M3 11.25 12 4l9 7.25" />
-      <path d="M5.25 10.5V20h13.5v-9.5" />
-      <path d="M9.75 20v-5.5h4.5V20" />
-    </svg>
-  )
-}
-
-function ChartIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-5 w-5" aria-hidden="true">
-      <path d="M3 3v18h18" />
-      <path d="M8 14v4M12 10v8M16 6v12" />
-    </svg>
-  )
-}
-
-function HandshakeIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-5 w-5" aria-hidden="true">
-      <path d="M9.5 10.5 12 13l2.5-2.5a2 2 0 0 1 2.8 0l3.2 3.2a2 2 0 0 1 0 2.8l-1.4 1.4a2 2 0 0 1-2.8 0L12 13.7" />
-      <path d="M14.5 10.5 12 8 9.5 10.5a2 2 0 0 1-2.8 0L3.5 7.3a2 2 0 0 1 0-2.8l1.4-1.4a2 2 0 0 1 2.8 0L12 7.3" />
-    </svg>
-  )
-}
+import { GOOGLE_RATING, GOOGLE_REVIEW_COUNT } from '@/data/reviews'
 
 function BuildingIcon() {
   return (
@@ -45,12 +17,28 @@ function BuildingIcon() {
   )
 }
 
-function BriefcaseIcon() {
+function StagingIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-5 w-5" aria-hidden="true">
-      <path d="M3 7h18v12H3z" />
-      <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-      <path d="M3 12h18" />
+      <path d="M4 10h16M6 10V6h12v4" />
+      <path d="M8 14h8v8H8z" />
+    </svg>
+  )
+}
+
+function ReformIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-5 w-5" aria-hidden="true">
+      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z" />
+    </svg>
+  )
+}
+
+function CleanIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-5 w-5" aria-hidden="true">
+      <path d="M12 3 4 9v12h16V9l-8-6Z" />
+      <path d="M9 21v-6h6v6" />
     </svg>
   )
 }
@@ -63,73 +51,70 @@ function DiamondIcon() {
   )
 }
 
-const serviceIcons = [HomeIcon, ChartIcon, HandshakeIcon, BuildingIcon, BriefcaseIcon]
+const serviceIcons = [BuildingIcon, StagingIcon, ReformIcon, CleanIcon]
 
 const services = SERVICE_ITEMS.map((service, index) => ({
   ...service,
-  icon: serviceIcons[index] ?? HomeIcon,
+  icon: serviceIcons[index] ?? BuildingIcon,
 }))
 
 export default function SobreNosotrosPage() {
   return (
     <div className={HEADER_OFFSET_CLASS}>
-      {/* Hero */}
-      <section className="relative bg-brand-black text-white min-h-[calc(100svh-4.75rem)] md:min-h-[calc(100svh-5.75rem)] flex flex-col border-b border-gold/20">
+      <section className="relative bg-stone-50 min-h-[calc(100svh-4.75rem)] md:min-h-[calc(100svh-5.75rem)] flex flex-col border-b border-stone-200">
         <div className="flex flex-1 flex-col items-center justify-center px-6 md:px-10 py-16 md:py-20">
           <div className="max-w-4xl mx-auto text-center">
-            <SiteLogo variant="light" className="mb-8 text-2xl md:text-3xl" />
-            <p className="text-gold text-xs tracking-[0.35em] uppercase mb-4">Servicios</p>
-            <h1 className="font-display text-4xl md:text-5xl font-light tracking-wide uppercase">
-              <BrandName />
+            <SiteLogo className="mx-auto mb-8" />
+            <p className="text-stone-500 text-xs tracking-[0.35em] uppercase mb-4">Servicios</p>
+            <h1 className="font-display text-4xl md:text-5xl font-light tracking-wide text-stone-900">
+              {AGENT.fullName}
             </h1>
-            <p className="mt-3 text-sm md:text-base tracking-[0.2em] uppercase text-gold/90">
-              {AGENT.title}
+            <p className="mt-3 text-sm md:text-base tracking-[0.15em] uppercase text-stone-500">
+              Agencia inmobiliaria en Deba, Gipuzkoa
             </p>
+            {GOOGLE_REVIEW_COUNT > 0 && (
+              <p className="mt-6 text-stone-600">
+                {GOOGLE_RATING} en Google · {GOOGLE_REVIEW_COUNT.toLocaleString('es-ES')} opiniones
+              </p>
+            )}
           </div>
         </div>
-        <ScrollHint
-          className="pb-8 text-gold/80"
-          label="Sigue bajando"
-        />
+        <ScrollHint className="pb-8 text-stone-400" label="Sigue bajando" />
       </section>
 
-      {/* Nuestros servicios */}
-      <section className="bg-brand-black text-white py-20 px-6 md:px-10">
+      <section className="bg-white py-20 px-6 md:px-10">
         <div className="max-w-5xl mx-auto">
-          <h2 className="font-display text-2xl md:text-3xl font-light tracking-[0.15em] uppercase text-center text-gold mb-12">
+          <h2 className="font-display text-2xl md:text-3xl font-light tracking-[0.1em] uppercase text-center text-stone-900 mb-12">
             Nuestros servicios
           </h2>
-          <ul className="space-y-5 max-w-2xl mx-auto">
+          <ul className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {services.map((service) => (
-              <li key={service.title} className="flex items-start gap-4 border-b border-gold/15 pb-5 last:border-0">
-                <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-gold/30 text-gold">
+              <li key={service.title} className="rounded-2xl border border-stone-200 p-6 bg-stone-50/50">
+                <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-stone-200 text-brand-charcoal mb-4">
                   <service.icon />
                 </span>
-                <div>
-                  <h3 className="font-medium text-white tracking-wide">{service.title}</h3>
-                  <p className="mt-1 text-sm text-stone-400 leading-relaxed">{service.desc}</p>
-                </div>
+                <h3 className="service-script mb-2">{service.title}</h3>
+                <p className="text-sm text-stone-600 leading-relaxed">{service.desc}</p>
               </li>
             ))}
           </ul>
         </div>
       </section>
 
-      {/* Por qué elegirnos */}
-      <section className="bg-stone-950 text-white py-20 px-6 md:px-10 border-y border-gold/15">
+      <section className="bg-stone-50 py-20 px-6 md:px-10 border-y border-stone-200">
         <div className="max-w-5xl mx-auto">
-          <h2 className="font-display text-2xl md:text-3xl font-light tracking-[0.15em] uppercase text-center text-gold mb-12">
+          <h2 className="font-display text-2xl md:text-3xl font-light tracking-[0.1em] uppercase text-center text-stone-900 mb-12">
             Por qué elegirnos
           </h2>
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 max-w-3xl mx-auto">
             {WHY_CHOOSE_US.map((item) => (
               <li key={item.title} className="flex items-start gap-3">
-                <span className="mt-1.5 text-gold">
+                <span className="mt-1.5 text-brand-charcoal">
                   <DiamondIcon />
                 </span>
                 <div>
-                  <h3 className="font-medium text-white">{item.title}</h3>
-                  <p className="mt-1 text-sm text-stone-400 leading-relaxed">{item.desc}</p>
+                  <h3 className="font-medium text-stone-900">{item.title}</h3>
+                  <p className="mt-1 text-sm text-stone-600 leading-relaxed">{item.desc}</p>
                 </div>
               </li>
             ))}
@@ -137,19 +122,16 @@ export default function SobreNosotrosPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-gradient-to-b from-stone-950 to-brand-black text-white py-20 px-6 md:px-10 text-center border-t border-gold/15">
-        <h2 className="font-display text-3xl md:text-4xl font-light mb-4 tracking-wide uppercase text-gold">
+      <section className="bg-white py-20 px-6 md:px-10 text-center">
+        <h2 className="font-display text-3xl md:text-4xl font-light mb-4 tracking-wide text-stone-900">
           Contáctanos
         </h2>
-        <p className="text-stone-400 mb-2">{AGENT.fullName}</p>
-        {hasPhone && (
-          <a href={phoneHref} className="text-2xl md:text-3xl font-display text-white hover:text-gold transition-colors">
-            +34 {CONTACT.phone.display}
-          </a>
-        )}
+        <p className="text-stone-500 mb-2">{CONTACT.address.full}</p>
+        <a href={phoneHref} className="text-2xl md:text-3xl font-display text-brand-charcoal hover:text-stone-600 transition-colors">
+          +34 {CONTACT.phone.display}
+        </a>
         <div className="mt-10">
-          <Link href="/contacto" className="btn-gold px-10 py-4 text-sm">
+          <Link href="/contacto" className="btn-primary px-10 py-4 text-sm">
             Escríbenos
           </Link>
         </div>

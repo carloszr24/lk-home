@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { DM_Sans } from 'next/font/google'
+import { DM_Sans, Pinyon_Script } from 'next/font/google'
 import './globals.css'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
@@ -17,12 +17,18 @@ const display = DM_Sans({
   weight: ['500', '600', '700'],
 })
 
+const script = Pinyon_Script({
+  subsets: ['latin'],
+  variable: '--font-script',
+  weight: ['400'],
+})
+
 export const metadata: Metadata = {
   title: `${SITE_NAME} | ${SITE_TAGLINE}`,
   description:
-    'Compra y venta de viviendas, hipotecas, asesoría personalizada y créditos.',
+    'Inmobiliaria en Deba, Gipuzkoa. Gestión inmobiliaria, home staging, reformas integrales y limpieza profesional.',
   keywords:
-    'inmobiliaria, hipotecas, agencia inmobiliaria, compra vivienda, venta vivienda, creditos',
+    'inmobiliaria deba, agencia inmobiliaria gipuzkoa, home staging, reformas integrales, limpieza profesional, lk home',
 }
 
 export default function RootLayout({
@@ -31,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es" className={`${sans.variable} ${display.variable}`}>
+    <html lang="es" className={`${sans.variable} ${display.variable} ${script.variable}`}>
       <body className="bg-white text-stone-900 antialiased">
         <Navbar />
         <main className="min-h-screen">{children}</main>

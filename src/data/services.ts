@@ -1,41 +1,37 @@
 export const SERVICE_ITEMS = [
   {
-    title: 'Compra y venta de viviendas',
-    desc: 'Te acompañamos en todo el proceso con un servicio personalizado, transparente y adaptado a ti.',
+    title: 'Gestión inmobiliaria',
+    desc: 'Compra, venta y alquiler de viviendas con un acompañamiento integral y cercano en Deba y alrededores.',
   },
   {
-    title: 'Gestión integral de hipotecas',
-    desc: 'Buscamos la mejor financiación para tu perfil y te guiamos en cada paso del trámite.',
+    title: 'Home staging',
+    desc: 'Preparamos tu propiedad para que destaque: decoración, distribución y presentación que aceleran la venta.',
   },
   {
-    title: 'Asesoría inmobiliaria personalizada',
-    desc: 'Analizamos tu situación y te proponemos la estrategia más adecuada para tu operación.',
+    title: 'Reformas integrales',
+    desc: 'Renovamos espacios de principio a fin para valorizar tu inmueble con acabados de calidad.',
   },
   {
-    title: 'Inversión en propiedades exclusivas',
-    desc: 'Accede a oportunidades seleccionadas con el respaldo de un equipo que conoce el mercado.',
-  },
-  {
-    title: 'Servicios financieros adaptados a ti',
-    desc: 'Soluciones de financiación para particulares y empresas con un trato cercano y profesional.',
+    title: 'Limpieza profesional',
+    desc: 'Servicio de limpieza especializado para dejar cada propiedad impecable antes de visitas o entregas.',
   },
 ] as const
 
 export const WHY_CHOOSE_US = [
   {
-    title: 'Profesionalidad y cercanía',
-    desc: 'Un equipo que te escucha y te acompaña de principio a fin.',
+    title: 'Experiencia local',
+    desc: 'Conocemos el mercado de Deba y Gipuzkoa con más de 4.300 opiniones y 150 propiedades vendidas.',
   },
   {
-    title: 'Transparencia y confianza',
-    desc: 'Información clara en cada paso, sin sorpresas.',
+    title: 'Servicio integral',
+    desc: 'Desde la gestión del inmueble hasta el staging, la reforma y la limpieza, todo en un solo equipo.',
   },
   {
-    title: 'Soluciones a medida',
-    desc: 'Cada cliente es distinto; adaptamos la estrategia a tu caso.',
+    title: 'Trato personalizado',
+    desc: 'Cada propiedad y cada cliente reciben una atención adaptada a sus necesidades.',
   },
   {
-    title: 'Inmobiliaria y financiera, juntas',
-    desc: 'Unimos ambos mundos para ofrecerte más opciones y mejores resultados.',
+    title: 'Resultados visibles',
+    desc: 'Preparamos cada espacio para que transmita valor y genere confianza desde el primer momento.',
   },
 ] as const

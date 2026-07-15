@@ -4,11 +4,11 @@ export function HeroCarousel() {
   return (
     <div className="absolute inset-0 z-0">
       <div
-        className="absolute inset-0 bg-gradient-to-br from-brand-black via-stone-900 to-brand-gold-dark/40"
+        className="absolute inset-0 bg-gradient-to-br from-stone-100 via-white to-stone-200/80"
         aria-hidden="true"
       />
       <div
-        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(196,160,53,0.12),transparent_65%)]"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(51,51,51,0.04),transparent_60%)]"
         aria-hidden="true"
       />
     </div>

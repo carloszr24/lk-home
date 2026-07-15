@@ -6,5 +6,14 @@ type Props = {
 }
 
 export function BrandName({ className }: Props) {
-  return <span className={cn('font-brand', className)}>{SITE_NAME}</span>
+  const [prefix, suffix] = SITE_NAME.includes(' ')
+    ? SITE_NAME.split(' ', 2)
+    : [SITE_NAME.slice(0, 2).toUpperCase(), SITE_NAME.slice(2).toLowerCase() || 'home']
+
+  return (
+    <span className={cn('inline-flex items-baseline gap-1', className)}>
+      <span className="font-display font-semibold uppercase tracking-wide">{prefix}</span>
+      {suffix && <span className="font-script text-[1.15em] font-normal lowercase">{suffix}</span>}
+    </span>
+  )
 }

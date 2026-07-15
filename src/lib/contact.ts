@@ -7,29 +7,29 @@ export const AGENT = {
   fullName: SITE_FULL_NAME,
   title: SITE_TAGLINE,
   tagline:
-    'Compra y venta de viviendas, hipotecas, asesoría personalizada y créditos empresariales y personales.',
+    'Gestión inmobiliaria, home staging, reformas integrales y limpieza profesional en Deba, Gipuzkoa.',
 } as const
 
 export const LEGAL = {
-  ownerName: SITE_NAME,
+  ownerName: SITE_FULL_NAME,
   legalForm: '',
   taxId: '',
-  address: '',
+  address: 'Lersundi Kalea, 31, 20820 Deba, Gipuzkoa',
 } as const
 
 export const OFFICES = {
   primary: {
     label: 'Oficina',
-    line1: '',
-    line2: '',
-    full: '',
-    mapsQuery: '',
+    line1: 'Lersundi Kalea, 31',
+    line2: '20820 Deba, Gipuzkoa',
+    full: 'Lersundi Kalea, 31, 20820 Deba, Gipuzkoa',
+    mapsQuery: 'Lersundi+Kalea+31,+20820+Deba,+Gipuzkoa',
   },
 } as const
 
 export const OPENING_HOURS = [
   { day: 'Lunes', hours: '10:00–14:00' },
-  { day: 'Martes', hours: '10:00–14:00' },
+  { day: 'Martes', hours: '10:00–14:00, 17:00–19:30' },
   { day: 'Miércoles', hours: '10:00–14:00' },
   { day: 'Jueves', hours: '10:00–14:00' },
   { day: 'Viernes', hours: '10:00–14:00' },
@@ -38,9 +38,9 @@ export const OPENING_HOURS = [
 ] as const
 
 const contactEmail = (process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? CONTACT_EMAIL).trim()
-const phoneDisplay = (process.env.NEXT_PUBLIC_CONTACT_PHONE ?? '').trim()
-const phoneE164 = (process.env.NEXT_PUBLIC_CONTACT_PHONE_E164 ?? '').trim()
-const phoneWa = (process.env.NEXT_PUBLIC_CONTACT_WHATSAPP ?? phoneE164.replace(/^\+/, '')).trim()
+const phoneDisplay = (process.env.NEXT_PUBLIC_CONTACT_PHONE ?? '688 76 32 89').trim()
+const phoneE164 = (process.env.NEXT_PUBLIC_CONTACT_PHONE_E164 ?? '+34688763289').trim()
+const phoneWa = (process.env.NEXT_PUBLIC_CONTACT_WHATSAPP ?? '34688763289').trim()
 
 export const CONTACT = {
   address: OFFICES.primary,

@@ -1,16 +1,16 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { GOOGLE_RATING, PROPERTIES_SOLD_LABEL, REVIEWS } from '@/data/reviews'
+import { GOOGLE_RATING, GOOGLE_REVIEW_COUNT, PROPERTIES_SOLD_COUNT, PROPERTIES_SOLD_LABEL, REVIEWS } from '@/data/reviews'
 
 function StarRow() {
   return (
-    <div className="flex items-center gap-1.5" aria-label="Valoracion excelente">
+    <div className="flex items-center gap-1.5" aria-label="Valoración excelente">
       {Array.from({ length: 5 }).map((_, idx) => (
         <svg
           key={idx}
           viewBox="0 0 24 24"
-          className={`h-5 w-5 ${idx === 4 ? 'text-gold/80' : 'text-gold'}`}
+          className={`h-5 w-5 ${idx === 4 ? 'text-brand-charcoal/70' : 'text-brand-charcoal'}`}
           fill="currentColor"
           aria-hidden="true"
         >
@@ -22,7 +22,7 @@ function StarRow() {
 }
 
 export function ReviewsCarousel() {
-  if (REVIEWS.length === 0) return null
+  if (GOOGLE_REVIEW_COUNT === 0 && REVIEWS.length === 0) return null
   return <ReviewsCarouselContent />
 }
 
@@ -40,6 +40,7 @@ function ReviewsCarouselContent() {
   const isDraggingRef = useRef(false)
   const resumeTimerRef = useRef<number | null>(null)
   const loopedReviews = useMemo(() => [...REVIEWS, ...REVIEWS], [])
+  const hasReviews = REVIEWS.length > 0
 
   useEffect(() => {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -65,12 +66,12 @@ function ReviewsCarouselContent() {
   }, [])
 
   useEffect(() => {
-    if (!isVisible || !trackRef.current) return
+    if (!hasReviews || !isVisible || !trackRef.current) return
     loopWidthRef.current = trackRef.current.scrollWidth / 2
-  }, [isVisible, loopedReviews])
+  }, [hasReviews, isVisible, loopedReviews])
 
   useEffect(() => {
-    if (!isVisible || reducedMotion || !trackRef.current) return
+    if (!hasReviews || !isVisible || reducedMotion || !trackRef.current) return
 
     const speedPxPerSecond = 22
     const tick = (timestamp: number) => {
@@ -95,7 +96,7 @@ function ReviewsCarouselContent() {
       rafRef.current = null
       lastFrameRef.current = null
     }
-  }, [isVisible, reducedMotion, isPaused])
+  }, [hasReviews, isVisible, reducedMotion, isPaused])
 
   useEffect(() => {
     return () => {
@@ -134,24 +135,36 @@ function ReviewsCarouselContent() {
     resumeAutoplay()
   }
 
+  const stats = [
+    GOOGLE_REVIEW_COUNT > 0
+      ? { value: GOOGLE_REVIEW_COUNT.toLocaleString('es-ES'), label: 'opiniones en Google' }
+      : null,
+    GOOGLE_RATING
+      ? { value: GOOGLE_RATING, label: 'en Google' }
+      : null,
+    PROPERTIES_SOLD_COUNT > 0
+      ? { value: `+${PROPERTIES_SOLD_COUNT}`, label: 'propiedades vendidas' }
+      : null,
+  ].filter(Boolean) as { value: string; label: string }[]
+
   return (
-    <section ref={rootRef} className="bg-stone-50 py-20 md:py-24 px-6 md:px-10 overflow-hidden">
+    <section ref={rootRef} className="bg-white py-20 md:py-24 px-6 md:px-10 overflow-hidden border-y border-stone-200/80">
       <div className="max-w-7xl mx-auto">
         <div
           className={`mb-12 md:mb-14 transition-all duration-700 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
-          <div className="mx-auto grid max-w-5xl grid-cols-1 gap-3 rounded-2xl border border-stone-200 bg-white p-3 shadow-sm sm:grid-cols-3 sm:gap-0 sm:p-2">
-            {[
-              { value: 'Más de 100', label: 'propiedades vendidas' },
-              { value: '< 60 días', label: 'tiempo medio de cierre' },
-              { value: GOOGLE_RATING, label: 'en Google' },
-            ].map((stat, idx) => (
+          <div
+            className={`mx-auto grid max-w-4xl grid-cols-1 gap-3 rounded-2xl border border-stone-200 bg-stone-50 p-3 sm:gap-0 sm:p-2 ${
+              stats.length === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'
+            }`}
+          >
+            {stats.map((stat, idx) => (
               <div
                 key={stat.label}
                 className={`flex flex-col items-center justify-center rounded-xl px-6 py-5 text-center ${
-                  idx !== 2 ? 'sm:border-r sm:border-stone-200' : ''
+                  idx !== stats.length - 1 ? 'sm:border-r sm:border-stone-200' : ''
                 }`}
               >
                 <p className="font-display text-3xl font-bold tracking-tight text-stone-900 md:text-4xl">{stat.value}</p>
@@ -166,40 +179,44 @@ function ReviewsCarouselContent() {
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
-          <p className="text-gold text-xs tracking-[0.3em] uppercase mb-3">Opiniones</p>
-          <h2 className="section-title mb-5">Nuestra prioridad: el cliente</h2>
+          <p className="text-stone-500 text-xs tracking-[0.3em] uppercase mb-3">Opiniones</p>
+          <h2 className="section-title mb-5">La confianza de nuestros clientes</h2>
           <div className="flex flex-col items-center gap-2 text-stone-700">
             <StarRow />
-            <p className="text-base md:text-lg font-medium">{PROPERTIES_SOLD_LABEL} con un trato cercano y profesional</p>
+            <p className="text-base md:text-lg font-medium">
+              {PROPERTIES_SOLD_LABEL} con un trato cercano y profesional
+            </p>
           </div>
         </div>
 
-        <div className={`transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div
-            className="overflow-hidden select-none touch-pan-y"
-            aria-label="Carrusel de reseñas de clientes"
-            onPointerDown={handlePointerDown}
-            onPointerMove={handlePointerMove}
-            onPointerUp={handlePointerUp}
-            onPointerCancel={handlePointerUp}
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => {
-              if (!isDraggingRef.current) resumeAutoplay()
-            }}
-          >
-            <div ref={trackRef} className="flex items-stretch gap-4 md:gap-6 will-change-transform">
-              {loopedReviews.map((review, idx) => (
-                <div key={`${review.id}-${idx}`} className="shrink-0 w-[86vw] sm:w-[68vw] md:w-[44vw] lg:w-[31vw]">
-                  <article className="card-hover h-full min-h-56 bg-white border border-stone-200 p-6 md:p-7 rounded-lg shadow-sm hover:shadow-lg">
-                    <StarRow />
-                    <p className="text-stone-600 text-sm md:text-base leading-relaxed mt-4">"{review.text}"</p>
-                    <p className="mt-6 text-stone-900 font-semibold">{review.name}</p>
-                  </article>
-                </div>
-              ))}
+        {hasReviews && (
+          <div className={`transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <div
+              className="overflow-hidden select-none touch-pan-y"
+              aria-label="Carrusel de reseñas de clientes"
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
+              onPointerCancel={handlePointerUp}
+              onMouseEnter={() => setIsPaused(true)}
+              onMouseLeave={() => {
+                if (!isDraggingRef.current) resumeAutoplay()
+              }}
+            >
+              <div ref={trackRef} className="flex items-stretch gap-4 md:gap-6 will-change-transform">
+                {loopedReviews.map((review, idx) => (
+                  <div key={`${review.id}-${idx}`} className="shrink-0 w-[86vw] sm:w-[68vw] md:w-[44vw] lg:w-[31vw]">
+                    <article className="card-hover h-full min-h-56 bg-white border border-stone-200 p-6 md:p-7 rounded-lg shadow-sm hover:shadow-lg">
+                      <StarRow />
+                      <p className="text-stone-600 text-sm md:text-base leading-relaxed mt-4">&ldquo;{review.text}&rdquo;</p>
+                      <p className="mt-6 text-stone-900 font-semibold">{review.name}</p>
+                    </article>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   )
