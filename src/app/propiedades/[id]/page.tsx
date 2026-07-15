@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils'
 import { PropertyImageViewer } from '@/components/properties/PropertyImageViewer'
 import { HEADER_OFFSET_CLASS } from '@/lib/logo'
 import { getExtraLabel, formatPriceLocalized } from '@/i18n/utils'
+import { localizeProperty } from '@/i18n/property-translations'
 import { getServerI18n, getSiteMetadataVars } from '@/i18n/server'
 import { interpolate } from '@/i18n/interpolate'
 
@@ -30,16 +31,17 @@ export async function generateMetadata({
   params: { id: string }
 }): Promise<Metadata> {
   const property = await getPropertyById(params.id)
-  const { dict } = await getServerI18n()
+  const { dict, locale } = await getServerI18n()
   const vars = getSiteMetadataVars(dict)
   if (!property) {
     return {
       title: interpolate(dict.metadata.notFound.title, vars),
     }
   }
+  const localized = localizeProperty(property, locale)
   return {
-    title: `${property.title} | ${vars.siteName}`,
-    description: property.description.slice(0, 160),
+    title: `${localized.title} | ${vars.siteName}`,
+    description: localized.description.slice(0, 160),
   }
 }
 
@@ -52,33 +54,34 @@ export default async function PropertyDetailPage({
   if (!property) notFound()
 
   const { dict, locale } = await getServerI18n()
+  const propertyView = localizeProperty(property, locale)
   const pd = dict.propertyDetail
   const labels = dict.labels
 
-  const images = parseImages(property.images)
-  const floorLabel = property.floor?.trim()
+  const images = parseImages(propertyView.images)
+  const floorLabel = propertyView.floor?.trim()
   const hasElevator = propertyHasExtra(property, 'elevator')
   const showFloorCard = Boolean(floorLabel || hasElevator)
-  const whatsappText = interpolate(pd.whatsappMessage, { title: property.title })
+  const whatsappText = interpolate(pd.whatsappMessage, { title: propertyView.title })
   const whatsappUrl = `${whatsappHref}?text=${encodeURIComponent(whatsappText)}`
   const heatingDetail =
-    property.heating && !['sí', 'si', 's'].includes(property.heating.trim().toLowerCase())
-      ? property.heating
+    propertyView.heating && !['sí', 'si', 's', 'bai', 'b'].includes(propertyView.heating.trim().toLowerCase())
+      ? propertyView.heating
       : null
   const extrasSummary = getPropertyExtras(property).map((extraId) => getExtraLabel(dict, extraId)).join(', ')
   const featureItems = [
-    { label: pd.fields.propertyType, value: labels.type[property.type] || property.type },
-    { label: pd.fields.availability, value: property.availability },
-    { label: pd.fields.hotWater, value: property.hotWater },
+    { label: pd.fields.propertyType, value: labels.type[propertyView.type] || propertyView.type },
+    { label: pd.fields.availability, value: propertyView.availability },
+    { label: pd.fields.hotWater, value: propertyView.hotWater },
     { label: pd.fields.heatingType, value: heatingDetail },
-    { label: pd.fields.condition, value: property.condition },
-    { label: pd.fields.age, value: property.propertyAge },
+    { label: pd.fields.condition, value: propertyView.condition },
+    { label: pd.fields.age, value: propertyView.propertyAge },
     { label: pd.fields.extras, value: extrasSummary || null },
     {
       label: pd.fields.energy,
       value:
-        property.energyRating || property.energyValue != null
-          ? `${property.energyRating ?? '-'}${property.energyValue != null ? interpolate(dict.common.co2Unit, { value: property.energyValue }) : ''}`
+        propertyView.energyRating || property.energyValue != null
+          ? `${propertyView.energyRating ?? '-'}${property.energyValue != null ? interpolate(dict.common.co2Unit, { value: property.energyValue }) : ''}`
           : null,
     },
     {
@@ -100,14 +103,14 @@ export default async function PropertyDetailPage({
           <span>/</span>
           <Link href="/propiedades" className="hover:text-stone-600 transition-colors">{dict.nav.properties}</Link>
           <span>/</span>
-          <span className="text-stone-600 truncate max-w-[200px]">{property.title}</span>
+          <span className="text-stone-600 truncate max-w-[200px]">{propertyView.title}</span>
         </nav>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
           <div className="lg:col-span-3">
-            <PropertyImageViewer images={images} title={property.title} />
+            <PropertyImageViewer images={images} title={propertyView.title} />
 
             <div className="lg:hidden bg-stone-900 p-6 mb-6">
               <p className="text-xs text-stone-400 tracking-widest uppercase mb-1">{dict.common.price}</p>
@@ -116,7 +119,7 @@ export default async function PropertyDetailPage({
 
             <div className="mt-8">
               <h2 className="font-display text-2xl font-light text-stone-900 mb-4">{dict.common.description}</h2>
-              <p className="text-stone-600 leading-relaxed text-sm">{property.description}</p>
+              <p className="text-stone-600 leading-relaxed text-sm">{propertyView.description}</p>
             </div>
 
             {featureItems.length > 0 && (
@@ -139,24 +142,24 @@ export default async function PropertyDetailPage({
               <div className="flex items-center gap-2 mb-4">
                 <span className={cn(
                   'text-xs font-medium px-2.5 py-1 border',
-                  statusColors[property.status] || statusColors.disponible
+                  statusColors[propertyView.status] || statusColors.disponible
                 )}>
-                  {labels.status[property.status] || property.status}
+                  {labels.status[propertyView.status] || propertyView.status}
                 </span>
                 <span className="text-xs bg-stone-100 text-stone-600 px-2.5 py-1">
-                  {labels.type[property.type] || property.type}
+                  {labels.type[propertyView.type] || propertyView.type}
                 </span>
                 <span className="text-xs bg-stone-100 text-stone-600 px-2.5 py-1">
-                  {labels.operation[property.operation || 'venta'] || property.operation || labels.operation.venta}
+                  {labels.operation[propertyView.operation || 'venta'] || propertyView.operation || labels.operation.venta}
                 </span>
               </div>
 
               <h1 className="font-display text-3xl font-light text-stone-900 leading-tight mb-2">
-                {property.title}
+                {propertyView.title}
               </h1>
 
               <p className="text-stone-500 text-sm mb-6">
-                <span className="mr-1 text-stone-300">—</span> {property.location}
+                <span className="mr-1 text-stone-300">—</span> {propertyView.location}
               </p>
 
               <div className="hidden lg:block bg-stone-900 p-6 mb-6">

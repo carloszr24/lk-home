@@ -1,5 +1,8 @@
 import type { Locale } from './config'
 import type { Dictionary } from './types'
+import { localizeProperty, localizeProperties } from './property-translations'
+
+export { localizeProperty, localizeProperties }
 
 export function getOpeningHours(dict: Dictionary) {
   const { days } = dict

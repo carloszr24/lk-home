@@ -7,6 +7,7 @@ import { parseImages, STATUS_BADGE_CLASSES } from '@/lib/utils'
 import { cn } from '@/lib/utils'
 import { useI18n } from '@/i18n/client'
 import { interpolate } from '@/i18n/interpolate'
+import { localizeProperty } from '@/i18n/property-translations'
 
 interface PropertyCardProps {
   property: Property
@@ -17,14 +18,14 @@ interface PropertyCardProps {
 const statusColors = STATUS_BADGE_CLASSES
 
 export function PropertyCard({ property, variant = 'default', priority = false }: PropertyCardProps) {
-  const { dict, formatPrice } = useI18n()
-  const images = parseImages(property.images)
+  const { dict, formatPrice, locale } = useI18n()
+  const localized = localizeProperty(property, locale)
+  const images = parseImages(localized.images)
   const firstImage = images[0] || 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800'
   const isFeaturedMinimal = variant === 'featuredMinimal'
 
-  const statusLabel = dict.labels.status[property.status] || property.status
-  const typeLabel = dict.labels.type[property.type] || property.type
-  const operationLabel = dict.labels.operation[property.operation || 'venta'] || property.operation || dict.labels.operation.venta
+  const typeLabel = dict.labels.type[localized.type] || localized.type
+  const operationLabel = dict.labels.operation[localized.operation || 'venta'] || localized.operation || dict.labels.operation.venta
 
   return (
     <Link href={`/propiedades/${property.id}`} className="group block">
@@ -32,7 +33,7 @@ export function PropertyCard({ property, variant = 'default', priority = false }
         <div className={cn('relative overflow-hidden bg-stone-100', isFeaturedMinimal ? 'aspect-[3/4]' : 'aspect-[16/10]')}>
           <Image
             src={firstImage}
-            alt={property.title}
+            alt={localized.title}
             fill
             priority={priority}
             quality={75}
@@ -44,10 +45,10 @@ export function PropertyCard({ property, variant = 'default', priority = false }
               <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent opacity-100 transition-opacity duration-300" />
               <span className={cn(
                 'absolute bottom-3 left-3 z-10 text-xs font-medium px-2.5 py-1 border',
-                property.status !== 'vendido' && 'backdrop-blur-sm',
-                statusColors[property.status] || statusColors.disponible
+                localized.status !== 'vendido' && 'backdrop-blur-sm',
+                statusColors[localized.status] || statusColors.disponible
               )}>
-                {statusLabel}
+                {dict.labels.status[localized.status] || localized.status}
               </span>
               {images.length > 1 && (
                 <span className="absolute top-3 right-3 z-10 bg-black/50 text-white text-xs px-2 py-1 backdrop-blur-sm">
@@ -75,14 +76,14 @@ export function PropertyCard({ property, variant = 'default', priority = false }
               'font-medium text-stone-900 leading-snug line-clamp-2 group-hover:text-brand-charcoal transition-colors',
               isFeaturedMinimal ? 'text-base' : 'text-lg'
             )}>
-              {property.title}
+              {localized.title}
             </h3>
           </div>
 
           {!isFeaturedMinimal && (
             <>
               <p className="text-sm text-stone-500 mb-5">
-                {property.location}
+                {localized.location}
               </p>
 
               {(property.sqMeters || property.bedrooms || property.bathrooms) && (

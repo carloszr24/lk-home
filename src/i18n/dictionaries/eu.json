@@ -211,8 +211,7 @@
     ],
     "hero": {
       "eyebrow": "Zerbitzuak",
-      "subtitle": "Gipuzkoako higiezinen agentzia",
-      "googleReviews": "{{rating}} Google-n · {{count}} iritzi"
+      "subtitle": "Gipuzkoako higiezinen agentzia"
     },
     "sectionTitle": "Gure zerbitzuak",
     "whyTitle": "Zergatik aukeratu gaitzazu",
@@ -221,8 +220,6 @@
     "scrollHint": "Jarraitu behera"
   },
   "reviews": {
-    "googleReviews": "iritzi Google-n",
-    "onGoogle": "Google-n",
     "propertiesSold": "higiezin saldu",
     "eyebrow": "Iritziak",
     "title": "Gure bezeroen konfiantza",

@@ -1,14 +1,24 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { LOCALE_LABELS, type Locale } from '@/i18n/config'
 import { useI18n } from '@/i18n/client'
 import { cn } from '@/lib/utils'
 
+const FLAG_SIZE = 'h-6 w-6'
+
 function FlagSpain({ className }: { className?: string }) {
   return (
-    <span className={cn('inline-flex h-8 w-8 items-center justify-center rounded-full bg-stone-100 text-lg shadow-sm ring-1 ring-stone-200/80', className)} aria-hidden>
+    <span
+      className={cn(
+        'inline-flex items-center justify-center rounded-full bg-stone-100 text-sm shadow-sm ring-1 ring-stone-200/80',
+        FLAG_SIZE,
+        className
+      )}
+      aria-hidden
+    >
       🇪🇸
     </span>
   )
@@ -18,16 +28,13 @@ function FlagBasque({ className }: { className?: string }) {
   return (
     <span
       className={cn(
-        'inline-flex h-8 w-8 overflow-hidden rounded-full shadow-sm ring-1 ring-stone-200/80',
+        'relative inline-flex overflow-hidden rounded-full shadow-sm ring-1 ring-stone-200/80',
+        FLAG_SIZE,
         className
       )}
       aria-hidden
     >
-      <svg viewBox="0 0 32 32" className="h-full w-full">
-        <rect width="32" height="32" fill="#D52B1E" />
-        <path d="M0 0 L32 32 M32 0 L0 32" stroke="#009B48" strokeWidth="6" />
-        <path d="M0 0 L32 32 M32 0 L0 32" stroke="#fff" strokeWidth="2.5" />
-      </svg>
+      <Image src="/images/euskadi.png" alt="" fill className="object-cover" sizes="24px" />
     </span>
   )
 }
@@ -132,7 +139,7 @@ export function LanguageSwitcher() {
                   l === locale && 'bg-stone-50 font-medium text-brand-charcoal'
                 )}
               >
-                {l === 'es' ? <FlagSpain className="h-7 w-7 text-base" /> : <FlagBasque className="h-7 w-7" />}
+                {l === 'es' ? <FlagSpain /> : <FlagBasque />}
                 <span>{dict.language[l]}</span>
               </button>
             </li>

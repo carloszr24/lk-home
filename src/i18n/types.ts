@@ -139,7 +139,6 @@ export type Dictionary = {
     hero: {
       eyebrow: string
       subtitle: string
-      googleReviews: string
     }
     sectionTitle: string
     whyTitle: string
@@ -148,8 +147,6 @@ export type Dictionary = {
     scrollHint: string
   }
   reviews: {
-    googleReviews: string
-    onGoogle: string
     propertiesSold: string
     eyebrow: string
     title: string

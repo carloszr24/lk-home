@@ -72,10 +72,4 @@ export const REVIEWS: Review[] = [
   },
 ]
 
-export const GOOGLE_REVIEW_COUNT: number = 4323
-
-export const GOOGLE_RATING = '4,3 / 5'
-
-export const PROPERTIES_SOLD_COUNT = 150
-
-export const PROPERTIES_SOLD_LABEL = 'Más de 150 propiedades vendidas'
+export const PROPERTIES_SOLD_COUNT: number = 150

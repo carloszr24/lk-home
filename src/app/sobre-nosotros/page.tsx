@@ -4,7 +4,6 @@ import { AGENT, CONTACT, phoneHref } from '@/lib/contact'
 import { ScrollHint } from '@/components/home/ScrollHint'
 import { HEADER_OFFSET_CLASS } from '@/lib/logo'
 import { SiteLogo } from '@/components/SiteLogo'
-import { GOOGLE_RATING, GOOGLE_REVIEW_COUNT } from '@/data/reviews'
 import { getServerI18n, getSiteMetadataVars } from '@/i18n/server'
 import { interpolate } from '@/i18n/interpolate'
 
@@ -63,9 +62,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function SobreNosotrosPage() {
-  const { dict, locale } = await getServerI18n()
+  const { dict } = await getServerI18n()
   const s = dict.services
-  const localeTag = locale === 'eu' ? 'eu-ES' : 'es-ES'
 
   const services = s.items.map((service, index) => ({
     ...service,
@@ -85,14 +83,6 @@ export default async function SobreNosotrosPage() {
             <p className="mt-3 text-sm md:text-base tracking-[0.15em] uppercase text-stone-500">
               {s.hero.subtitle}
             </p>
-            {GOOGLE_REVIEW_COUNT > 0 && (
-              <p className="mt-6 text-stone-600">
-                {interpolate(s.hero.googleReviews, {
-                  rating: GOOGLE_RATING,
-                  count: GOOGLE_REVIEW_COUNT.toLocaleString(localeTag),
-                })}
-              </p>
-            )}
           </div>
         </div>
         <ScrollHint className="pb-8 text-stone-400" label={s.scrollHint} />
