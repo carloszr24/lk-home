@@ -71,5 +71,3 @@ export const REVIEWS: Review[] = [
     text: 'Zerbitzu eta akonpainamendu ona momentu guztietan. Oso gomendagarria bere profesionaltasunagatik eta eskuzabaltasunagatik.',
   },
 ]
-
-export const PROPERTIES_SOLD_COUNT: number = 150

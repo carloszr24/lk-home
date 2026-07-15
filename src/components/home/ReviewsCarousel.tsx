@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { PROPERTIES_SOLD_COUNT, REVIEWS } from '@/data/reviews'
+import { REVIEWS } from '@/data/reviews'
 import { useI18n } from '@/i18n/client'
 import { interpolate } from '@/i18n/interpolate'
 
@@ -24,7 +24,7 @@ function StarRow({ ariaLabel }: { ariaLabel: string }) {
 }
 
 export function ReviewsCarousel() {
-  if (REVIEWS.length === 0 && PROPERTIES_SOLD_COUNT === 0) return null
+  if (REVIEWS.length === 0) return null
   return <ReviewsCarouselContent />
 }
 
@@ -140,35 +140,9 @@ function ReviewsCarouselContent() {
     resumeAutoplay()
   }
 
-  const stats = [
-    PROPERTIES_SOLD_COUNT > 0
-      ? { value: `+${PROPERTIES_SOLD_COUNT}`, label: r.propertiesSold }
-      : null,
-  ].filter(Boolean) as { value: string; label: string }[]
-
   return (
     <section ref={rootRef} className="bg-white py-20 md:py-24 px-6 md:px-10 overflow-hidden border-y border-stone-200/80">
       <div className="max-w-7xl mx-auto">
-        {stats.length > 0 && (
-          <div
-            className={`mb-12 md:mb-14 transition-all duration-700 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-          >
-            <div className="mx-auto grid max-w-md grid-cols-1 gap-3 rounded-2xl border border-stone-200 bg-stone-50 p-3 sm:p-2">
-              {stats.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="flex flex-col items-center justify-center rounded-xl px-6 py-5 text-center"
-                >
-                  <p className="font-display text-3xl font-bold tracking-tight text-stone-900 md:text-4xl">{stat.value}</p>
-                  <p className="mt-1.5 text-[11px] uppercase tracking-[0.14em] text-stone-500">{stat.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
         <div
           className={`text-center max-w-3xl mx-auto mb-10 md:mb-12 transition-all duration-700 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'

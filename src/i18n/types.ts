@@ -147,7 +147,6 @@ export type Dictionary = {
     scrollHint: string
   }
   reviews: {
-    propertiesSold: string
     eyebrow: string
     title: string
     subtitle: string
