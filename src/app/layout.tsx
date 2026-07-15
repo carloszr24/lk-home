@@ -1,17 +1,17 @@
 import type { Metadata } from 'next'
-import { Cormorant_Garamond } from 'next/font/google'
+import { DM_Sans } from 'next/font/google'
 import './globals.css'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { SITE_NAME, SITE_TAGLINE } from '@/lib/brand'
 
-const serif = Cormorant_Garamond({
+const sans = DM_Sans({
   subsets: ['latin'],
   variable: '--font-body',
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '500', '700'],
 })
 
-const display = Cormorant_Garamond({
+const display = DM_Sans({
   subsets: ['latin'],
   variable: '--font-display',
   weight: ['500', '600', '700'],
@@ -31,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es" className={`${serif.variable} ${display.variable}`}>
+    <html lang="es" className={`${sans.variable} ${display.variable}`}>
       <body className="bg-white text-stone-900 antialiased">
         <Navbar />
         <main className="min-h-screen">{children}</main>

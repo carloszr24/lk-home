@@ -9,10 +9,10 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-body)', 'Georgia', 'serif'],
-        display: ['var(--font-display)', 'var(--font-body)', 'Georgia', 'serif'],
-        logo: ['var(--font-display)', 'Georgia', 'serif'],
-        brand: ['var(--font-display)', 'Georgia', 'serif'],
+        sans: ['var(--font-body)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', 'var(--font-body)', 'system-ui', 'sans-serif'],
+        logo: ['var(--font-display)', '"Times New Roman"', 'Georgia', 'serif'],
+        brand: ['var(--font-display)', '"Times New Roman"', 'Georgia', 'serif'],
       },
       colors: {
         stone: {
