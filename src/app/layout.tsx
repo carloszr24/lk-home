@@ -5,7 +5,7 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { LanguageSwitcher } from '@/components/i18n/LanguageSwitcher'
 import { I18nProvider } from '@/i18n/client'
-import { getLocale, getServerI18n, getSiteMetadataVars, t } from '@/i18n/server'
+import { getLocale, getServerI18n, getSiteMetadataVars } from '@/i18n/server'
 import { interpolate } from '@/i18n/interpolate'
 
 const montserrat = Montserrat({

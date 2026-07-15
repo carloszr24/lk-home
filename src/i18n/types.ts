@@ -84,6 +84,7 @@ export type Dictionary = {
     web: string
     energyUnit: string
     co2Unit: string
+    heroImageAlt: string
   }
   nav: {
     properties: string

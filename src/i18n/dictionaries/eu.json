@@ -99,7 +99,8 @@
     "spain": "Espainia",
     "web": "Webgunea",
     "energyUnit": "kg CO₂/m²/urte",
-    "co2Unit": " · {{value}} kg CO₂/m²/urte"
+    "co2Unit": " · {{value}} kg CO₂/m²/urte",
+    "heroImageAlt": "Deba, Gipuzkoa"
   },
   "nav": {
     "properties": "Higiezinak",

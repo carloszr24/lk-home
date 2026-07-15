@@ -1,15 +1,18 @@
 'use client'
 
 import Image from 'next/image'
+import { useI18n } from '@/i18n/client'
 
 const HERO_IMAGE = '/images/deba.jpeg'
 
 export function HeroCarousel() {
+  const { dict } = useI18n()
+
   return (
     <div className="absolute inset-0 z-0">
       <Image
         src={HERO_IMAGE}
-        alt="Vista de Deba, Gipuzkoa"
+        alt={dict.common.heroImageAlt}
         fill
         priority
         quality={80}

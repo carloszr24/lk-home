@@ -99,7 +99,8 @@
     "spain": "España",
     "web": "Web",
     "energyUnit": "kg CO₂/m²/año",
-    "co2Unit": " · {{value}} kg CO₂/m²/año"
+    "co2Unit": " · {{value}} kg CO₂/m²/año",
+    "heroImageAlt": "Vista de Deba, Gipuzkoa"
   },
   "nav": {
     "properties": "Propiedades",
