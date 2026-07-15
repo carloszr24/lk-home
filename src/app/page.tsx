@@ -69,7 +69,7 @@ export default async function HomePage() {
             Tu hogar y tu financiación,
             <span className="hidden md:inline"> </span>
             <br className="md:hidden" aria-hidden="true" />
-            <span className="text-gold [text-shadow:0_2px_10px_rgba(0,0,0,0.5)]">está en buenas manos</span>
+            <span className="text-gold [text-shadow:0_2px_10px_rgba(0,0,0,0.5)]">en buenas manos</span>
           </h1>
           <p className="text-stone-200 text-base sm:text-lg md:text-xl font-normal max-w-[min(100%,22rem)] sm:max-w-2xl mx-auto mb-8 md:mb-9 leading-relaxed text-pretty animate-fade-up" style={{ animationDelay: '0.1s', opacity: 0, animationFillMode: 'forwards' }}>
             {AGENT.tagline}
