@@ -8,6 +8,8 @@ import { useI18n } from '@/i18n/client'
 import { cn } from '@/lib/utils'
 
 const FLAG_SIZE = 'h-6 w-6'
+const FLAG_BUTTON =
+  'inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition-colors hover:bg-stone-50'
 
 const FLAG_SRC: Record<Locale, string> = {
   es: '/images/españa.png',
@@ -18,13 +20,13 @@ function FlagIcon({ locale, className }: { locale: Locale; className?: string })
   return (
     <span
       className={cn(
-        'relative inline-flex overflow-hidden rounded-full shadow-sm ring-1 ring-stone-200/80',
+        'relative block overflow-hidden rounded-full shadow-sm ring-1 ring-stone-200/80',
         FLAG_SIZE,
         className
       )}
       aria-hidden
     >
-      <Image src={FLAG_SRC[locale]} alt="" fill className="object-cover" sizes="24px" />
+      <Image src={FLAG_SRC[locale]} alt="" fill className="object-cover object-center" sizes="24px" />
     </span>
   )
 }
@@ -62,21 +64,23 @@ export function LanguageSwitcher() {
       ref={rootRef}
       className="fixed right-3 md:right-5 top-[4.75rem] md:top-[5.75rem] z-40 flex flex-col items-end gap-1"
     >
-      <div className="flex items-center gap-1 rounded-full border border-stone-200/90 bg-white/95 p-1 shadow-md backdrop-blur-sm">
+      <div className="flex items-center gap-0.5 rounded-full border border-stone-200/90 bg-white/95 p-1 shadow-md backdrop-blur-sm">
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="inline-flex items-center gap-1 rounded-full px-1 py-0.5 transition-colors hover:bg-stone-50"
+          className="inline-flex h-7 shrink-0 items-center gap-0.5 rounded-full pl-0.5 pr-1 transition-colors hover:bg-stone-50"
           aria-label={dict.language.select}
           aria-expanded={open}
           aria-haspopup="listbox"
         >
-          <FlagIcon locale={locale} />
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center">
+            <FlagIcon locale={locale} />
+          </span>
           <svg
             viewBox="0 0 20 20"
             fill="currentColor"
             aria-hidden
-            className={cn('h-3.5 w-3.5 text-stone-500 transition-transform', open && 'rotate-180')}
+            className={cn('h-3.5 w-3.5 shrink-0 text-stone-500 transition-transform', open && 'rotate-180')}
           >
             <path
               fillRule="evenodd"
@@ -92,7 +96,7 @@ export function LanguageSwitcher() {
               key={l}
               type="button"
               onClick={() => setLocale(l)}
-              className="rounded-full p-0.5 transition-opacity hover:opacity-80"
+              className={cn(FLAG_BUTTON, 'hover:opacity-90')}
               aria-label={LOCALE_LABELS[l]}
               title={LOCALE_LABELS[l]}
             >
