@@ -5,16 +5,16 @@ import Link from 'next/link'
 import {
   CONTACT,
   OFFICES,
-  OPENING_HOURS,
   emailHref,
   hasEmail,
   hasPhone,
   mapsHref,
-  phoneHref,
   whatsappDisplay,
   whatsappHref,
+  phoneHref,
 } from '@/lib/contact'
 import { HEADER_OFFSET_CLASS } from '@/lib/logo'
+import { useI18n } from '@/i18n/client'
 
 function MapPinIcon() {
   return (
@@ -43,6 +43,9 @@ function MailIcon() {
 }
 
 export default function ContactoPage() {
+  const { dict, locale, openingHours } = useI18n()
+  const c = dict.contact
+
   const [form, setForm] = useState({ nombre: '', email: '', telefono: '', mensaje: '' })
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -63,19 +66,20 @@ export default function ContactoPage() {
         body: JSON.stringify({
           fullName: form.nombre,
           email: form.email,
-          phone: form.telefono || 'No facilitado',
+          phone: form.telefono || dict.common.notProvided,
           notes: form.mensaje,
           source: 'web_contacto',
           intent: 'comprar',
           priority: 'media',
+          locale,
         }),
       })
       if (!res.ok) {
-        throw new Error('No se pudo enviar el mensaje')
+        throw new Error(c.errorSend)
       }
       setSent(true)
     } catch {
-      setError('No se pudo enviar el formulario. Prueba de nuevo en unos minutos.')
+      setError(c.errorSubmit)
     } finally {
       setLoading(false)
     }
@@ -85,10 +89,10 @@ export default function ContactoPage() {
     <div className={HEADER_OFFSET_CLASS}>
       <div className="bg-brand-black text-white py-20 px-6 md:px-10">
         <div className="max-w-7xl mx-auto">
-          <p className="text-stone-400 text-xs tracking-[0.3em] uppercase mb-4">Contacto</p>
-          <h1 className="font-display text-5xl md:text-6xl font-light">Estamos aquí para ayudarte</h1>
+          <p className="text-stone-400 text-xs tracking-[0.3em] uppercase mb-4">{c.eyebrow}</p>
+          <h1 className="font-display text-5xl md:text-6xl font-light">{c.title}</h1>
           <p className="text-stone-400 mt-4 text-lg font-light max-w-md">
-            Escríbenos o llámanos. Te responderemos en menos de 24 horas.
+            {c.subtitle}
           </p>
         </div>
       </div>
@@ -99,67 +103,65 @@ export default function ContactoPage() {
             {sent ? (
               <div className="bg-emerald-50 border border-emerald-200 p-10 text-center">
                 <span className="text-4xl mb-4 block">✓</span>
-                <h3 className="font-medium text-emerald-800 text-lg mb-2">Mensaje enviado</h3>
-                <p className="text-emerald-600 text-sm">
-                  Nos pondremos en contacto contigo en las próximas horas.
-                </p>
+                <h3 className="font-medium text-emerald-800 text-lg mb-2">{c.successTitle}</h3>
+                <p className="text-emerald-600 text-sm">{c.successMessage}</p>
                 <button
                   onClick={() => { setSent(false); setForm({ nombre: '', email: '', telefono: '', mensaje: '' }) }}
                   className="mt-6 text-sm text-emerald-700 underline hover:no-underline"
                 >
-                  Enviar otro mensaje
+                  {c.sendAnother}
                 </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
-                <h2 className="font-display text-3xl font-light text-stone-900 mb-8">Envíanos un mensaje</h2>
+                <h2 className="font-display text-3xl font-light text-stone-900 mb-8">{c.formTitle}</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
-                    <label className="text-xs text-stone-500 tracking-wide block mb-2">Nombre *</label>
+                    <label className="text-xs text-stone-500 tracking-wide block mb-2">{c.name}</label>
                     <input
                       name="nombre"
                       value={form.nombre}
                       onChange={handleChange}
                       required
-                      placeholder="Tu nombre"
+                      placeholder={c.namePlaceholder}
                       className="w-full border border-stone-200 px-4 py-3 text-sm focus:outline-none focus:border-brand-red transition-colors"
                     />
                   </div>
                   <div>
-                    <label className="text-xs text-stone-500 tracking-wide block mb-2">Email *</label>
+                    <label className="text-xs text-stone-500 tracking-wide block mb-2">{c.email}</label>
                     <input
                       name="email"
                       type="email"
                       value={form.email}
                       onChange={handleChange}
                       required
-                      placeholder="tu@email.com"
+                      placeholder={c.emailPlaceholder}
                       className="w-full border border-stone-200 px-4 py-3 text-sm focus:outline-none focus:border-brand-red transition-colors"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-xs text-stone-500 tracking-wide block mb-2">Teléfono</label>
+                  <label className="text-xs text-stone-500 tracking-wide block mb-2">{c.phone}</label>
                   <input
                     name="telefono"
                     value={form.telefono}
                     onChange={handleChange}
-                    placeholder="+34 600 000 000"
+                    placeholder={c.phonePlaceholder}
                     className="w-full border border-stone-200 px-4 py-3 text-sm focus:outline-none focus:border-brand-red transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs text-stone-500 tracking-wide block mb-2">Mensaje *</label>
+                  <label className="text-xs text-stone-500 tracking-wide block mb-2">{c.message}</label>
                   <textarea
                     name="mensaje"
                     value={form.mensaje}
                     onChange={handleChange}
                     required
                     rows={6}
-                    placeholder="Cuéntanos qué necesitas..."
+                    placeholder={c.messagePlaceholder}
                     className="w-full border border-stone-200 px-4 py-3 text-sm focus:outline-none focus:border-brand-red transition-colors resize-none"
                   />
                 </div>
@@ -169,16 +171,16 @@ export default function ContactoPage() {
                   disabled={loading}
                   className="btn-primary w-full py-4 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {loading ? 'Enviando...' : 'Enviar mensaje'}
+                  {loading ? dict.common.sending : c.submit}
                 </button>
                 {error && (
                   <p className="text-xs text-red-600 text-center">{error}</p>
                 )}
 
                 <p className="text-xs text-stone-400 text-center">
-                  Al enviar aceptas nuestra{' '}
+                  {c.privacyAccept}{' '}
                   <Link href="/politica-privacidad" className="underline hover:text-stone-600">
-                    política de privacidad
+                    {c.privacyLink}
                   </Link>
                   .
                 </p>
@@ -188,13 +190,13 @@ export default function ContactoPage() {
 
           <div className="lg:col-span-2 space-y-10">
             <div>
-              <h2 className="font-display text-3xl font-light text-stone-900 mb-8">Información</h2>
+              <h2 className="font-display text-3xl font-light text-stone-900 mb-8">{c.infoTitle}</h2>
               <div className="space-y-6">
                 {hasPhone && (
                   <div className="flex gap-4">
                     <span className="shrink-0 text-stone-500"><PhoneIcon /></span>
                     <div>
-                      <p className="text-xs text-stone-400 tracking-wide mb-1">{CONTACT.phone.label}</p>
+                      <p className="text-xs text-stone-400 tracking-wide mb-1">{dict.common.phone}</p>
                       <a href={phoneHref} className="text-stone-700 text-sm hover:text-stone-900 transition-colors">
                         {CONTACT.phone.display}
                       </a>
@@ -206,7 +208,7 @@ export default function ContactoPage() {
                   <div className="flex gap-4">
                     <span className="shrink-0 text-stone-500"><MailIcon /></span>
                     <div>
-                      <p className="text-xs text-stone-400 tracking-wide mb-1">Email</p>
+                      <p className="text-xs text-stone-400 tracking-wide mb-1">{dict.common.email}</p>
                       <a href={emailHref} className="text-stone-700 text-sm hover:text-stone-900 transition-colors break-all">
                         {CONTACT.email}
                       </a>
@@ -222,7 +224,7 @@ export default function ContactoPage() {
                     </svg>
                   </span>
                   <div>
-                    <p className="text-xs text-stone-400 tracking-wide mb-1">WhatsApp</p>
+                    <p className="text-xs text-stone-400 tracking-wide mb-1">{dict.common.whatsapp}</p>
                     <a
                       href={whatsappHref}
                       target="_blank"
@@ -239,7 +241,7 @@ export default function ContactoPage() {
                   <div className="flex gap-4">
                   <span className="shrink-0 text-stone-500"><MapPinIcon /></span>
                   <div>
-                    <p className="text-xs text-stone-400 tracking-wide mb-1">{OFFICES.primary.label}</p>
+                    <p className="text-xs text-stone-400 tracking-wide mb-1">{dict.common.office}</p>
                     <a
                       href={mapsHref}
                       target="_blank"
@@ -255,9 +257,9 @@ export default function ContactoPage() {
                 )}
 
                 <div className="border-t border-stone-100 pt-6">
-                  <p className="text-xs text-stone-400 tracking-widest uppercase mb-4">Horario de atención</p>
+                  <p className="text-xs text-stone-400 tracking-widest uppercase mb-4">{dict.common.openingHours}</p>
                   <ul className="space-y-2 text-sm text-stone-600">
-                    {OPENING_HOURS.map((slot) => (
+                    {openingHours.map((slot) => (
                       <li key={slot.day} className="flex justify-between gap-4">
                         <span className="text-stone-500">{slot.day}</span>
                         <span>{slot.hours}</span>
@@ -269,12 +271,12 @@ export default function ContactoPage() {
             </div>
 
             <div className="border-t border-stone-100 pt-8">
-              <p className="text-xs text-stone-400 tracking-widest uppercase mb-4">Otros canales</p>
+              <p className="text-xs text-stone-400 tracking-widest uppercase mb-4">{dict.common.otherChannels}</p>
               <div className="flex flex-wrap gap-4">
                 {[
-                  ...(whatsappHref ? [{ name: 'WhatsApp', href: whatsappHref }] : []),
-                  ...(mapsHref ? [{ name: 'Google Maps', href: mapsHref }] : []),
-                  ...(hasEmail ? [{ name: 'Email', href: emailHref }] : []),
+                  ...(whatsappHref ? [{ name: dict.common.whatsapp, href: whatsappHref }] : []),
+                  ...(mapsHref ? [{ name: dict.common.googleMaps, href: mapsHref }] : []),
+                  ...(hasEmail ? [{ name: dict.common.email, href: emailHref }] : []),
                 ].map((social) => (
                   <a
                     key={social.name}

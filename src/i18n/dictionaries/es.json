@@ -1,0 +1,619 @@
+{
+  "metadata": {
+    "site": {
+      "title": "{{siteName}} | {{tagline}}",
+      "description": "Inmobiliaria en Gipuzkoa. Gestión inmobiliaria, home staging, reformas integrales y limpieza profesional.",
+      "keywords": "inmobiliaria gipuzkoa, agencia inmobiliaria, home staging, reformas integrales, limpieza profesional, lk home"
+    },
+    "home": {
+      "title": "{{siteName}} | {{tagline}}",
+      "description": "Inmobiliaria en Gipuzkoa. Compra, venta y alquiler de viviendas con gestión integral."
+    },
+    "properties": {
+      "title": "Propiedades | {{siteName}}",
+      "description": "Catálogo de propiedades en venta y alquiler en Gipuzkoa."
+    },
+    "contact": {
+      "title": "Contacto | {{siteName}}",
+      "description": "Contacta con {{siteName}}. Te respondemos en menos de 24 horas."
+    },
+    "services": {
+      "title": "Servicios | {{siteName}}",
+      "description": "Gestión inmobiliaria, home staging, reformas integrales y limpieza profesional en Gipuzkoa."
+    },
+    "notFound": {
+      "title": "Página no encontrada | {{siteName}}",
+      "description": "La página que buscas no existe."
+    },
+    "avisoLegal": {
+      "title": "Aviso legal | {{siteName}}",
+      "description": "Aviso legal del sitio web de {{siteName}}."
+    },
+    "privacidad": {
+      "title": "Política de privacidad | {{siteName}}",
+      "description": "Política de privacidad y protección de datos de {{siteName}}."
+    },
+    "cookies": {
+      "title": "Política de cookies | {{siteName}}",
+      "description": "Información sobre el uso de cookies en el sitio web de {{siteName}}."
+    }
+  },
+  "common": {
+    "brandTagline": "Inmobiliaria en Gipuzkoa",
+    "agentTagline": "Compra y venta de viviendas, alquileres y gestión integral de tu propiedad en Gipuzkoa.",
+    "phone": "Teléfono",
+    "email": "Email",
+    "whatsapp": "WhatsApp",
+    "office": "Oficina",
+    "schedule": "Horario",
+    "closed": "Cerrado",
+    "loading": "Cargando...",
+    "sending": "Enviando...",
+    "selectOption": "Selecciona una opción",
+    "notProvided": "No facilitado",
+    "perMonth": "/mes",
+    "consultPrice": "Consultar precio",
+    "photos": "fotos",
+    "photosCount": "+{{count}} fotos",
+    "m2": "m²",
+    "bedrooms": "Habitaciones",
+    "bedroomsShort": "hab.",
+    "bathrooms": "Baños",
+    "bathroomsShort": "baños",
+    "floor": "Planta",
+    "withElevator": "con ascensor",
+    "viewAll": "Ver todas →",
+    "viewAllShort": "Ver todas",
+    "viewProperty": "Ver propiedad →",
+    "viewArrow": "Ver →",
+    "backToProperties": "← Volver a propiedades",
+    "home": "Inicio",
+    "price": "Precio",
+    "description": "Descripción",
+    "features": "Características",
+    "enlarge": "Ampliar",
+    "close": "Cerrar",
+    "zoomIn": "Acercar",
+    "zoomOut": "Alejar",
+    "prevImage": "Imagen anterior",
+    "nextImage": "Imagen siguiente",
+    "viewEnlargedImage": "Ver imagen ampliada",
+    "viewImage": "Ver imagen {{n}}",
+    "viewAllImages": "Ver todas las imágenes ({{count}})",
+    "enlargedImage": "{{title}} ampliada {{n}}",
+    "thumbnail": "{{title}} miniatura {{n}}",
+    "menu": "Menú",
+    "callUs": "Llámanos: 688 76 32 89 →",
+    "googleMaps": "Google Maps",
+    "otherChannels": "Otros canales",
+    "openingHours": "Horario de atención",
+    "navigation": "Navegación",
+    "contactSection": "Contacto",
+    "legalDisclaimer": "Toda la información contenida en esta web carece de carácter contractual, siendo su contenido meramente informativo.",
+    "allRightsReserved": "Todos los derechos reservados.",
+    "privacyPolicy": "Política de privacidad",
+    "legalNotice": "Aviso legal",
+    "cookies": "Cookies",
+    "privacyShort": "Privacidad",
+    "backToContact": "Volver a contacto",
+    "spain": "España",
+    "web": "Web",
+    "energyUnit": "kg CO₂/m²/año",
+    "co2Unit": " · {{value}} kg CO₂/m²/año"
+  },
+  "nav": {
+    "properties": "Propiedades",
+    "services": "Servicios",
+    "contact": "Contacto",
+    "freeValuation": "Valoración gratuita"
+  },
+  "days": {
+    "monday": "Lunes",
+    "tuesday": "Martes",
+    "wednesday": "Miércoles",
+    "thursday": "Jueves",
+    "friday": "Viernes",
+    "saturday": "Sábado",
+    "sunday": "Domingo"
+  },
+  "labels": {
+    "status": {
+      "disponible": "Disponible",
+      "reservado": "Reservado",
+      "vendido": "Vendido"
+    },
+    "type": {
+      "piso": "Piso",
+      "casa": "Casa",
+      "duplex": "Dúplex",
+      "local": "Local",
+      "terreno": "Terreno",
+      "oficina": "Oficina",
+      "garaje": "Plaza de garaje"
+    },
+    "operation": {
+      "venta": "Venta",
+      "alquiler": "Alquiler"
+    },
+    "extras": {
+      "garage": "Garaje",
+      "elevator": "Ascensor",
+      "furnished": "Amueblado",
+      "heating": "Calefacción",
+      "pool": "Piscina",
+      "storage": "Trastero",
+      "common_areas": "Zonas comunes"
+    }
+  },
+  "home": {
+    "hero": {
+      "titleLine1": "Tu hogar,",
+      "titleLine2": "en buenas manos",
+      "viewProperties": "Quiero comprar",
+      "freeValuation": "Valoración gratuita"
+    },
+    "services": {
+      "eyebrow": "Nuestros servicios",
+      "title": "Todo lo que tu propiedad necesita",
+      "subtitle": "Gestión, presentación, reforma y limpieza con un equipo local en Gipuzkoa.",
+      "viewAll": "Conoce todos los servicios →"
+    },
+    "featured": {
+      "title": "Propiedades",
+      "titleHighlight": "destacadas",
+      "viewAll": "Ver todas →",
+      "empty": "Pronto añadiremos propiedades destacadas."
+    },
+    "cta": {
+      "title": "¿Hablamos de tu proyecto?",
+      "subtitle": "Visítanos en Lersundi Kalea, 31, Gipuzkoa, o llámanos al 688 76 32 89.",
+      "contactWith": "Contacta con"
+    },
+    "scrollHint": "Descubre más"
+  },
+  "services": {
+    "items": [
+      {
+        "title": "Gestión inmobiliaria",
+        "desc": "Compra, venta y alquiler de viviendas con un acompañamiento integral y cercano en Gipuzkoa."
+      },
+      {
+        "title": "Home staging",
+        "desc": "Preparamos tu propiedad para que destaque: decoración, distribución y presentación que aceleran la venta."
+      },
+      {
+        "title": "Reformas integrales",
+        "desc": "Renovamos espacios de principio a fin para valorizar tu inmueble con acabados de calidad."
+      },
+      {
+        "title": "Limpieza profesional",
+        "desc": "Servicio de limpieza especializado para dejar cada propiedad impecable antes de visitas o entregas."
+      }
+    ],
+    "whyChooseUs": [
+      {
+        "title": "Experiencia local",
+        "desc": "Conocemos el mercado de Gipuzkoa con más de 4.300 opiniones y 150 propiedades vendidas."
+      },
+      {
+        "title": "Servicio integral",
+        "desc": "Desde la gestión del inmueble hasta el staging, la reforma y la limpieza, todo en un solo equipo."
+      },
+      {
+        "title": "Trato personalizado",
+        "desc": "Cada propiedad y cada cliente reciben una atención adaptada a sus necesidades."
+      },
+      {
+        "title": "Resultados visibles",
+        "desc": "Preparamos cada espacio para que transmita valor y genere confianza desde el primer momento."
+      }
+    ],
+    "hero": {
+      "eyebrow": "Servicios",
+      "subtitle": "Agencia inmobiliaria en Gipuzkoa",
+      "googleReviews": "{{rating}} en Google · {{count}} opiniones"
+    },
+    "sectionTitle": "Nuestros servicios",
+    "whyTitle": "Por qué elegirnos",
+    "contactTitle": "Contáctanos",
+    "writeUs": "Escríbenos",
+    "scrollHint": "Sigue bajando"
+  },
+  "reviews": {
+    "googleReviews": "opiniones en Google",
+    "onGoogle": "en Google",
+    "propertiesSold": "propiedades vendidas",
+    "eyebrow": "Opiniones",
+    "title": "La confianza de nuestros clientes",
+    "subtitle": "{{label}} con un trato cercano y profesional",
+    "soldLabel": "Más de 150 propiedades vendidas",
+    "carouselAria": "Carrusel de reseñas de clientes",
+    "excellentRating": "Valoración excelente"
+  },
+  "properties": {
+    "eyebrow": "Propiedades",
+    "title": "Propiedades",
+    "countOne": "{{count}} inmueble disponible",
+    "countMany": "{{count}} inmuebles disponibles",
+    "noResults": "Sin resultados",
+    "noResultsHint": "Prueba ajustando los filtros o explora todo el catálogo",
+    "viewAll": "Ver todas las propiedades",
+    "filters": {
+      "title": "Filtros",
+      "active": "Activos",
+      "clear": "Limpiar",
+      "propertyType": "Tipo de inmueble",
+      "operation": "Operación",
+      "status": "Estado",
+      "province": "Provincia",
+      "bedrooms": "Habitaciones",
+      "bathrooms": "Baños",
+      "minPrice": "Precio mínimo",
+      "maxPrice": "Precio máximo",
+      "extras": "Extras",
+      "all": "Todos",
+      "allF": "Todas",
+      "any": "Cualquiera",
+      "fourOrMore": "4 o más",
+      "threeOrMore": "3 o más"
+    }
+  },
+  "propertyDetail": {
+    "requestInfo": "Solicitar información",
+    "viewPortal": "Ver en portal inmobiliario ↗",
+    "whatsappMessage": "Hola! Me gustaría solicitar información sobre {{title}}",
+    "fields": {
+      "propertyType": "Tipo de inmueble",
+      "availability": "Disponibilidad",
+      "hotWater": "Agua caliente",
+      "heatingType": "Tipo de calefacción",
+      "condition": "Estado",
+      "age": "Antigüedad",
+      "extras": "Extras",
+      "energy": "Energía",
+      "emissions": "Emisiones"
+    }
+  },
+  "contact": {
+    "eyebrow": "Contacto",
+    "title": "Estamos aquí para ayudarte",
+    "subtitle": "Escríbenos o llámanos. Te responderemos en menos de 24 horas.",
+    "formTitle": "Envíanos un mensaje",
+    "name": "Nombre *",
+    "namePlaceholder": "Tu nombre",
+    "email": "Email *",
+    "emailPlaceholder": "tu@email.com",
+    "phone": "Teléfono",
+    "phonePlaceholder": "+34 600 000 000",
+    "message": "Mensaje *",
+    "messagePlaceholder": "Cuéntanos qué necesitas...",
+    "submit": "Enviar mensaje",
+    "privacyAccept": "Al enviar aceptas nuestra",
+    "privacyLink": "política de privacidad",
+    "successTitle": "Mensaje enviado",
+    "successMessage": "Nos pondremos en contacto contigo en las próximas horas.",
+    "sendAnother": "Enviar otro mensaje",
+    "infoTitle": "Información",
+    "errorSend": "No se pudo enviar el mensaje",
+    "errorSubmit": "No se pudo enviar el formulario. Prueba de nuevo en unos minutos."
+  },
+  "valoracion": {
+    "triggerDefault": "Quiero vender",
+    "closeModal": "Cerrar modal",
+    "thanksTitle": "Gracias por confiar en nosotros",
+    "thanksMessage": "Te contactaremos para pasarte la valoración gratuita de tu propiedad.",
+    "close": "Cerrar",
+    "title": "¿Quieres saber cuánto vale tu casa?",
+    "subtitle": "Completa los datos y te haremos una valoración completa de tu inmueble sin compromiso. Además, si vendes con nosotros te regalamos el certificado energético obligatorio.",
+    "stepOf": "Paso {{step}} de {{total}}",
+    "percentComplete": "{{percent}}% completado",
+    "step1Title": "Tu inmueble",
+    "step2Title": "Más detalles",
+    "step3Title": "Datos de contacto",
+    "propertyType": "Tipo de inmueble *",
+    "location": "Zona / Dirección *",
+    "sqMeters": "m² aproximados *",
+    "bedrooms": "Habitaciones",
+    "bathrooms": "Baños",
+    "condition": "Estado de la vivienda",
+    "saleTimeline": "¿Cuándo planeas venderlo? *",
+    "observations": "Observaciones",
+    "observationsPlaceholder": "Cuéntenos cualquier detalle adicional",
+    "name": "Nombre *",
+    "phone": "Teléfono *",
+    "email": "Email *",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "submit": "Solicitar valoración",
+    "errorRequired": "Completa los campos obligatorios para continuar.",
+    "errorTimeline": "Indica cuándo planeas vender para continuar.",
+    "errorContact": "Completa tus datos de contacto para enviar la solicitud.",
+    "errorEmail": "Introduce un email válido.",
+    "errorSubmit": "No se pudo enviar la solicitud. Inténtalo de nuevo.",
+    "propertyTypes": ["Piso", "Casa", "Ático", "Dúplex", "Chalet", "Local", "Garaje", "Terreno", "Otro"],
+    "saleTimelines": [
+      "Lo antes posible",
+      "En 1-3 meses",
+      "En 3-6 meses",
+      "En 6-12 meses",
+      "Solo quiero una orientación por ahora"
+    ],
+    "conditions": [
+      "Totalmente reformado",
+      "Semirreformado",
+      "Reforma antigua",
+      "Para entrar a vivir",
+      "Para reformar"
+    ]
+  },
+  "notFound": {
+    "title": "Página no encontrada",
+    "description": "La página que buscas no existe o ha sido movida. Puedes volver al inicio y explorar nuestras propiedades.",
+    "backHome": "Volver al inicio"
+  },
+  "legal": {
+    "eyebrow": "Legal",
+    "avisoLegal": {
+      "title": "Aviso legal",
+      "sections": [
+        {
+          "title": "Titular del sitio web",
+          "paragraphs": [
+            "{{ownerName}}, {{legalForm}}.{{taxIdLine}} Domicilio profesional: {{address}}.",
+            "Denominación comercial: {{agentName}}.",
+            "{{emailLine}}"
+          ]
+        },
+        {
+          "title": "Objeto",
+          "paragraphs": [
+            "El sitio web {{siteUrl}} tiene carácter informativo y comercial. Su finalidad es presentar los servicios inmobiliarios de {{agentName}} y facilitar el contacto con personas interesadas en compra, venta, alquiler o asesoramiento relacionado con inmuebles."
+          ]
+        },
+        {
+          "title": "Condiciones de uso",
+          "paragraphs": [
+            "El acceso y uso de este sitio web atribuye la condición de usuario e implica la aceptación de las condiciones aquí recogidas. El usuario se compromete a hacer un uso adecuado de los contenidos y servicios ofrecidos, conforme a la ley, la moral, el orden público y las presentes condiciones."
+          ]
+        },
+        {
+          "title": "Propiedad intelectual",
+          "paragraphs": [
+            "Los contenidos de este sitio web, incluidos textos, imágenes, logotipos y diseño, son propiedad de {{agentName}} o de terceros que han autorizado su uso, quedando prohibida su reproducción sin autorización expresa."
+          ]
+        },
+        {
+          "title": "Protección de datos y cookies",
+          "paragraphs": [
+            "El tratamiento de datos personales y el uso de cookies se rigen por documentos específicos:"
+          ],
+          "list": [
+            "Política de privacidad",
+            "Política de cookies"
+          ]
+        }
+      ]
+    },
+    "privacidad": {
+      "title": "Política de privacidad",
+      "sections": [
+        {
+          "title": "Política de privacidad",
+          "paragraphs": [
+            "Es compromiso de {{agentName}} informar a los usuarios de este sitio web sobre el tratamiento y la protección de los datos personales que puedan recabarse con motivo de la navegación o del uso de los servicios ofrecidos en el mismo.",
+            "Por dato personal se entiende cualquier información concerniente a una persona física identificada o identificable."
+          ]
+        },
+        {
+          "title": "¿Quién es el responsable del tratamiento?",
+          "paragraphs": [
+            "De conformidad con el Reglamento (UE) 2016/679 (RGPD) y la normativa española de protección de datos, le informamos de que el responsable del tratamiento de los datos personales facilitados a través de {{siteUrl}} es:",
+            "{{ownerBlock}}",
+            "{{agentName}} será responsable de la confidencialidad y seguridad de los datos tratados para las finalidades indicadas en esta política, sin perjuicio de las responsabilidades que puedan corresponder a proveedores tecnológicos que actúen como encargados del tratamiento fuera del ámbito directo de la web."
+          ]
+        },
+        {
+          "title": "¿Está obligado a facilitar sus datos personales?",
+          "paragraphs": [
+            "La simple visita a la web no obliga a facilitar datos personales. No obstante, el uso de los formularios de contacto o de solicitud de valoración inmobiliaria requiere facilitar determinados datos para poder atender su petición.",
+            "Los datos solicitados en cada formulario son los estrictamente necesarios para la finalidad indicada. La negativa a facilitar los datos marcados como obligatorios impedirá tramitar adecuadamente su solicitud."
+          ]
+        },
+        {
+          "title": "¿Para qué utilizamos sus datos personales?",
+          "paragraphs": [
+            "Los datos personales que nos facilite serán tratados con las siguientes finalidades:"
+          ],
+          "list": [
+            "Formulario de contacto: atender su consulta, responder a su mensaje y mantener la comunicación relacionada con los servicios inmobiliarios de {{agentName}}.",
+            "Formulario de valoración gratuita («Quiero vender»): gestionar su solicitud de valoración del inmueble, contactar con usted para ofrecerle una orientación de mercado y, en su caso, tramitar los servicios inmobiliarios que nos solicite.",
+            "Contacto por teléfono, correo electrónico o WhatsApp: dar respuesta a las solicitudes que nos dirija por estos medios en relación con nuestros servicios."
+          ]
+        },
+        {
+          "title": "Comunicaciones comerciales",
+          "paragraphs": [
+            "No utilizamos sus datos para el envío de comunicaciones comerciales no solicitadas distintas de la respuesta a su propia consulta o solicitud, salvo que usted nos autorice expresamente a ello o exista una relación comercial previa conforme a la normativa aplicable.",
+            "El acceso al panel de administración de la web utiliza una cookie técnica de sesión. Puede consultar más información en la Política de cookies."
+          ]
+        },
+        {
+          "title": "¿Cuál es la legitimación del tratamiento?",
+          "paragraphs": [
+            "El tratamiento de sus datos se basa en el consentimiento que nos presta al enviar los formularios, en la ejecución de medidas precontractuales a petición suya y, cuando proceda, en el interés legítimo de {{agentName}} en atender las solicitudes recibidas.",
+            "Puede retirar su consentimiento en cualquier momento, sin que ello afecte a la licitud del tratamiento realizado con anterioridad."
+          ]
+        },
+        {
+          "title": "¿Qué categorías de datos se tratan?",
+          "paragraphs": [
+            "Según el servicio utilizado, podemos tratar las siguientes categorías de datos:"
+          ],
+          "list": [
+            "Datos identificativos: nombre y apellidos.",
+            "Datos de contacto: teléfono y correo electrónico.",
+            "Datos incluidos en su mensaje o consulta.",
+            "En el formulario de valoración: tipo de inmueble, ubicación, superficie, habitaciones, baños, estado, plazo de venta y demás información que decida facilitarnos."
+          ]
+        },
+        {
+          "title": "¿Durante cuánto tiempo conservamos los datos?",
+          "paragraphs": [
+            "Los datos se conservarán durante el tiempo necesario para atender su solicitud y mantener la relación derivada de la misma, así como durante los plazos legalmente exigibles para atender posibles responsabilidades.",
+            "A título orientativo, y cuando resulte de aplicación, los datos podrán conservarse durante los plazos previstos en la normativa mercantil, fiscal o civil (por ejemplo, documentación contractual o contable durante los años exigidos por la legislación vigente)."
+          ]
+        },
+        {
+          "title": "¿A qué destinatarios se comunican los datos?",
+          "paragraphs": [
+            "Sus datos no se cederán a terceros salvo obligación legal o cuando sea necesario para prestar el servicio solicitado.",
+            "Para el funcionamiento de la web y la gestión de consultas, {{agentName}} puede apoyarse en proveedores que actúan como encargados del tratamiento, como plataformas de alojamiento y base de datos en el servidor local y, en su caso, servicios de envío de correo electrónico para la notificación de solicitudes recibidas.",
+            "Estos proveedores únicamente tratarán los datos siguiendo nuestras instrucciones y con las garantías exigidas por la normativa de protección de datos."
+          ]
+        },
+        {
+          "title": "¿Qué responsabilidad tiene el usuario?",
+          "paragraphs": [
+            "Usted garantiza que los datos facilitados son veraces, exactos y están actualizados, respondiendo de la inexactitud o falsedad de los mismos y de los perjuicios que pudieran causarse a {{agentName}} o a terceros."
+          ]
+        },
+        {
+          "title": "¿Qué derechos tiene el usuario?",
+          "paragraphs": [
+            "Puede ejercer gratuitamente los derechos de acceso, rectificación, supresión, oposición, limitación del tratamiento y portabilidad, así como retirar el consentimiento prestado, mediante solicitud escrita dirigida a {{ownerName}} a la dirección {{address}}{{emailRights}}.",
+            "Asimismo, puede presentar una reclamación ante la Agencia Española de Protección de Datos (www.aepd.es) si considera que el tratamiento no se ajusta a la normativa vigente."
+          ]
+        },
+        {
+          "title": "¿Es seguro facilitar datos personales?",
+          "paragraphs": [
+            "{{agentName}} adopta las medidas técnicas y organizativas razonables para proteger sus datos frente a accesos no autorizados, pérdida, alteración o tratamiento ilícito, de acuerdo con el estado de la tecnología y la naturaleza de los datos tratados."
+          ]
+        },
+        {
+          "title": "¿Puede cambiar esta política de privacidad?",
+          "paragraphs": [
+            "Nos reservamos el derecho a modificar la presente política para adaptarla a novedades legislativas o cambios en los servicios ofrecidos. Cuando ello sea relevante, se publicará la versión actualizada en esta página."
+          ]
+        }
+      ]
+    },
+    "cookies": {
+      "title": "Política de cookies",
+      "lastUpdated": "Última actualización: junio de 2026. Esta política se aplica a los ciudadanos y residentes del Espacio Económico Europeo.",
+      "sections": [
+        {
+          "title": "1. Introducción",
+          "paragraphs": [
+            "Nuestra web, {{siteUrl}} (en adelante, «la web»), utiliza cookies y tecnologías similares. En este documento le informamos sobre su uso en el sitio de {{agentName}}, de acuerdo con lo que la web utiliza actualmente.",
+            "La navegación ordinaria por la web no instala cookies de publicidad, estadísticas ni redes sociales. Solo se emplea una cookie técnica de sesión para el acceso al panel de administración interno."
+          ]
+        },
+        {
+          "title": "2. ¿Qué son las cookies?",
+          "paragraphs": [
+            "Una cookie es un pequeño archivo que se envía junto con las páginas de una web y que su navegador puede almacenar en su dispositivo. La información guardada puede devolverse a nuestros servidores o a los de terceros durante una visita posterior."
+          ]
+        },
+        {
+          "title": "3. ¿Qué son los scripts?",
+          "paragraphs": [
+            "Un script es un fragmento de código que permite que la web funcione correctamente. En nuestro caso, la web está desarrollada con Next.js y parte de ese código se ejecuta en nuestro servidor de alojamiento y otra parte en su navegador para mostrar contenidos e interactuar con los formularios de contacto y valoración.",
+            "Las tipografías de la web se sirven desde el propio sitio (no cargamos fuentes desde servicios externos que instalen cookies en su dispositivo)."
+          ]
+        },
+        {
+          "title": "4. ¿Qué es una baliza web?",
+          "paragraphs": [
+            "Una baliza web es una pequeña imagen o fragmento invisible que algunos sitios utilizan para medir visitas o comportamiento. {{agentName}} no utiliza balizas web ni etiquetas de seguimiento en la versión actual de esta web."
+          ]
+        },
+        {
+          "title": "5. Cookies",
+          "subsections": [
+            {
+              "title": "5.1 Cookies técnicas o funcionales",
+              "paragraphs": [
+                "Son necesarias para que determinadas partes de la web funcionen. En la navegación pública de usuarios no instalamos cookies de preferencias ni de carrito, ya que la web no dispone de tienda online ni de área de clientes.",
+                "La única cookie propia que utiliza la web es la de sesión del panel de administración, accesible únicamente en la ruta /admin para personal autorizado."
+              ]
+            },
+            {
+              "title": "5.2 Cookies de estadísticas",
+              "paragraphs": [
+                "No utilizamos cookies de estadísticas (por ejemplo, Google Analytics, Matomo u otras herramientas similares) en la versión actual de la web."
+              ]
+            },
+            {
+              "title": "5.3 Cookies de marketing o seguimiento",
+              "paragraphs": [
+                "No utilizamos cookies de marketing ni de creación de perfiles publicitarios en esta web."
+              ]
+            },
+            {
+              "title": "5.4 Redes sociales y contenido embebido",
+              "paragraphs": [
+                "No incorporamos contenido embebido de redes sociales (LinkedIn, Facebook, YouTube, etc.) ni reproductores de vídeo de terceros dentro de nuestras páginas.",
+                "Sí existen enlaces externos que usted puede abrir voluntariamente, como WhatsApp, Google Maps, Fotocasa o el correo electrónico. Al acceder a esos servicios, el tercero correspondiente podrá utilizar sus propias cookies, sobre las que {{agentName}} no tiene control. Le recomendamos consultar las políticas de privacidad y cookies de dichos sitios."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "6. Cookies utilizadas en esta web",
+          "paragraphs": [
+            "El proveedor de alojamiento (Vercel) puede tratar datos técnicos de conexión necesarios para servir la web de forma segura. No obstante, en la navegación habitual del usuario no desplegamos herramientas adicionales de medición o publicidad."
+          ]
+        },
+        {
+          "title": "7. Consentimiento",
+          "paragraphs": [
+            "Dado que la web no utiliza cookies de estadísticas, marketing ni redes sociales embebidas, no mostramos actualmente un banner de consentimiento de cookies al visitante medio.",
+            "La cookie técnica del panel de administración solo se utiliza cuando el propio personal autorizado accede a /admin, por lo que no afecta a la navegación general del sitio.",
+            "Si en el futuro incorporáramos cookies que requieran consentimiento previo, actualizaremos esta política y habilitaremos el mecanismo de gestión correspondiente."
+          ]
+        },
+        {
+          "title": "8. Activación, desactivación y borrado de cookies",
+          "paragraphs": [
+            "Puede configurar su navegador para bloquear o eliminar las cookies. Consulte la sección de ayuda de su navegador para más información.",
+            "Tenga en cuenta que, si elimina la cookie de sesión del panel de administración, será necesario volver a iniciar sesión en /admin. La navegación ordinaria de la web no debería verse afectada."
+          ]
+        },
+        {
+          "title": "9. Sus derechos respecto a los datos personales",
+          "paragraphs": [
+            "Tiene derecho de acceso, rectificación, supresión, oposición, limitación del tratamiento, portabilidad y a retirar el consentimiento cuando el tratamiento se base en este. También puede presentar una reclamación ante la Agencia Española de Protección de Datos (www.aepd.es).",
+            "Para más información, consulte nuestra Política de privacidad."
+          ]
+        },
+        {
+          "title": "10. Datos de contacto",
+          "paragraphs": [
+            "Para cualquier consulta sobre esta política de cookies, puede contactar con:",
+            "{{contactBlock}}"
+          ]
+        }
+      ],
+      "cookieTable": {
+        "headers": {
+          "name": "Nombre",
+          "type": "Tipo",
+          "purpose": "Finalidad",
+          "duration": "Duración"
+        },
+        "row": {
+          "name": "{{cookieName}}",
+          "type": "Técnica / sesión",
+          "purpose": "Mantener la sesión del panel de administración interno. Solo se instala si un usuario autorizado inicia sesión en /admin.",
+          "duration": "Hasta 7 días"
+        }
+      }
+    }
+  },
+  "language": {
+    "select": "Seleccionar idioma",
+    "es": "Español",
+    "eu": "Euskara"
+  }
+}

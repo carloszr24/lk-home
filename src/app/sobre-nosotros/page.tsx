@@ -1,12 +1,12 @@
-'use client'
-
+import type { Metadata } from 'next'
 import Link from 'next/link'
-import { SERVICE_ITEMS, WHY_CHOOSE_US } from '@/data/services'
-import { AGENT, phoneHref, CONTACT } from '@/lib/contact'
+import { AGENT, CONTACT, phoneHref } from '@/lib/contact'
 import { ScrollHint } from '@/components/home/ScrollHint'
 import { HEADER_OFFSET_CLASS } from '@/lib/logo'
 import { SiteLogo } from '@/components/SiteLogo'
 import { GOOGLE_RATING, GOOGLE_REVIEW_COUNT } from '@/data/reviews'
+import { getServerI18n, getSiteMetadataVars } from '@/i18n/server'
+import { interpolate } from '@/i18n/interpolate'
 
 function BuildingIcon() {
   return (
@@ -53,39 +53,55 @@ function DiamondIcon() {
 
 const serviceIcons = [BuildingIcon, StagingIcon, ReformIcon, CleanIcon]
 
-const services = SERVICE_ITEMS.map((service, index) => ({
-  ...service,
-  icon: serviceIcons[index] ?? BuildingIcon,
-}))
+export async function generateMetadata(): Promise<Metadata> {
+  const { dict } = await getServerI18n()
+  const vars = getSiteMetadataVars(dict)
+  return {
+    title: interpolate(dict.metadata.services.title, vars),
+    description: dict.metadata.services.description,
+  }
+}
 
-export default function SobreNosotrosPage() {
+export default async function SobreNosotrosPage() {
+  const { dict, locale } = await getServerI18n()
+  const s = dict.services
+  const localeTag = locale === 'eu' ? 'eu-ES' : 'es-ES'
+
+  const services = s.items.map((service, index) => ({
+    ...service,
+    icon: serviceIcons[index] ?? BuildingIcon,
+  }))
+
   return (
     <div className={HEADER_OFFSET_CLASS}>
       <section className="relative bg-stone-50 min-h-[calc(100svh-4.75rem)] md:min-h-[calc(100svh-5.75rem)] flex flex-col border-b border-stone-200">
         <div className="flex flex-1 flex-col items-center justify-center px-6 md:px-10 py-16 md:py-20">
           <div className="max-w-4xl mx-auto text-center">
             <SiteLogo className="mx-auto mb-8" />
-            <p className="text-stone-500 text-xs tracking-[0.35em] uppercase mb-4">Servicios</p>
+            <p className="text-stone-500 text-xs tracking-[0.35em] uppercase mb-4">{s.hero.eyebrow}</p>
             <h1 className="font-display text-4xl md:text-5xl font-light tracking-wide text-stone-900">
               {AGENT.fullName}
             </h1>
             <p className="mt-3 text-sm md:text-base tracking-[0.15em] uppercase text-stone-500">
-              Agencia inmobiliaria en Gipuzkoa
+              {s.hero.subtitle}
             </p>
             {GOOGLE_REVIEW_COUNT > 0 && (
               <p className="mt-6 text-stone-600">
-                {GOOGLE_RATING} en Google · {GOOGLE_REVIEW_COUNT.toLocaleString('es-ES')} opiniones
+                {interpolate(s.hero.googleReviews, {
+                  rating: GOOGLE_RATING,
+                  count: GOOGLE_REVIEW_COUNT.toLocaleString(localeTag),
+                })}
               </p>
             )}
           </div>
         </div>
-        <ScrollHint className="pb-8 text-stone-400" label="Sigue bajando" />
+        <ScrollHint className="pb-8 text-stone-400" label={s.scrollHint} />
       </section>
 
       <section className="bg-white py-20 px-6 md:px-10">
         <div className="max-w-5xl mx-auto">
           <h2 className="font-display text-2xl md:text-3xl font-light tracking-[0.1em] uppercase text-center text-stone-900 mb-12">
-            Nuestros servicios
+            {s.sectionTitle}
           </h2>
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {services.map((service) => (
@@ -104,10 +120,10 @@ export default function SobreNosotrosPage() {
       <section className="bg-stone-50 py-20 px-6 md:px-10 border-y border-stone-200">
         <div className="max-w-5xl mx-auto">
           <h2 className="font-display text-2xl md:text-3xl font-light tracking-[0.1em] uppercase text-center text-stone-900 mb-12">
-            Por qué elegirnos
+            {s.whyTitle}
           </h2>
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 max-w-3xl mx-auto">
-            {WHY_CHOOSE_US.map((item) => (
+            {s.whyChooseUs.map((item) => (
               <li key={item.title} className="flex items-start gap-3">
                 <span className="mt-1.5 text-brand-charcoal">
                   <DiamondIcon />
@@ -124,7 +140,7 @@ export default function SobreNosotrosPage() {
 
       <section className="bg-white py-20 px-6 md:px-10 text-center">
         <h2 className="font-display text-3xl md:text-4xl font-light mb-4 tracking-wide text-stone-900">
-          Contáctanos
+          {s.contactTitle}
         </h2>
         <p className="text-stone-500 mb-2">{CONTACT.address.full}</p>
         <a href={phoneHref} className="text-2xl md:text-3xl font-display text-brand-charcoal hover:text-stone-600 transition-colors">
@@ -132,7 +148,7 @@ export default function SobreNosotrosPage() {
         </a>
         <div className="mt-10">
           <Link href="/contacto" className="btn-primary px-10 py-4 text-sm">
-            Escríbenos
+            {s.writeUs}
           </Link>
         </div>
       </section>

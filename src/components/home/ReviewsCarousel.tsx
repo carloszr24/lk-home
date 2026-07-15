@@ -1,11 +1,13 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { GOOGLE_RATING, GOOGLE_REVIEW_COUNT, PROPERTIES_SOLD_COUNT, PROPERTIES_SOLD_LABEL, REVIEWS } from '@/data/reviews'
+import { GOOGLE_RATING, GOOGLE_REVIEW_COUNT, PROPERTIES_SOLD_COUNT, REVIEWS } from '@/data/reviews'
+import { useI18n } from '@/i18n/client'
+import { interpolate } from '@/i18n/interpolate'
 
-function StarRow() {
+function StarRow({ ariaLabel }: { ariaLabel: string }) {
   return (
-    <div className="flex items-center gap-1.5" aria-label="Valoración excelente">
+    <div className="flex items-center gap-1.5" aria-label={ariaLabel}>
       {Array.from({ length: 5 }).map((_, idx) => (
         <svg
           key={idx}
@@ -27,6 +29,10 @@ export function ReviewsCarousel() {
 }
 
 function ReviewsCarouselContent() {
+  const { dict, locale } = useI18n()
+  const r = dict.reviews
+  const localeTag = locale === 'eu' ? 'eu-ES' : 'es-ES'
+
   const [isVisible, setIsVisible] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
   const [reducedMotion, setReducedMotion] = useState(false)
@@ -137,13 +143,13 @@ function ReviewsCarouselContent() {
 
   const stats = [
     GOOGLE_REVIEW_COUNT > 0
-      ? { value: GOOGLE_REVIEW_COUNT.toLocaleString('es-ES'), label: 'opiniones en Google' }
+      ? { value: GOOGLE_REVIEW_COUNT.toLocaleString(localeTag), label: r.googleReviews }
       : null,
     GOOGLE_RATING
-      ? { value: GOOGLE_RATING, label: 'en Google' }
+      ? { value: GOOGLE_RATING, label: r.onGoogle }
       : null,
     PROPERTIES_SOLD_COUNT > 0
-      ? { value: `+${PROPERTIES_SOLD_COUNT}`, label: 'propiedades vendidas' }
+      ? { value: `+${PROPERTIES_SOLD_COUNT}`, label: r.propertiesSold }
       : null,
   ].filter(Boolean) as { value: string; label: string }[]
 
@@ -179,12 +185,12 @@ function ReviewsCarouselContent() {
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
-          <p className="text-stone-500 text-xs tracking-[0.3em] uppercase mb-3">Opiniones</p>
-          <h2 className="section-title mb-5">La confianza de nuestros clientes</h2>
+          <p className="text-stone-500 text-xs tracking-[0.3em] uppercase mb-3">{r.eyebrow}</p>
+          <h2 className="section-title mb-5">{r.title}</h2>
           <div className="flex flex-col items-center gap-2 text-stone-700">
-            <StarRow />
+            <StarRow ariaLabel={r.excellentRating} />
             <p className="text-base md:text-lg font-medium">
-              {PROPERTIES_SOLD_LABEL} con un trato cercano y profesional
+              {interpolate(r.subtitle, { label: r.soldLabel })}
             </p>
           </div>
         </div>
@@ -193,7 +199,7 @@ function ReviewsCarouselContent() {
           <div className={`transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <div
               className="overflow-hidden select-none touch-pan-y"
-              aria-label="Carrusel de reseñas de clientes"
+              aria-label={r.carouselAria}
               onPointerDown={handlePointerDown}
               onPointerMove={handlePointerMove}
               onPointerUp={handlePointerUp}
@@ -207,7 +213,7 @@ function ReviewsCarouselContent() {
                 {loopedReviews.map((review, idx) => (
                   <div key={`${review.id}-${idx}`} className="shrink-0 w-[86vw] sm:w-[68vw] md:w-[44vw] lg:w-[31vw]">
                     <article className="card-hover h-full min-h-56 bg-white border border-stone-200 p-6 md:p-7 rounded-lg shadow-sm hover:shadow-lg">
-                      <StarRow />
+                      <StarRow ariaLabel={r.excellentRating} />
                       <p className="text-stone-600 text-sm md:text-base leading-relaxed mt-4">&ldquo;{review.text}&rdquo;</p>
                       <p className="mt-6 text-stone-900 font-semibold">{review.name}</p>
                     </article>

@@ -8,17 +8,15 @@ import {
   PROPERTY_OPERATIONS,
   PROPERTY_STATUSES,
   PROPERTY_TYPES,
-  OPERATION_LABELS,
-  STATUS_LABELS,
-  TYPE_LABELS,
 } from '@/lib/utils'
-import { PROPERTY_EXTRA_OPTIONS } from '@/lib/property-extras'
+import { useI18n } from '@/i18n/client'
+import { getPropertyExtraOptions } from '@/i18n/utils'
 
 const PRICE_MIN = 0
 const PRICE_MAX = 1000000
 
-function formatEuro(value: number): string {
-  return new Intl.NumberFormat('es-ES', {
+function formatEuro(value: number, locale: string): string {
+  return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency: 'EUR',
     maximumFractionDigits: 0,
@@ -40,6 +38,10 @@ function parseSelectedExtras(extras: string | null, legacyExtra: string | null):
 export function PropertyFilters({ availableProvinces }: { availableProvinces: string[] }) {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const { dict, locale } = useI18n()
+  const f = dict.properties.filters
+  const localeTag = locale === 'eu' ? 'eu-ES' : 'es-ES'
+  const extraOptions = getPropertyExtraOptions(dict)
 
   const type = searchParams.get('type') || ''
   const operation = searchParams.get('operation') || ''
@@ -102,10 +104,10 @@ export function PropertyFilters({ availableProvinces }: { availableProvinces: st
             className="inline-flex items-center gap-2 text-sm text-stone-800 hover:text-stone-950 transition-colors"
             aria-expanded={open}
           >
-            <span className="font-medium">Filtros</span>
+            <span className="font-medium">{f.title}</span>
             {hasFilters && (
               <span className="rounded-full bg-brand-red/10 px-2 py-0.5 text-[11px] font-medium text-brand-red">
-                Activos
+                {f.active}
               </span>
             )}
             <svg
@@ -123,7 +125,7 @@ export function PropertyFilters({ availableProvinces }: { availableProvinces: st
           </button>
           {hasFilters && (
             <button onClick={clearAll} className="text-sm text-brand-charcoal hover:text-brand-charcoal-dark transition-colors">
-              Limpiar
+              {f.clear}
             </button>
           )}
         </div>
@@ -137,36 +139,36 @@ export function PropertyFilters({ availableProvinces }: { availableProvinces: st
             <div className="pb-4 pt-1">
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             <div>
-              <label className="text-xs text-stone-500 mb-1.5 block">Tipo de inmueble</label>
+              <label className="text-xs text-stone-500 mb-1.5 block">{f.propertyType}</label>
               <select value={type} onChange={(e) => updateParam('type', e.target.value)} className={selectClass}>
-                <option value="">Todos</option>
+                <option value="">{f.all}</option>
                 {PROPERTY_TYPES.map((t) => (
                   <option key={t} value={t}>
-                    {TYPE_LABELS[t]}
+                    {dict.labels.type[t]}
                   </option>
                 ))}
               </select>
             </div>
 
             <div>
-              <label className="text-xs text-stone-500 mb-1.5 block">Operación</label>
+              <label className="text-xs text-stone-500 mb-1.5 block">{f.operation}</label>
               <select value={operation} onChange={(e) => updateParam('operation', e.target.value)} className={selectClass}>
-                <option value="">Todas</option>
+                <option value="">{f.allF}</option>
                 {PROPERTY_OPERATIONS.map((op) => (
                   <option key={op} value={op}>
-                    {OPERATION_LABELS[op]}
+                    {dict.labels.operation[op]}
                   </option>
                 ))}
               </select>
             </div>
 
             <div>
-              <label className="text-xs text-stone-500 mb-1.5 block">Estado</label>
+              <label className="text-xs text-stone-500 mb-1.5 block">{f.status}</label>
               <select value={status} onChange={(e) => updateParam('status', e.target.value)} className={selectClass}>
-                <option value="">Todos</option>
+                <option value="">{f.all}</option>
                 {PROPERTY_STATUSES.map((s) => (
                   <option key={s} value={s}>
-                    {STATUS_LABELS[s]}
+                    {dict.labels.status[s]}
                   </option>
                 ))}
               </select>
@@ -174,9 +176,9 @@ export function PropertyFilters({ availableProvinces }: { availableProvinces: st
 
             {availableProvinces.length > 0 && (
               <div>
-                <label className="text-xs text-stone-500 mb-1.5 block">Provincia</label>
+                <label className="text-xs text-stone-500 mb-1.5 block">{f.province}</label>
                 <select value={province} onChange={(e) => updateParam('province', e.target.value)} className={selectClass}>
-                  <option value="">Todas</option>
+                  <option value="">{f.allF}</option>
                   {availableProvinces.map((p) => (
                     <option key={p} value={p}>
                       {p}
@@ -187,31 +189,31 @@ export function PropertyFilters({ availableProvinces }: { availableProvinces: st
             )}
 
             <div>
-              <label className="text-xs text-stone-500 mb-1.5 block">Habitaciones</label>
+              <label className="text-xs text-stone-500 mb-1.5 block">{f.bedrooms}</label>
               <select value={bedrooms} onChange={(e) => updateParam('bedrooms', e.target.value)} className={selectClass}>
-                <option value="">Cualquiera</option>
+                <option value="">{f.any}</option>
                 {BEDROOM_FILTER_OPTIONS.map((n) => (
                   <option key={n} value={n}>
-                    {n === '4' ? '4 o más' : n}
+                    {n === '4' ? f.fourOrMore : n}
                   </option>
                 ))}
               </select>
             </div>
 
             <div>
-              <label className="text-xs text-stone-500 mb-1.5 block">Baños</label>
+              <label className="text-xs text-stone-500 mb-1.5 block">{f.bathrooms}</label>
               <select value={bathrooms} onChange={(e) => updateParam('bathrooms', e.target.value)} className={selectClass}>
-                <option value="">Cualquiera</option>
+                <option value="">{f.any}</option>
                 {BATHROOM_FILTER_OPTIONS.map((n) => (
                   <option key={n} value={n}>
-                    {n === '3' ? '3 o más' : n}
+                    {n === '3' ? f.threeOrMore : n}
                   </option>
                 ))}
               </select>
             </div>
 
             <div>
-              <label className="text-xs text-stone-500 mb-1.5 block">Precio mínimo</label>
+              <label className="text-xs text-stone-500 mb-1.5 block">{f.minPrice}</label>
               <div className="relative">
                 <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-stone-400">€</span>
                 <input
@@ -221,13 +223,13 @@ export function PropertyFilters({ availableProvinces }: { availableProvinces: st
                   value={minPriceValue}
                   onChange={(e) => updateParam('minPrice', e.target.value)}
                   className="w-full bg-white border border-stone-200 rounded-full pl-7 pr-4 py-2.5 text-sm text-stone-900 focus:outline-none focus:border-stone-400"
-                  placeholder={formatEuro(PRICE_MIN)}
+                  placeholder={formatEuro(PRICE_MIN, localeTag)}
                 />
               </div>
             </div>
 
             <div>
-              <label className="text-xs text-stone-500 mb-1.5 block">Precio máximo</label>
+              <label className="text-xs text-stone-500 mb-1.5 block">{f.maxPrice}</label>
               <div className="relative">
                 <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-stone-400">€</span>
                 <input
@@ -237,15 +239,15 @@ export function PropertyFilters({ availableProvinces }: { availableProvinces: st
                   value={maxPriceValue}
                   onChange={(e) => updateParam('maxPrice', e.target.value)}
                   className="w-full bg-white border border-stone-200 rounded-full pl-7 pr-4 py-2.5 text-sm text-stone-900 focus:outline-none focus:border-stone-400"
-                  placeholder={formatEuro(PRICE_MAX)}
+                  placeholder={formatEuro(PRICE_MAX, localeTag)}
                 />
               </div>
             </div>
             <div className="sm:col-span-2 lg:col-span-3 xl:col-span-4">
-              <label className="text-xs text-stone-500 mb-1.5 block">Extras</label>
+              <label className="text-xs text-stone-500 mb-1.5 block">{f.extras}</label>
               <div className="rounded-2xl border border-stone-200 bg-white p-3">
                 <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-                  {PROPERTY_EXTRA_OPTIONS.map((option) => {
+                  {extraOptions.map((option) => {
                     const checked = selectedExtras.includes(option.value)
                     return (
                       <label

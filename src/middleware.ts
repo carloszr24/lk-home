@@ -4,9 +4,19 @@ import {
   applyAdminSecurityHeaders,
   isAdminIpAllowed,
 } from '@/lib/admin-security'
+import { isLocale, LOCALE_COOKIE } from '@/i18n/config'
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
+  const lang = request.nextUrl.searchParams.get('lang')
+
+  if (isLocale(lang) && !pathname.startsWith('/admin') && !pathname.startsWith('/api')) {
+    const url = request.nextUrl.clone()
+    url.searchParams.delete('lang')
+    const response = NextResponse.redirect(url)
+    response.cookies.set(LOCALE_COOKIE, lang, { path: '/', maxAge: 60 * 60 * 24 * 365 })
+    return response
+  }
 
   const touchesAdmin =
     pathname.startsWith('/admin') ||

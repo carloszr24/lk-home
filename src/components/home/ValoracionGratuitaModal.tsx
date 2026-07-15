@@ -2,6 +2,8 @@
 
 import { FormEvent, useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { useI18n } from '@/i18n/client'
+import { interpolate } from '@/i18n/interpolate'
 
 type ValoracionForm = {
   propertyType: string
@@ -31,40 +33,16 @@ const initialForm: ValoracionForm = {
   email: '',
 }
 
-const propertyTypeOptions = [
-  'Piso',
-  'Casa',
-  'Ático',
-  'Dúplex',
-  'Chalet',
-  'Local',
-  'Garaje',
-  'Terreno',
-  'Otro',
-]
-
-const saleTimelineOptions = [
-  'Lo antes posible',
-  'En 1-3 meses',
-  'En 3-6 meses',
-  'En 6-12 meses',
-  'Solo quiero una orientación por ahora',
-]
-
-const conditionOptions = [
-  'Totalmente reformado',
-  'Semirreformado',
-  'Reforma antigua',
-  'Para entrar a vivir',
-  'Para reformar',
-]
-
 type Props = {
   triggerClassName?: string
   triggerLabel?: string
 }
 
-export function ValoracionGratuitaModal({ triggerClassName = '', triggerLabel = 'Quiero vender' }: Props) {
+export function ValoracionGratuitaModal({ triggerClassName = '', triggerLabel }: Props) {
+  const { dict, locale } = useI18n()
+  const v = dict.valoracion
+  const label = triggerLabel ?? v.triggerDefault
+
   const [mounted, setMounted] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [submitted, setSubmitted] = useState(false)
@@ -105,13 +83,13 @@ export function ValoracionGratuitaModal({ triggerClassName = '', triggerLabel = 
     if (step === 1) {
       const required = [form.propertyType, form.location, form.sqMeters]
       if (required.some((value) => !value.trim())) {
-        setError('Completa los campos obligatorios para continuar.')
+        setError(v.errorRequired)
         return false
       }
     }
 
     if (step === 2 && !form.saleTimeline.trim()) {
-      setError('Indica cuándo planeas vender para continuar.')
+      setError(v.errorTimeline)
       return false
     }
 
@@ -129,13 +107,13 @@ export function ValoracionGratuitaModal({ triggerClassName = '', triggerLabel = 
     setError('')
     const required = [form.name, form.phone, form.email]
     if (required.some((value) => !value.trim())) {
-      setError('Completa tus datos de contacto para enviar la solicitud.')
+      setError(v.errorContact)
       return
     }
 
     const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())
     if (!emailOk) {
-      setError('Introduce un email válido.')
+      setError(v.errorEmail)
       return
     }
 
@@ -150,7 +128,7 @@ export function ValoracionGratuitaModal({ triggerClassName = '', triggerLabel = 
           phone: form.phone,
           source: 'web_valoracion',
           intent: 'vender',
-          priority: form.saleTimeline === 'Lo antes posible' ? 'alta' : 'media',
+          priority: form.saleTimeline === v.saleTimelines[0] ? 'alta' : 'media',
           saleTimeline: form.saleTimeline,
           propertyRef: `${form.propertyType} - ${form.location}`,
           propertyType: form.propertyType,
@@ -160,21 +138,22 @@ export function ValoracionGratuitaModal({ triggerClassName = '', triggerLabel = 
           bathrooms: form.bathrooms || null,
           condition: form.condition || null,
           observations: form.notes || null,
+          locale,
           notes: [
             `Tipo: ${form.propertyType}`,
             `Zona/Direccion: ${form.location}`,
             `Metros cuadrados: ${form.sqMeters}`,
-            `Habitaciones: ${form.bedrooms || 'No indicado'}`,
-            `Banos: ${form.bathrooms || 'No indicado'}`,
-            `Estado: ${form.condition || 'No indicado'}`,
-            `Observaciones: ${form.notes || 'No indicado'}`,
+            `Habitaciones: ${form.bedrooms || dict.common.notProvided}`,
+            `Banos: ${form.bathrooms || dict.common.notProvided}`,
+            `Estado: ${form.condition || dict.common.notProvided}`,
+            `Observaciones: ${form.notes || dict.common.notProvided}`,
           ].join('\n'),
         }),
       })
-      if (!res.ok) throw new Error('No se pudo enviar la solicitud')
+      if (!res.ok) throw new Error(v.errorSubmit)
       setSubmitted(true)
     } catch {
-      setError('No se pudo enviar la solicitud. Intentalo de nuevo.')
+      setError(v.errorSubmit)
     } finally {
       setSubmitting(false)
     }
@@ -187,40 +166,37 @@ export function ValoracionGratuitaModal({ triggerClassName = '', triggerLabel = 
         onClick={() => setIsOpen(true)}
         className={triggerClassName || 'btn-outline px-10 py-4 text-[calc(0.875rem+4pt)] tracking-wide'}
       >
-        {triggerLabel}
+        {label}
       </button>
 
       {mounted && isOpen && createPortal(
         <div className="lead-modal-overlay" onClick={closeModal}>
           <div className="lead-modal" onClick={(e) => e.stopPropagation()}>
-            <button type="button" onClick={closeModal} className="lead-modal-close" aria-label="Cerrar modal">
+            <button type="button" onClick={closeModal} className="lead-modal-close" aria-label={v.closeModal}>
               ×
             </button>
 
             {submitted ? (
               <div className="lead-modal-thanks">
                 <span className="lead-modal-thanks-icon" aria-hidden="true">✓</span>
-                <h3>Gracias por confiar en nosotros</h3>
-                <p>Te contactaremos para pasarte la valoración gratuita de tu propiedad.</p>
+                <h3>{v.thanksTitle}</h3>
+                <p>{v.thanksMessage}</p>
                 <button type="button" className="btn-primary lead-modal-submit" onClick={closeModal}>
-                  Cerrar
+                  {v.close}
                 </button>
               </div>
             ) : (
               <>
                 <div className="lead-modal-hero">
-                  <h3 className="lead-modal-title">¿Quieres saber cuánto vale tu casa?</h3>
-                  <p className="lead-modal-subtitle">
-                    Completa los datos y te haremos una valoración completa de tu inmueble sin compromiso.
-                    Además, si vendes con nosotros te regalamos el certificado energético obligatorio.
-                  </p>
+                  <h3 className="lead-modal-title">{v.title}</h3>
+                  <p className="lead-modal-subtitle">{v.subtitle}</p>
                 </div>
 
                 <form onSubmit={onSubmit} className="lead-modal-form">
                   <div className="lead-modal-progress-wrap" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress}>
                     <div className="lead-modal-progress-meta">
-                      <span>Paso {step} de {totalSteps}</span>
-                      <span>{progress}% completado</span>
+                      <span>{interpolate(v.stepOf, { step, total: totalSteps })}</span>
+                      <span>{interpolate(v.percentComplete, { percent: progress })}</span>
                     </div>
                     <div className="lead-modal-progress-track">
                       <div className="lead-modal-progress-fill" style={{ width: `${progress}%` }} />
@@ -229,16 +205,16 @@ export function ValoracionGratuitaModal({ triggerClassName = '', triggerLabel = 
 
                   {step === 1 && (
                     <div className="lead-modal-section">
-                      <h4>Tu inmueble</h4>
+                      <h4>{v.step1Title}</h4>
                       <div className="lead-modal-grid">
                         <label>
-                          Tipo de inmueble *
+                          {v.propertyType}
                           <select
                             value={form.propertyType}
                             onChange={(e) => setForm((prev) => ({ ...prev, propertyType: e.target.value }))}
                           >
-                            <option value="">Selecciona una opción</option>
-                            {propertyTypeOptions.map((option) => (
+                            <option value="">{dict.common.selectOption}</option>
+                            {v.propertyTypes.map((option) => (
                               <option key={option} value={option}>
                                 {option}
                               </option>
@@ -247,7 +223,7 @@ export function ValoracionGratuitaModal({ triggerClassName = '', triggerLabel = 
                         </label>
 
                         <label>
-                          Zona / Dirección *
+                          {v.location}
                           <input
                             type="text"
                             value={form.location}
@@ -256,7 +232,7 @@ export function ValoracionGratuitaModal({ triggerClassName = '', triggerLabel = 
                         </label>
 
                         <label>
-                          m² aproximados *
+                          {v.sqMeters}
                           <input
                             type="number"
                             value={form.sqMeters}
@@ -269,10 +245,10 @@ export function ValoracionGratuitaModal({ triggerClassName = '', triggerLabel = 
 
                   {step === 2 && (
                     <div className="lead-modal-section">
-                      <h4>Más detalles</h4>
+                      <h4>{v.step2Title}</h4>
                       <div className="lead-modal-grid">
                         <label>
-                          Habitaciones
+                          {v.bedrooms}
                           <input
                             type="number"
                             value={form.bedrooms}
@@ -281,7 +257,7 @@ export function ValoracionGratuitaModal({ triggerClassName = '', triggerLabel = 
                         </label>
 
                         <label>
-                          Baños
+                          {v.bathrooms}
                           <input
                             type="number"
                             value={form.bathrooms}
@@ -290,13 +266,13 @@ export function ValoracionGratuitaModal({ triggerClassName = '', triggerLabel = 
                         </label>
 
                         <label>
-                          Estado de la vivienda
+                          {v.condition}
                           <select
                             value={form.condition}
                             onChange={(e) => setForm((prev) => ({ ...prev, condition: e.target.value }))}
                           >
-                            <option value="">Selecciona una opción</option>
-                            {conditionOptions.map((option) => (
+                            <option value="">{dict.common.selectOption}</option>
+                            {v.conditions.map((option) => (
                               <option key={option} value={option}>
                                 {option}
                               </option>
@@ -305,13 +281,13 @@ export function ValoracionGratuitaModal({ triggerClassName = '', triggerLabel = 
                         </label>
 
                         <label className="lead-modal-full">
-                          ¿Cuándo planeas venderlo? *
+                          {v.saleTimeline}
                           <select
                             value={form.saleTimeline}
                             onChange={(e) => setForm((prev) => ({ ...prev, saleTimeline: e.target.value }))}
                           >
-                            <option value="">Selecciona una opción</option>
-                            {saleTimelineOptions.map((option) => (
+                            <option value="">{dict.common.selectOption}</option>
+                            {v.saleTimelines.map((option) => (
                               <option key={option} value={option}>
                                 {option}
                               </option>
@@ -320,10 +296,10 @@ export function ValoracionGratuitaModal({ triggerClassName = '', triggerLabel = 
                         </label>
 
                         <label className="lead-modal-full">
-                          Observaciones
+                          {v.observations}
                           <textarea
                             rows={2}
-                            placeholder="Cuéntenos cualquier detalle adicional"
+                            placeholder={v.observationsPlaceholder}
                             value={form.notes}
                             onChange={(e) => setForm((prev) => ({ ...prev, notes: e.target.value }))}
                           />
@@ -334,10 +310,10 @@ export function ValoracionGratuitaModal({ triggerClassName = '', triggerLabel = 
 
                   {step === 3 && (
                     <div className="lead-modal-section">
-                      <h4>Datos de contacto</h4>
+                      <h4>{v.step3Title}</h4>
                       <div className="lead-modal-grid">
                         <label>
-                          Nombre *
+                          {v.name}
                           <input
                             type="text"
                             value={form.name}
@@ -346,7 +322,7 @@ export function ValoracionGratuitaModal({ triggerClassName = '', triggerLabel = 
                         </label>
 
                         <label>
-                          Teléfono *
+                          {v.phone}
                           <input
                             type="tel"
                             value={form.phone}
@@ -355,7 +331,7 @@ export function ValoracionGratuitaModal({ triggerClassName = '', triggerLabel = 
                         </label>
 
                         <label className="lead-modal-full">
-                          Email *
+                          {v.email}
                           <input
                             type="email"
                             value={form.email}
@@ -371,17 +347,17 @@ export function ValoracionGratuitaModal({ triggerClassName = '', triggerLabel = 
                   <div className="lead-modal-actions">
                     {step > 1 && (
                       <button type="button" className="btn-outline lead-modal-secondary" onClick={() => setStep((prev) => (prev > 1 ? (prev - 1) as 1 | 2 | 3 : prev))}>
-                        Atrás
+                        {v.back}
                       </button>
                     )}
 
                     {step < 3 ? (
                       <button type="button" className="btn-primary lead-modal-submit" onClick={goToNextStep}>
-                        Siguiente
+                        {v.next}
                       </button>
                     ) : (
                       <button type="submit" disabled={submitting} className="btn-primary lead-modal-submit disabled:opacity-60">
-                        {submitting ? 'Enviando...' : 'Solicitar valoración'}
+                        {submitting ? dict.common.sending : v.submit}
                       </button>
                     )}
                   </div>

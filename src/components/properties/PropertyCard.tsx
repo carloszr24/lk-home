@@ -1,8 +1,12 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import { Property } from '@/types'
-import { formatPrice, OPERATION_LABELS, parseImages, STATUS_BADGE_CLASSES, STATUS_LABELS, TYPE_LABELS } from '@/lib/utils'
+import { parseImages, STATUS_BADGE_CLASSES } from '@/lib/utils'
 import { cn } from '@/lib/utils'
+import { useI18n } from '@/i18n/client'
+import { interpolate } from '@/i18n/interpolate'
 
 interface PropertyCardProps {
   property: Property
@@ -13,14 +17,18 @@ interface PropertyCardProps {
 const statusColors = STATUS_BADGE_CLASSES
 
 export function PropertyCard({ property, variant = 'default', priority = false }: PropertyCardProps) {
+  const { dict, formatPrice } = useI18n()
   const images = parseImages(property.images)
   const firstImage = images[0] || 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800'
   const isFeaturedMinimal = variant === 'featuredMinimal'
 
+  const statusLabel = dict.labels.status[property.status] || property.status
+  const typeLabel = dict.labels.type[property.type] || property.type
+  const operationLabel = dict.labels.operation[property.operation || 'venta'] || property.operation || dict.labels.operation.venta
+
   return (
     <Link href={`/propiedades/${property.id}`} className="group block">
       <article className="card-hover overflow-hidden bg-white border border-stone-100">
-        {/* Image */}
         <div className={cn('relative overflow-hidden bg-stone-100', isFeaturedMinimal ? 'aspect-[3/4]' : 'aspect-[16/10]')}>
           <Image
             src={firstImage}
@@ -31,7 +39,6 @@ export function PropertyCard({ property, variant = 'default', priority = false }
             className="object-cover transition-transform duration-500 group-hover:scale-105"
             sizes={isFeaturedMinimal ? '(max-width: 768px) 86vw, (max-width: 1024px) 68vw, 31vw' : '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'}
           />
-          {/* Status badge */}
           {!isFeaturedMinimal && (
             <>
               <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent opacity-100 transition-opacity duration-300" />
@@ -40,16 +47,15 @@ export function PropertyCard({ property, variant = 'default', priority = false }
                 property.status !== 'vendido' && 'backdrop-blur-sm',
                 statusColors[property.status] || statusColors.disponible
               )}>
-                {STATUS_LABELS[property.status] || property.status}
+                {statusLabel}
               </span>
-              {/* Image count */}
               {images.length > 1 && (
                 <span className="absolute top-3 right-3 z-10 bg-black/50 text-white text-xs px-2 py-1 backdrop-blur-sm">
-                  +{images.length} fotos
+                  {interpolate(dict.common.photosCount, { count: images.length })}
                 </span>
               )}
               <span className="absolute inset-x-0 bottom-0 z-10 translate-y-full bg-black/55 px-5 py-4 text-sm text-white backdrop-blur-sm transition-transform duration-300 group-hover:translate-y-0">
-                Ver propiedad →
+                {dict.common.viewProperty}
               </span>
             </>
           )}
@@ -63,7 +69,6 @@ export function PropertyCard({ property, variant = 'default', priority = false }
           </div>
         )}
 
-        {/* Content */}
         <div className={cn('p-6', isFeaturedMinimal && 'p-4')}>
           <div className={cn('flex items-start justify-between gap-4', isFeaturedMinimal ? 'mb-4' : 'mb-3')}>
             <h3 className={cn(
@@ -80,26 +85,24 @@ export function PropertyCard({ property, variant = 'default', priority = false }
                 {property.location}
               </p>
 
-              {/* Stats */}
               {(property.sqMeters || property.bedrooms || property.bathrooms) && (
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs uppercase tracking-[0.18em] text-stone-500 mb-5 pb-5 border-b border-stone-100">
-                  {property.sqMeters && <span>{property.sqMeters} m²</span>}
+                  {property.sqMeters && <span>{property.sqMeters} {dict.common.m2}</span>}
                   {property.bedrooms != null && property.bedrooms > 0 && (
-                    <span>{property.bedrooms} hab.</span>
+                    <span>{property.bedrooms} {dict.common.bedroomsShort}</span>
                   )}
-                  {property.bathrooms && <span>{property.bathrooms} baños</span>}
+                  {property.bathrooms && <span>{property.bathrooms} {dict.common.bathroomsShort}</span>}
                   <span className="ml-auto text-[11px] bg-stone-100 px-2.5 py-1 text-stone-600 tracking-[0.12em] uppercase">
-                    {TYPE_LABELS[property.type] || property.type}
+                    {typeLabel}
                   </span>
                   <span className="text-[11px] bg-stone-100 px-2.5 py-1 text-stone-600 tracking-[0.12em] uppercase">
-                    {OPERATION_LABELS[property.operation || 'venta'] || property.operation || 'Venta'}
+                    {operationLabel}
                   </span>
                 </div>
               )}
             </>
           )}
 
-          {/* Price */}
           <div
             className={cn(
               'flex items-center justify-between',
@@ -111,7 +114,7 @@ export function PropertyCard({ property, variant = 'default', priority = false }
             </span>
             {!isFeaturedMinimal && (
               <span className="text-xs uppercase tracking-[0.18em] text-brand-charcoal group-hover:translate-x-1 transition-transform inline-block">
-                Ver →
+                {dict.common.viewArrow}
               </span>
             )}
           </div>

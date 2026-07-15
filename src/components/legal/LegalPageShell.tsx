@@ -1,13 +1,15 @@
 import Link from 'next/link'
 import { HEADER_OFFSET_CLASS } from '@/lib/logo'
+import type { Dictionary } from '@/i18n/types'
 
 type Props = {
   eyebrow: string
   title: string
+  dict: Dictionary
   children: React.ReactNode
 }
 
-export function LegalPageShell({ eyebrow, title, children }: Props) {
+export function LegalPageShell({ eyebrow, title, dict, children }: Props) {
   return (
     <div className={HEADER_OFFSET_CLASS}>
       <div className="bg-stone-950 text-white py-16 px-6 md:px-10">
@@ -21,11 +23,11 @@ export function LegalPageShell({ eyebrow, title, children }: Props) {
         {children}
         <p className="text-stone-500 text-sm text-left">
           <Link href="/contacto" className="text-brand-red hover:underline">
-            Volver a contacto
+            {dict.common.backToContact}
           </Link>
           {' · '}
           <Link href="/aviso-legal" className="text-brand-red hover:underline">
-            Aviso legal
+            {dict.common.legalNotice}
           </Link>
         </p>
       </div>

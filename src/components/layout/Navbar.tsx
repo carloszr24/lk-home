@@ -9,25 +9,26 @@ import { SITE_NAME } from '@/lib/brand'
 import { HEADER_HEIGHT_CLASS, LOGO_IMAGE_CLASS, LOGO_RENDER, LOGO_SRC } from '@/lib/logo'
 import { cn } from '@/lib/utils'
 import { ValoracionGratuitaModal } from '@/components/home/ValoracionGratuitaModal'
-import { SERVICE_ITEMS } from '@/data/services'
-
-const links = [
-  { href: '/propiedades', label: 'Propiedades' },
-  { href: '/sobre-nosotros', label: 'Servicios' },
-  { href: '/contacto', label: 'Contacto' },
-]
+import { useI18n } from '@/i18n/client'
 
 const navLinkClass =
   'inline-flex items-center leading-none text-[11px] font-medium uppercase tracking-[0.13em] transition-colors duration-200'
 
 export function Navbar() {
   const pathname = usePathname()
+  const { dict } = useI18n()
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [servicesOpen, setServicesOpen] = useState(false)
   const closeTimer = useRef<NodeJS.Timeout | null>(null)
   const isHome = pathname === '/'
   const transparent = isHome && !scrolled && !open
+
+  const links = [
+    { href: '/propiedades', label: dict.nav.properties },
+    { href: '/sobre-nosotros', label: dict.nav.services },
+    { href: '/contacto', label: dict.nav.contact },
+  ]
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -158,7 +159,7 @@ export function Navbar() {
                         )}
                       >
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                          {SERVICE_ITEMS.map((service) => (
+                          {dict.services.items.map((service) => (
                             <Link
                               key={service.title}
                               href="/sobre-nosotros"
@@ -174,7 +175,7 @@ export function Navbar() {
                             href={phoneHref}
                             className="inline-flex items-center justify-center gap-1 text-sm font-medium text-brand-charcoal hover:text-stone-600 transition-colors"
                           >
-                            Llámanos: 688 76 32 89 →
+                            {dict.common.callUs}
                           </a>
                         </div>
                       </div>
@@ -202,7 +203,7 @@ export function Navbar() {
             </nav>
 
             <ValoracionGratuitaModal
-              triggerLabel="Valoración gratuita"
+              triggerLabel={dict.nav.freeValuation}
               triggerClassName={cn(
                 'inline-flex shrink-0 whitespace-nowrap rounded-md text-[11px] uppercase tracking-[0.1em] px-5 py-2.5',
                 transparent
@@ -215,7 +216,7 @@ export function Navbar() {
           <button
             className={cn('md:hidden ml-auto p-2 transition-colors', transparent ? 'text-white' : 'text-stone-600')}
             onClick={() => setOpen(!open)}
-            aria-label="Menu"
+            aria-label={dict.common.menu}
           >
             <div className="w-5 space-y-1.5">
               <span
@@ -257,7 +258,7 @@ export function Navbar() {
             </Link>
           ))}
           <ValoracionGratuitaModal
-            triggerLabel="Valoración gratuita"
+            triggerLabel={dict.nav.freeValuation}
             triggerClassName="btn-primary text-xs mt-4 w-full text-center"
           />
         </div>

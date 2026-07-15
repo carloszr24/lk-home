@@ -1,0 +1,619 @@
+{
+  "metadata": {
+    "site": {
+      "title": "{{siteName}} | {{tagline}}",
+      "description": "Gipuzkoako higiezinen agentzia. Higiezinen kudeaketa, home staging, erreforma integralak eta garbiketa profesionala.",
+      "keywords": "higiezinen agentzia gipuzkoa, etxeak salmenta, home staging, erreforma integralak, garbiketa profesionala, lk home"
+    },
+    "home": {
+      "title": "{{siteName}} | {{tagline}}",
+      "description": "Gipuzkoako higiezinen agentzia. Etxebizitzen salmenta, erostea eta alokairua kudeaketa integralarekin."
+    },
+    "properties": {
+      "title": "Higiezinak | {{siteName}}",
+      "description": "Gipuzkoan salmenta eta alokairurako higiezinen katalogoa."
+    },
+    "contact": {
+      "title": "Kontaktua | {{siteName}}",
+      "description": "Jarri harremanetan {{siteName}}-rekin. 24 orduren barruan erantzuten dizugu."
+    },
+    "services": {
+      "title": "Zerbitzuak | {{siteName}}",
+      "description": "Higiezinen kudeaketa, home staging, erreforma integralak eta garbiketa profesionala Gipuzkoan."
+    },
+    "notFound": {
+      "title": "Orria ez da aurkitu | {{siteName}}",
+      "description": "Bilatzen ari zaren orria ez da existitzen."
+    },
+    "avisoLegal": {
+      "title": "Lege-oharra | {{siteName}}",
+      "description": "{{siteName}} webgunearen lege-oharra."
+    },
+    "privacidad": {
+      "title": "Pribatutasun-politika | {{siteName}}",
+      "description": "{{siteName}}-ren datu pertsonalen babes eta pribatutasun-politika."
+    },
+    "cookies": {
+      "title": "Cookie-politika | {{siteName}}",
+      "description": "{{siteName}} webgunean cookieen erabilerari buruzko informazioa."
+    }
+  },
+  "common": {
+    "brandTagline": "Gipuzkoako higiezinen agentzia",
+    "agentTagline": "Etxebizitzen salmenta eta erostea, alokairuak eta zure higiezinaren kudeaketa integrala Gipuzkoan.",
+    "phone": "Telefonoa",
+    "email": "Posta elektronikoa",
+    "whatsapp": "WhatsApp",
+    "office": "Bulegoa",
+    "schedule": "Ordutegia",
+    "closed": "Itxita",
+    "loading": "Kargatzen...",
+    "sending": "Bidaltzen...",
+    "selectOption": "Aukeratu aukera bat",
+    "notProvided": "Ez da emana",
+    "perMonth": "/hil",
+    "consultPrice": "Galdetu prezioa",
+    "photos": "argazki",
+    "photosCount": "+{{count}} argazki",
+    "m2": "m²",
+    "bedrooms": "Logelak",
+    "bedroomsShort": "log.",
+    "bathrooms": "Komunak",
+    "bathroomsShort": "kom.",
+    "floor": "Solairua",
+    "withElevator": "igogailuarekin",
+    "viewAll": "Ikusi guztiak →",
+    "viewAllShort": "Ikusi guztiak",
+    "viewProperty": "Ikusi higiezina →",
+    "viewArrow": "Ikusi →",
+    "backToProperties": "← Itzuli higiezinetara",
+    "home": "Hasiera",
+    "price": "Prezioa",
+    "description": "Deskribapena",
+    "features": "Ezaugarriak",
+    "enlarge": "Handitu",
+    "close": "Itxi",
+    "zoomIn": "Hurbildu",
+    "zoomOut": "Urrundu",
+    "prevImage": "Aurreko irudia",
+    "nextImage": "Hurrengo irudia",
+    "viewEnlargedImage": "Ikusi irudi handitua",
+    "viewImage": "Ikusi irudia {{n}}",
+    "viewAllImages": "Ikusi irudi guztiak ({{count}})",
+    "enlargedImage": "{{title}} handitua {{n}}",
+    "thumbnail": "{{title}} irudi txikia {{n}}",
+    "menu": "Menua",
+    "callUs": "Deitu: 688 76 32 89 →",
+    "googleMaps": "Google Maps",
+    "otherChannels": "Beste kanalak",
+    "openingHours": "Arreta-ordutegia",
+    "navigation": "Nabigazioa",
+    "contactSection": "Kontaktua",
+    "legalDisclaimer": "Webgune honetako informazio guztiak ez du izaera kontraktualik; edukia informatiboa besterik ez da.",
+    "allRightsReserved": "Eskubide guztiak erreserbatuta.",
+    "privacyPolicy": "Pribatutasun-politika",
+    "legalNotice": "Lege-oharra",
+    "cookies": "Cookieak",
+    "privacyShort": "Pribatutasuna",
+    "backToContact": "Itzuli kontaktura",
+    "spain": "Espainia",
+    "web": "Webgunea",
+    "energyUnit": "kg CO₂/m²/urte",
+    "co2Unit": " · {{value}} kg CO₂/m²/urte"
+  },
+  "nav": {
+    "properties": "Higiezinak",
+    "services": "Zerbitzuak",
+    "contact": "Kontaktua",
+    "freeValuation": "Doako balorazioa"
+  },
+  "days": {
+    "monday": "Astelehena",
+    "tuesday": "Asteartea",
+    "wednesday": "Asteazkena",
+    "thursday": "Osteguna",
+    "friday": "Ostirala",
+    "saturday": "Larunbata",
+    "sunday": "Igandea"
+  },
+  "labels": {
+    "status": {
+      "disponible": "Eskuragarri",
+      "reservado": "Erreserbatuta",
+      "vendido": "Saldua"
+    },
+    "type": {
+      "piso": "Pisua",
+      "casa": "Etxea",
+      "duplex": "Duplexa",
+      "local": "Lokala",
+      "terreno": "Lurra",
+      "oficina": "Bulegoa",
+      "garaje": "Garaje-plaza"
+    },
+    "operation": {
+      "venta": "Salmenta",
+      "alquiler": "Alokairua"
+    },
+    "extras": {
+      "garage": "Garajea",
+      "elevator": "Igogailua",
+      "furnished": "Altzariz",
+      "heating": "Berogailua",
+      "pool": "Igerilekua",
+      "storage": "Trastelekua",
+      "common_areas": "Eremu komuna"
+    }
+  },
+  "home": {
+    "hero": {
+      "titleLine1": "Zure etxea,",
+      "titleLine2": "eskuz ondo",
+      "viewProperties": "Erosi nahi dut",
+      "freeValuation": "Doako balorazioa"
+    },
+    "services": {
+      "eyebrow": "Gure zerbitzuak",
+      "title": "Zure higiezinak behar duen guztia",
+      "subtitle": "Kudeaketa, aurkezpena, erreforma eta garbiketa talde lokal batekin Gipuzkoan.",
+      "viewAll": "Ezagutu zerbitzu guztiak →"
+    },
+    "featured": {
+      "title": "Nabarmendutako",
+      "titleHighlight": "higiezinak",
+      "viewAll": "Ikusi guztiak →",
+      "empty": "Laster gehituko ditugu nabarmendutako higiezinak."
+    },
+    "cta": {
+      "title": "Hitz egin dezagun zure proiektuaz?",
+      "subtitle": "Bisita gaitzazu Lersundi Kalea, 31, Gipuzkoa, edo deitu 688 76 32 89 zenbakira.",
+      "contactWith": "Jarri harremanetan"
+    },
+    "scrollHint": "Aurkitu gehiago"
+  },
+  "services": {
+    "items": [
+      {
+        "title": "Higiezinen kudeaketa",
+        "desc": "Etxebizitzen salmenta, erostea eta alokairua laguntza integral eta hurbilekoarekin Gipuzkoan."
+      },
+      {
+        "title": "Home staging",
+        "desc": "Zure higiezina nabarmentzeko prestatzen dugu: dekorazioa, banaketa eta aurkezpena salmenta azkartzen dutenak."
+      },
+      {
+        "title": "Erreforma integralak",
+        "desc": "Espazioak hasieratik amaierara berritu egiten ditugu zure higiezina balioesteko kalitatezko bukaerarekin."
+      },
+      {
+        "title": "Garbiketa profesionala",
+        "desc": "Garbiketa zerbitzu espezializatua higiezin bakoitza txukun utzi aurretik bisitak edo entregak egiteko."
+      }
+    ],
+    "whyChooseUs": [
+      {
+        "title": "Esperientzia lokala",
+        "desc": "Gipuzkoako merkatua ezagutzen dugu, 4.300 iritzi baino gehiagorekin eta 150 higiezin saldu."
+      },
+      {
+        "title": "Zerbitzu integrala",
+        "desc": "Higiezinaren kudeaketatik staging-era, erreformara eta garbiketara, dena talde berean."
+      },
+      {
+        "title": "Tratu pertsonalizatua",
+        "desc": "Higiezin eta bezero bakoitzak behar bereziak dituela kontuan hartuta arreta jasotzen du."
+      },
+      {
+        "title": "Emaitzak ikusgarriak",
+        "desc": "Espazio bakoitza prestatzen dugu balioa transmititzeko eta konfiantza sortzeko lehen momentutik."
+      }
+    ],
+    "hero": {
+      "eyebrow": "Zerbitzuak",
+      "subtitle": "Gipuzkoako higiezinen agentzia",
+      "googleReviews": "{{rating}} Google-n · {{count}} iritzi"
+    },
+    "sectionTitle": "Gure zerbitzuak",
+    "whyTitle": "Zergatik aukeratu gaitzazu",
+    "contactTitle": "Jarri gurekin harremanetan",
+    "writeUs": "Idatzi guri",
+    "scrollHint": "Jarraitu behera"
+  },
+  "reviews": {
+    "googleReviews": "iritzi Google-n",
+    "onGoogle": "Google-n",
+    "propertiesSold": "higiezin saldu",
+    "eyebrow": "Iritziak",
+    "title": "Gure bezeroen konfiantza",
+    "subtitle": "{{label}} tratu hurbil eta profesionalarekin",
+    "soldLabel": "150 higiezin baino gehiago saldu",
+    "carouselAria": "Bezeroen iritzien karrusela",
+    "excellentRating": "Balorazio bikaina"
+  },
+  "properties": {
+    "eyebrow": "Higiezinak",
+    "title": "Higiezinak",
+    "countOne": "{{count}} higiezin eskuragarri",
+    "countMany": "{{count}} higiezin eskuragarri",
+    "noResults": "Emaitzarik ez",
+    "noResultsHint": "Saiatu iragazkiak doitzeko edo arakatu katalogo osoa",
+    "viewAll": "Ikusi higiezin guztiak",
+    "filters": {
+      "title": "Iragazkiak",
+      "active": "Aktiboak",
+      "clear": "Garbitu",
+      "propertyType": "Higiezin mota",
+      "operation": "Eragiketa",
+      "status": "Egoera",
+      "province": "Probintzia",
+      "bedrooms": "Logelak",
+      "bathrooms": "Komunak",
+      "minPrice": "Prezio minimoa",
+      "maxPrice": "Prezio maximoa",
+      "extras": "Gehigarriak",
+      "all": "Guztiak",
+      "allF": "Guztiak",
+      "any": "Edozein",
+      "fourOrMore": "4 edo gehiago",
+      "threeOrMore": "3 edo gehiago"
+    }
+  },
+  "propertyDetail": {
+    "requestInfo": "Eskatu informazioa",
+    "viewPortal": "Ikusi higiezinen portalean ↗",
+    "whatsappMessage": "Kaixo! {{title}} higiezinari buruzko informazioa eskatu nahi nuke",
+    "fields": {
+      "propertyType": "Higiezin mota",
+      "availability": "Eskuragarritasuna",
+      "hotWater": "Ur beroa",
+      "heatingType": "Berogailu mota",
+      "condition": "Egoera",
+      "age": "Antzinatasuna",
+      "extras": "Gehigarriak",
+      "energy": "Energia",
+      "emissions": "Isurketak"
+    }
+  },
+  "contact": {
+    "eyebrow": "Kontaktua",
+    "title": "Hemen gaude laguntzeko",
+    "subtitle": "Idatzi edo deitu. 24 orduren barruan erantzuten dizugu.",
+    "formTitle": "Bidali mezu bat",
+    "name": "Izena *",
+    "namePlaceholder": "Zure izena",
+    "email": "Posta elektronikoa *",
+    "emailPlaceholder": "zure@email.com",
+    "phone": "Telefonoa",
+    "phonePlaceholder": "+34 600 000 000",
+    "message": "Mezua *",
+    "messagePlaceholder": "Esan zer behar duzun...",
+    "submit": "Bidali mezua",
+    "privacyAccept": "Bidaltzean gure",
+    "privacyLink": "pribatutasun-politika",
+    "successTitle": "Mezua bidali da",
+    "successMessage": "Hurrengo orduei buruz jarriko gara zurekin harremanetan.",
+    "sendAnother": "Bidali beste mezu bat",
+    "infoTitle": "Informazioa",
+    "errorSend": "Ezin izan da mezua bidali",
+    "errorSubmit": "Ezin izan da formularioa bidali. Saiatu berriro minutu batzuk barru."
+  },
+  "valoracion": {
+    "triggerDefault": "Saldu nahi dut",
+    "closeModal": "Itxi modala",
+    "thanksTitle": "Eskerrik asko gurekin konfiantza izateagatik",
+    "thanksMessage": "Zure higiezinaren doako balorazioa emateko jarriko gara zurekin harremanetan.",
+    "close": "Itxi",
+    "title": "Jakin nahi duzu zenbat balio duen zure etxeak?",
+    "subtitle": "Osatu datuak eta zure higiezinaren balorazio osoa egingo dizugu konpromisorik gabe. Gainera, gurekin saltzen baduzu, beharrezko energia-ziurtagiria oparitzen dizugu.",
+    "stepOf": "{{total}}-tik {{step}}. pausoa",
+    "percentComplete": "%{{percent}} osatuta",
+    "step1Title": "Zure higiezina",
+    "step2Title": "Xehetasun gehiago",
+    "step3Title": "Harremanetarako datuak",
+    "propertyType": "Higiezin mota *",
+    "location": "Eremua / Helbidea *",
+    "sqMeters": "m² gutxi gorabehera *",
+    "bedrooms": "Logelak",
+    "bathrooms": "Komunak",
+    "condition": "Etxebizitzaren egoera",
+    "saleTimeline": "Noiz saldu nahi duzu? *",
+    "observations": "Oharrak",
+    "observationsPlaceholder": "Kontatu edozein xehetasun gehigarri",
+    "name": "Izena *",
+    "phone": "Telefonoa *",
+    "email": "Posta elektronikoa *",
+    "back": "Atzera",
+    "next": "Hurrengoa",
+    "submit": "Eskatu balorazioa",
+    "errorRequired": "Osatu derrigorrezko eremuak jarraitzeko.",
+    "errorTimeline": "Adierazi noiz saldu nahi duzun jarraitzeko.",
+    "errorContact": "Osatu zure harremanetarako datuak eskaera bidaltzeko.",
+    "errorEmail": "Sartu baliozko posta elektroniko bat.",
+    "errorSubmit": "Ezin izan da eskaera bidali. Saiatu berriro.",
+    "propertyTypes": ["Pisua", "Etxea", "Atikoa", "Duplexa", "Txaleta", "Lokala", "Garajea", "Lurra", "Bestea"],
+    "saleTimelines": [
+      "Ahal bezain laster",
+      "1-3 hilabete barru",
+      "3-6 hilabete barru",
+      "6-12 hilabete barru",
+      "Oraingoz orientazioa nahi dut besterik ez"
+    ],
+    "conditions": [
+      "Erabat berrituta",
+      "Erdi-berrituta",
+      "Berrikuntza zaharra",
+      "Bizitzera sartzeko",
+      "Berrikusteko"
+    ]
+  },
+  "notFound": {
+    "title": "Orria ez da aurkitu",
+    "description": "Bilatzen ari zaren orria ez da existitzen edo lekuz aldatu da. Itzul zaitezke hasierara eta arakatu gure higiezinak.",
+    "backHome": "Itzuli hasierara"
+  },
+  "legal": {
+    "eyebrow": "Legala",
+    "avisoLegal": {
+      "title": "Lege-oharra",
+      "sections": [
+        {
+          "title": "Webgunearen titularra",
+          "paragraphs": [
+            "{{ownerName}}, {{legalForm}}.{{taxIdLine}} Helbide profesionala: {{address}}.",
+            "Izen komertziala: {{agentName}}.",
+            "{{emailLine}}"
+          ]
+        },
+        {
+          "title": "Helburua",
+          "paragraphs": [
+            "{{siteUrl}} webguneak izaera informatibo eta komertziala du. {{agentName}}-ren higiezinen zerbitzuak aurkeztea eta higiezinen salmenta, erostea, alokairua edo aholkularitza interesatzen duten pertsonekin harremana erraztea da bere helburua."
+          ]
+        },
+        {
+          "title": "Erabilera-baldintzak",
+          "paragraphs": [
+            "Webgune honetara sartzeak eta erabiltzeak erabiltzaile izaera ematen du eta hemen jasotako baldintzak onartzea dakar. Erabiltzaileak edukien eta eskaintzen diren zerbitzuen erabilera egokia egiten du, legea, moral publikoa eta ordena publikoa eta baldintza hauek betetzen dituela."
+          ]
+        },
+        {
+          "title": "Jabetza intelektuala",
+          "paragraphs": [
+            "Webgune honetako edukiak, testuak, irudiak, logotipoak eta diseinua barne, {{agentName}}-ren jabetza dira edo erabiltzeko baimena ematen duten hirugarrenenak; baimen esplizitua gabe errepordatzea debekatuta dago."
+          ]
+        },
+        {
+          "title": "Datuen babesa eta cookieak",
+          "paragraphs": [
+            "Datu pertsonalen tratamendua eta cookieen erabilera dokumentu espezifikoek arautzen dituzte:"
+          ],
+          "list": [
+            "Pribatutasun-politika",
+            "Cookie-politika"
+          ]
+        }
+      ]
+    },
+    "privacidad": {
+      "title": "Pribatutasun-politika",
+      "sections": [
+        {
+          "title": "Pribatutasun-politika",
+          "paragraphs": [
+            "{{agentName}}-ren konpromisoa da webgune honen erabiltzaileei nabigazioagatik edo eskaintzen diren zerbitzuak erabiltzeagatik biltzen diren datu pertsonalen tratamendu eta babesari buruz informatzea.",
+            "Datu pertsonala pertsona fisiko bat identifikatua edo identifikagarria den edozein informazio da."
+          ]
+        },
+        {
+          "title": "Nor da tratamenduaren arduraduna?",
+          "paragraphs": [
+            "(EB) 2016/679 Erregelamendua (DBEO) eta Espainiako datuak babesteko araudiaren arabera, {{siteUrl}} bidez emandako datu pertsonalen tratamenduaren arduraduna hau da:",
+            "{{ownerBlock}}",
+            "{{agentName}}-k politika honetan adierazitako helburuetarako tratatutako datuen konfidentzialtasunaren eta segurtasunaren ardura izango du, webgunearen esparrutik kanpo tratamendu-emaile gisa jarduten duten teknologia-hornitzaileei dagozkien arduren kalterik gabe."
+          ]
+        },
+        {
+          "title": "Beharrezkoa al da datu pertsonalak ematea?",
+          "paragraphs": [
+            "Webgunea bisitatzeak ez du datu pertsonalak ematea behartzen. Hala ere, kontakturako formularioak edo higiezinen balorazioa eskatzeko formularioak erabiltzeak zure eskaera artatzeko datu jakin batzuk ematea eskatzen du.",
+            "Formulario bakoitzean eskatzen diren datuak adierazitako helbururako beharrezkoak besterik ez dira. Derrigorrezko gisa markatutako datuak emateari uko egiteak zure eskaera behar bezala tramitatzea eragotziko du."
+          ]
+        },
+        {
+          "title": "Zertarako erabiltzen ditugu zure datu pertsonalak?",
+          "paragraphs": [
+            "Ematen dizkiguzun datu pertsonalak helburu hauetarako tratatuko dira:"
+          ],
+          "list": [
+            "Kontakturako formularioa: zure kontsulta artatzea, zure mezuari erantzutea eta {{agentName}}-ren higiezinen zerbitzuekin lotutako komunikazioa mantentzea.",
+            "Doako balorazioaren formularioa («Saldu nahi dut»): zure higiezinaren balorazio-eskaera kudeatzea, merkatu-orientazioa eskaintzeko zurekin harremanetan jartzea eta, hala badagokio, eskatzen dituzun higiezinen zerbitzuak tramitatu.",
+            "Telefono, posta elektroniko edo WhatsApp bidezko kontaktua: gure zerbitzuei buruz bidaltzen dizkiguzun eskaerei erantzutea."
+          ]
+        },
+        {
+          "title": "Komunikazio komertzialak",
+          "paragraphs": [
+            "Ez ditugu zure datuak erabiltzen eskatu gabeko komunikazio komertzialak bidaltzeko, zure kontsulta edo eskaerari erantzutetik bestelakoak, zuk horretarako baimena ematen diguzun edo indarrean dagoen araudiaren arabera aurrez harreman komertziala badago besterik ez.",
+            "Webgunearen administrazio-panelerako sarbideak saio-teknologiko cookie bat erabiltzen du. Informazio gehiago Cookie-politikan kontsulta dezakezu."
+          ]
+        },
+        {
+          "title": "Zein da tratamenduaren legitimazioa?",
+          "paragraphs": [
+            "Zure datuen tratamendua formularioak bidaltzean ematen diguzun baimenean, zure eskaeraren arabera aurrekontratu-neurriak betetzean eta, dagokionean, {{agentName}}-ren interes legitimoa jasotako eskaerak artatzean oinarritzen da.",
+            "Edozein unetan ken dezakezu zure baimena, horrek aurretik egindako tratamenduaren legezkotasuna eragotzi gabe."
+          ]
+        },
+        {
+          "title": "Ze datu-kategoria tratatzen dira?",
+          "paragraphs": [
+            "Erabilitako zerbitzuaren arabera, datu-kategoria hauek tratatu ditzakegu:"
+          ],
+          "list": [
+            "Identifikazio-datuak: izena eta abizenak.",
+            "Harremanetarako datuak: telefonoa eta posta elektronikoa.",
+            "Zure mezuan edo kontsultan sartutako datuak.",
+            "Balorazio-formularioan: higiezin mota, kokapena, azalera, logelak, komunak, egoera, salmenta-epea eta ematea erabakitzen duzun beste informazioa."
+          ]
+        },
+        {
+          "title": "Zenbat denbora gordetzen ditugu datuak?",
+          "paragraphs": [
+            "Datuak zure eskaera artatzeko eta horretatik sortutako harremana mantentzeko beharrezko denboran gordeko dira, baita gerta daitezkeen erantzukizunak artatzeko legez eskatzen diren epeetan ere.",
+            "Orientazio gisa, eta aplikatzen denean, datuak merkataritza, fiskal edo zibil araudiak ezartzen dituzten epeetan gorde daitezke (adibidez, kontratu edo kontabilitate-dokumentazioa indarrean dagoen legeriak eskatzen duen urteetan)."
+          ]
+        },
+        {
+          "title": "Nori komunikatzen zaizkio datuak?",
+          "paragraphs": [
+            "Zure datuak ez dira hirugarrenei lagatuko legezko betebeharra edo eskatutako zerbitzua emateko beharrezkoa denean besterik ez.",
+            "Webgunearen funtzionamendurako eta kontsulten kudeaketarako, {{agentName}}-k tratamendu-emaile gisa jarduten duten hornitzaileetan oinarri daiteke, hala nola ostatatze-plataformetan eta zerbitzari lokaleko datu-basean eta, hala badagokio, jasotako eskaeren jakinarazpena bidaltzeko posta elektronikoko zerbitzuetan.",
+            "Hornitzaile hauek datuak gure argibideen arabera eta datuak babesteko araudiak eskatzen dituen garantiekin soilik tratatuko dituzte."
+          ]
+        },
+        {
+          "title": "Ze erantzukizun du erabiltzaileak?",
+          "paragraphs": [
+            "Ematen dituzun datuak egiazkoak, zehatzak eta eguneratuta daudela bermatzen duzu, eta horien okertasun edo faltsuketagaren eta {{agentName}} edo hirugarrenei eragin diezazkieketen kalteen erantzule izango zara."
+          ]
+        },
+        {
+          "title": "Ze eskubide ditu erabiltzaileak?",
+          "paragraphs": [
+            "Doan erabil ditzakezu sarbidea, zuzentzea, ezabatzea, aurka egitea, tratamendua mugatzea eta eramangarritasuna, baita emandako baimena kentzea ere, {{ownerName}}-ri idatziz {{address}} helbidera{{emailRights}}.",
+            "Halaber, Espainiako Datuak Babesteko Agentzian (www.aepd.es) erreklamazioa jar dezakezu tratamendua indarrean dagoen araudiarekin bat ez badator."
+          ]
+        },
+        {
+          "title": "Segurua al da datu pertsonalak ematea?",
+          "paragraphs": [
+            "{{agentName}}-k zure datuak baimenik gabeko sarbide, galera, aldaketa edo tratamendu ilegaletik babesteko neurri tekniko eta antolakuntza arrazoizkoak hartzen ditu, teknologiaren egoeraren eta tratatzen diren datuen izaeraren arabera."
+          ]
+        },
+        {
+          "title": "Aldatu daiteke pribatutasun-politika hau?",
+          "paragraphs": [
+            "Politika hau aldatzeko eskubidea gordetzen dugu lege-berritasunetara edo eskaintzen diren zerbitzuetako aldaketetara egokitzeko. Garrantzitsua denean, bertsio eguneratua orrialde honetan argitaratuko da."
+          ]
+        }
+      ]
+    },
+    "cookies": {
+      "title": "Cookie-politika",
+      "lastUpdated": "Azken eguneraketa: 2026ko ekaina. Politika hau Esparru Ekonomiko Europarreko herritar eta egoiliarrei aplikatzen zaie.",
+      "sections": [
+        {
+          "title": "1. Sarrera",
+          "paragraphs": [
+            "Gure webguneak, {{siteUrl}} (aurrerantzean, «webgunea»), cookieak eta antzeko teknologiak erabiltzen ditu. Dokumentu honetan {{agentName}}-ren webgunean erabilerari buruz informatzen dizugu, webguneak une honetan erabiltzen duenaren arabera.",
+            "Webgunean ohiko nabigazioak ez ditu publizitate, estatistika edo sare sozialen cookieak instalatzen. Saio-teknologiko cookie bat soilik erabiltzen da barneko administrazio-panelerako sarbiderako."
+          ]
+        },
+        {
+          "title": "2. Zer dira cookieak?",
+          "paragraphs": [
+            "Cookiea web-orri baten bidez bidaltzen den fitxategi txiki bat da, eta zure nabigatzaileak zure gailuan gorde dezake. Gordetako informazioa gure zerbitzarietara edo hirugarrenenetara itzul daiteke hurrengo bisita batean."
+          ]
+        },
+        {
+          "title": "3. Zer dira scriptak?",
+          "paragraphs": [
+            "Scripta webguneak behar bezala funtzionatzeko ahalbidetzen duen kode-zati bat da. Gure kasuan, webgunea Next.js-rekin garatu da eta kode horren zati bat gure ostatatze-zerbitzarian exekutatzen da eta beste zati bat zure nabigatzailean edukiak erakusteko eta kontakturako eta balorazio-formularioekin elkarreragiteko.",
+            "Webgunearen tipografiak webgunearen beretik zerbitzatzen dira (ez dugu kanpoko zerbitzuetatik jartzen cookieak instalatuko lituzketen letra-tipoak)."
+          ]
+        },
+        {
+          "title": "4. Zer da web-beacon bat?",
+          "paragraphs": [
+            "Web-beacon irudi txiki edo zati ikusezin bat da zenbat bisita edo portaera neurtzeko erabiltzen duten webgune batzuek. {{agentName}}-k ez du web-beaconik edo jarraipen-etiketarik erabiltzen webgunearen uneko bertsioan."
+          ]
+        },
+        {
+          "title": "5. Cookieak",
+          "subsections": [
+            {
+              "title": "5.1 Cookie teknikoak edo funtzionalak",
+              "paragraphs": [
+                "Webgunearen zati jakin batzuk funtzionatzeko beharrezkoak dira. Erabiltzaileen jendaurrean nabigatzean ez dugu hobespen edo saskia cookieak instalatzen, webguneak ez duelako lineako denda edo bezeroen eremurik.",
+                "Webguneak erabiltzen duen cookie propio bakarra administrazio-panelaren saio-cookiea da, /admin bide-izenean soilik eskuragarri pertsonal baimendurako."
+              ]
+            },
+            {
+              "title": "5.2 Estatistika-cookieak",
+              "paragraphs": [
+                "Ez dugu estatistika-cookierik erabiltzen (adibidez, Google Analytics, Matomo edo antzeko tresnak) webgunearen uneko bertsioan."
+              ]
+            },
+            {
+              "title": "5.3 Marketing edo jarraipen-cookieak",
+              "paragraphs": [
+                "Ez dugu marketing-cookierik edo publizitate-profil sortzeko cookierik erabiltzen webgune honetan."
+              ]
+            },
+            {
+              "title": "5.4 Sare sozialak eta txertatutako edukia",
+              "paragraphs": [
+                "Ez dugu sare sozialen txertatutako edukirik (LinkedIn, Facebook, YouTube, etab.) edo hirugarrenen bideo-erreproduzitzaileak gure orrialdeetan.",
+                "Bai, kanpoko estekak daude zuk borondatez ireki ditzakezunak, hala nola WhatsApp, Google Maps, Fotocasa edo posta elektronikoa. Zerbitzu horietara sartzean hirugarrenak bere cookieak erabil ditzake, eta {{agentName}}-k ez du horien kontrolik. Gomendatzen dizugu webgune horien pribatutasun- eta cookie-politikak kontsultatzea."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "6. Webgune honetan erabilitako cookieak",
+          "paragraphs": [
+            "Ostatatze-hornitzaileak (Vercel) webgunea modu seguruan zerbitzatzeko beharrezkoak diren konexio-datu teknikoak tratatu ditzake. Hala ere, erabiltzailearen ohiko nabigazioan ez dugu neurketa edo publizitate-tresna gehigarririk erabiltzen."
+          ]
+        },
+        {
+          "title": "7. Baimena",
+          "paragraphs": [
+            "Webguneak ez dituelako estatistika, marketing edo txertatutako sare sozialen cookierik erabiltzen, ez dugu une honetan cookie-baimenaren bannerrik erakusten bisitari arruntei.",
+            "Administrazio-panelaren cookie teknikoa pertsonal baimenduak /admin-era sartzen denean soilik erabiltzen da, beraz ez du webgunearen nabigazio orokorrari eragiten.",
+            "Etorkizunean aurrez baimena eskatzen duten cookieak gehituko bagenu, politika hau eguneratuko dugu eta dagokion kudeaketa-mekanismoa gaituko dugu."
+          ]
+        },
+        {
+          "title": "8. Cookieak aktibatzea, desaktibatzea eta ezabatzea",
+          "paragraphs": [
+            "Zure nabigatzailea konfigura dezakezu cookieak blokeatzeko edo ezabatzeko. Informazio gehiagorako kontsultatu zure nabigatzailearen laguntza-atala.",
+            "Kontuan izan administrazio-panelaren saio-cookiea ezabatzen baduzu, berriro saioa hasi behar duzula /admin-en. Webgunearen ohiko nabigazioa ez litzateke kaltetuko."
+          ]
+        },
+        {
+          "title": "9. Datu pertsonalei buruzko zure eskubideak",
+          "paragraphs": [
+            "Sarbidea, zuzentzea, ezabatzea, aurka egitea, tratamendua mugatzea eta eramangarritasuna dituzu, baita baimena kentzeko eskubidea ere tratamendua horretan oinarritzen denean. Espainiako Datuak Babesteko Agentzian (www.aepd.es) erreklamazioa ere jar dezakezu.",
+            "Informazio gehiagorako, kontsultatu gure Pribatutasun-politika."
+          ]
+        },
+        {
+          "title": "10. Harremanetarako datuak",
+          "paragraphs": [
+            "Cookie-politika honi buruzko edozein kontsultarako, harremanetan jar zaitezke:",
+            "{{contactBlock}}"
+          ]
+        }
+      ],
+      "cookieTable": {
+        "headers": {
+          "name": "Izena",
+          "type": "Mota",
+          "purpose": "Helburua",
+          "duration": "Iraupena"
+        },
+        "row": {
+          "name": "{{cookieName}}",
+          "type": "Teknikoa / saioa",
+          "purpose": "Barneko administrazio-panelaren saioa mantentzea. Baimendutako erabiltzaile batek /admin-en saioa hasten duenean soilik instalatzen da.",
+          "duration": "7 egun arte"
+        }
+      }
+    }
+  },
+  "language": {
+    "select": "Hautatu hizkuntza",
+    "es": "Español",
+    "eu": "Euskara"
+  }
+}

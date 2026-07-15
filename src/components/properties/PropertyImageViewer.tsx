@@ -3,6 +3,8 @@
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
+import { useI18n } from '@/i18n/client'
+import { interpolate } from '@/i18n/interpolate'
 
 interface PropertyImageViewerProps {
   images: string[]
@@ -10,6 +12,9 @@ interface PropertyImageViewerProps {
 }
 
 export function PropertyImageViewer({ images, title }: PropertyImageViewerProps) {
+  const { dict } = useI18n()
+  const c = dict.common
+
   const safeImages = images.length > 0 ? images : ['https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200']
   const [index, setIndex] = useState(0)
   const [touchStartX, setTouchStartX] = useState<number | null>(null)
@@ -77,7 +82,7 @@ export function PropertyImageViewer({ images, title }: PropertyImageViewerProps)
           type="button"
           onClick={() => setLightboxOpen(true)}
           className="absolute inset-0 z-10 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/80"
-          aria-label="Ver imagen ampliada"
+          aria-label={c.viewEnlargedImage}
         />
         <button
           type="button"
@@ -87,7 +92,7 @@ export function PropertyImageViewer({ images, title }: PropertyImageViewerProps)
           }}
           className="absolute top-3 right-3 z-20 bg-black/55 text-white text-xs px-2.5 py-1.5 backdrop-blur-sm hover:bg-black/65"
         >
-          Ampliar
+          {c.enlarge}
         </button>
         {safeImages.length > 1 && (
           <>
@@ -98,7 +103,7 @@ export function PropertyImageViewer({ images, title }: PropertyImageViewerProps)
                 goPrev()
               }}
               className="hidden md:flex absolute left-3 top-1/2 -translate-y-1/2 z-20 h-10 w-10 items-center justify-center bg-black/45 text-white text-xl"
-              aria-label="Imagen anterior"
+              aria-label={c.prevImage}
             >
               ‹
             </button>
@@ -109,7 +114,7 @@ export function PropertyImageViewer({ images, title }: PropertyImageViewerProps)
                 goNext()
               }}
               className="hidden md:flex absolute right-3 top-1/2 -translate-y-1/2 z-20 h-10 w-10 items-center justify-center bg-black/45 text-white text-xl"
-              aria-label="Imagen siguiente"
+              aria-label={c.nextImage}
             >
               ›
             </button>
@@ -132,11 +137,11 @@ export function PropertyImageViewer({ images, title }: PropertyImageViewerProps)
               type="button"
               onClick={() => setIndex(i)}
               className={`relative aspect-square overflow-hidden bg-stone-100 border ${index === i ? 'border-stone-900' : 'border-transparent'}`}
-              aria-label={`Ver imagen ${i + 1}`}
+              aria-label={interpolate(c.viewImage, { n: i + 1 })}
             >
               <Image
                 src={img}
-                alt={`${title} miniatura ${i + 1}`}
+                alt={interpolate(c.thumbnail, { title, n: i + 1 })}
                 fill
                 className="object-cover"
                 quality={60}
@@ -150,7 +155,7 @@ export function PropertyImageViewer({ images, title }: PropertyImageViewerProps)
               type="button"
               onClick={() => openGallery(0)}
               className="relative aspect-square overflow-hidden bg-stone-100 border border-transparent"
-              aria-label={`Ver todas las imágenes (${safeImages.length})`}
+              aria-label={interpolate(c.viewAllImages, { count: safeImages.length })}
             >
               <Image
                 src={viewAllPreview}
@@ -163,7 +168,7 @@ export function PropertyImageViewer({ images, title }: PropertyImageViewerProps)
                 aria-hidden
               />
               <span className="absolute inset-0 flex items-center justify-center bg-black/35 text-white text-xs font-medium tracking-wide uppercase">
-                Ver todas
+                {dict.common.viewAllShort}
               </span>
             </button>
           )}
@@ -185,7 +190,7 @@ export function PropertyImageViewer({ images, title }: PropertyImageViewerProps)
               type="button"
               onClick={() => setLightboxOpen(false)}
               className="absolute top-2 right-2 z-30 h-10 w-10 bg-white/10 text-white text-2xl"
-              aria-label="Cerrar"
+              aria-label={c.close}
             >
               ×
             </button>
@@ -194,7 +199,7 @@ export function PropertyImageViewer({ images, title }: PropertyImageViewerProps)
                 type="button"
                 onClick={() => setZoom((z) => Math.max(1, z - 0.25))}
                 className="h-10 w-10 bg-white/10 text-white text-xl"
-                aria-label="Alejar"
+                aria-label={c.zoomOut}
               >
                 −
               </button>
@@ -202,7 +207,7 @@ export function PropertyImageViewer({ images, title }: PropertyImageViewerProps)
                 type="button"
                 onClick={() => setZoom((z) => Math.min(3, z + 0.25))}
                 className="h-10 w-10 bg-white/10 text-white text-xl"
-                aria-label="Acercar"
+                aria-label={c.zoomIn}
               >
                 +
               </button>
@@ -215,7 +220,7 @@ export function PropertyImageViewer({ images, title }: PropertyImageViewerProps)
               >
                 <Image
                   src={safeImages[index]}
-                  alt={`${title} ampliada ${index + 1}`}
+                  alt={interpolate(c.enlargedImage, { title, n: index + 1 })}
                   fill
                   className="object-contain"
                   quality={85}
@@ -230,7 +235,7 @@ export function PropertyImageViewer({ images, title }: PropertyImageViewerProps)
                   type="button"
                   onClick={goPrev}
                   className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-30 h-12 w-12 bg-white/10 text-white text-3xl"
-                  aria-label="Imagen anterior"
+                  aria-label={c.prevImage}
                 >
                   ‹
                 </button>
@@ -238,7 +243,7 @@ export function PropertyImageViewer({ images, title }: PropertyImageViewerProps)
                   type="button"
                   onClick={goNext}
                   className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-30 h-12 w-12 bg-white/10 text-white text-3xl"
-                  aria-label="Imagen siguiente"
+                  aria-label={c.nextImage}
                 >
                   ›
                 </button>
@@ -250,4 +255,3 @@ export function PropertyImageViewer({ images, title }: PropertyImageViewerProps)
     </>
   )
 }
-

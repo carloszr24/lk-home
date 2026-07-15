@@ -3,7 +3,10 @@ import { Montserrat } from 'next/font/google'
 import './globals.css'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
-import { SITE_NAME, SITE_TAGLINE } from '@/lib/brand'
+import { LanguageSwitcher } from '@/components/i18n/LanguageSwitcher'
+import { I18nProvider } from '@/i18n/client'
+import { getLocale, getServerI18n, getSiteMetadataVars, t } from '@/i18n/server'
+import { interpolate } from '@/i18n/interpolate'
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -11,25 +14,33 @@ const montserrat = Montserrat({
   weight: ['400', '500', '600', '700'],
 })
 
-export const metadata: Metadata = {
-  title: `${SITE_NAME} | ${SITE_TAGLINE}`,
-  description:
-    'Inmobiliaria en Gipuzkoa. Gestión inmobiliaria, home staging, reformas integrales y limpieza profesional.',
-  keywords:
-    'inmobiliaria gipuzkoa, agencia inmobiliaria, home staging, reformas integrales, limpieza profesional, lk home',
+export async function generateMetadata(): Promise<Metadata> {
+  const { dict } = await getServerI18n()
+  const vars = getSiteMetadataVars(dict)
+  return {
+    title: interpolate(dict.metadata.site.title, vars),
+    description: dict.metadata.site.description,
+    keywords: dict.metadata.site.keywords,
+  }
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const locale = await getLocale()
+  const { dict } = await getServerI18n()
+
   return (
-    <html lang="es" className={montserrat.variable}>
+    <html lang={locale} className={montserrat.variable}>
       <body className="bg-white text-stone-900 antialiased">
-        <Navbar />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
+        <I18nProvider locale={locale}>
+          <Navbar />
+          <LanguageSwitcher />
+          <main className="min-h-screen">{children}</main>
+          <Footer dict={dict} />
+        </I18nProvider>
       </body>
     </html>
   )
