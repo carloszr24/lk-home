@@ -1,11 +1,21 @@
-export function ScrollHint() {
+import { cn } from '@/lib/utils'
+
+type Props = {
+  className?: string
+  label?: string
+}
+
+export function ScrollHint({ className, label = 'Descubre más' }: Props) {
   return (
     <div
-      className="absolute inset-x-0 bottom-4 z-10 flex flex-col items-center justify-center gap-2 text-white/85 animate-fade-up pointer-events-none md:bottom-2"
+      className={cn(
+        'flex flex-col items-center justify-center gap-2 animate-fade-up pointer-events-none',
+        className
+      )}
       style={{ animationDelay: '0.45s', opacity: 0, animationFillMode: 'forwards' }}
       aria-hidden="true"
     >
-      <span className="text-[10px] uppercase tracking-[0.22em] text-center">Descubre más</span>
+      <span className="text-[10px] uppercase tracking-[0.22em] text-center">{label}</span>
       <svg
         viewBox="0 0 24 24"
         className="h-5 w-5 animate-bounce"

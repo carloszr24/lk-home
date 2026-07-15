@@ -92,7 +92,7 @@ export default async function HomePage() {
           </div>
         </div>
 
-        <ScrollHint />
+        <ScrollHint className="absolute inset-x-0 bottom-4 z-10 text-white/85 md:bottom-2" />
       </section>
 
       {/* SERVICES STRIP */}

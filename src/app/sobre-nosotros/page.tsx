@@ -5,7 +5,8 @@ import Link from 'next/link'
 import { SERVICE_ITEMS, VELTARA_FINANCING, WHY_CHOOSE_US } from '@/data/services'
 import { BrandName } from '@/components/BrandName'
 import { AGENT, phoneHref, CONTACT } from '@/lib/contact'
-import { HEADER_OFFSET_CLASS, LOGO_IMAGE_CLASS, LOGO_RENDER, LOGO_SRC } from '@/lib/logo'
+import { ScrollHint } from '@/components/home/ScrollHint'
+import { HEADER_OFFSET_CLASS, LOGO_IMAGE_CLASS, LOGO_RENDER, LOGO_SRC_WHITE } from '@/lib/logo'
 
 function HomeIcon() {
   return (
@@ -81,26 +82,29 @@ export default function SobreNosotrosPage() {
   return (
     <div className={HEADER_OFFSET_CLASS}>
       {/* Hero */}
-      <section className="bg-brand-black text-white py-16 md:py-24 px-6 md:px-10 border-b border-gold/20">
-        <div className="max-w-4xl mx-auto text-center">
-          <Image
-            src={LOGO_SRC}
-            alt={AGENT.name}
-            width={LOGO_RENDER.width}
-            height={LOGO_RENDER.height}
-            className={`${LOGO_IMAGE_CLASS} mx-auto mb-8`}
-          />
-          <p className="text-gold text-xs tracking-[0.35em] uppercase mb-4">Servicios</p>
-          <h1 className="font-display text-4xl md:text-5xl font-light tracking-wide uppercase">
-            <BrandName />
-          </h1>
-          <p className="mt-3 text-sm md:text-base tracking-[0.2em] uppercase text-gold/90">
-            Grupo Inmobiliario y Financiero
-          </p>
-          <p className="mt-8 text-stone-400 text-lg font-light max-w-2xl mx-auto leading-relaxed">
-            Inmobiliaria y financiación en un mismo equipo, con trato cercano desde Martos (Jaén).
-          </p>
+      <section className="relative bg-brand-black text-white min-h-[calc(100svh-4.75rem)] md:min-h-[calc(100svh-5.75rem)] flex flex-col border-b border-gold/20">
+        <div className="flex flex-1 flex-col items-center justify-center px-6 md:px-10 py-16 md:py-20">
+          <div className="max-w-4xl mx-auto text-center">
+            <Image
+              src={LOGO_SRC_WHITE}
+              alt={AGENT.name}
+              width={LOGO_RENDER.width}
+              height={LOGO_RENDER.height}
+              className={`${LOGO_IMAGE_CLASS} mx-auto mb-8`}
+            />
+            <p className="text-gold text-xs tracking-[0.35em] uppercase mb-4">Servicios</p>
+            <h1 className="font-display text-4xl md:text-5xl font-light tracking-wide uppercase">
+              <BrandName />
+            </h1>
+            <p className="mt-3 text-sm md:text-base tracking-[0.2em] uppercase text-gold/90">
+              Grupo Inmobiliario y Financiero
+            </p>
+          </div>
         </div>
+        <ScrollHint
+          className="pb-8 text-gold/80"
+          label="Sigue bajando"
+        />
       </section>
 
       {/* Nuestros servicios */}
@@ -152,20 +156,22 @@ export default function SobreNosotrosPage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(196,160,53,0.08),transparent_55%)]" aria-hidden="true" />
         <div className="relative max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <div className="flex flex-col items-center lg:items-start">
-              <p className="text-gold text-xs tracking-[0.3em] uppercase mb-6">Colaboración</p>
-              <div className="rounded-2xl border border-gold/25 bg-stone-950/80 p-8 md:p-10 w-full max-w-sm">
-                <Image
-                  src="/images/veltara-capital.png"
-                  alt="Veltara Capital"
-                  width={280}
-                  height={200}
-                  className="w-full h-auto object-contain"
-                />
-              </div>
-              <p className="mt-6 text-center lg:text-left text-xs tracking-[0.2em] uppercase text-stone-500">
-                Olmo &amp; Cobo × Veltara Capital
-              </p>
+            <div className="flex flex-col items-center justify-center lg:items-center">
+              <Image
+                src="/images/veltara-capital.png"
+                alt="Veltara Capital"
+                width={240}
+                height={160}
+                className="w-full max-w-[220px] h-auto object-contain"
+              />
+              <span className="my-5 text-xl font-light text-gold/60" aria-hidden="true">×</span>
+              <Image
+                src={LOGO_SRC_WHITE}
+                alt={AGENT.name}
+                width={LOGO_RENDER.width}
+                height={LOGO_RENDER.height}
+                className={`${LOGO_IMAGE_CLASS} max-w-[200px]`}
+              />
             </div>
 
             <div>

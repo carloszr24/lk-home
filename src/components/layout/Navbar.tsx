@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { AGENT, phoneHref } from '@/lib/contact'
 import { SITE_NAME } from '@/lib/brand'
-import { HEADER_HEIGHT_CLASS, LOGO_IMAGE_CLASS, LOGO_RENDER, LOGO_SRC } from '@/lib/logo'
+import { HEADER_HEIGHT_CLASS, LOGO_IMAGE_CLASS, LOGO_RENDER, LOGO_SRC, LOGO_SRC_WHITE } from '@/lib/logo'
 import { cn } from '@/lib/utils'
 import { ValoracionGratuitaModal } from '@/components/home/ValoracionGratuitaModal'
 import { SERVICE_ITEMS } from '@/data/services'
@@ -72,19 +72,35 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto pl-5 pr-4 md:pl-12 md:pr-10">
         <div className={cn('flex w-full items-center', HEADER_HEIGHT_CLASS)}>
           <Link href="/" className="relative z-10 flex shrink-0 items-center py-3 md:py-4">
-            <Image
-              src={LOGO_SRC}
-              alt={SITE_NAME}
-              width={LOGO_RENDER.width}
-              height={LOGO_RENDER.height}
-              sizes="(max-width: 768px) 160px, 200px"
-              priority
-              className={cn(
-                LOGO_IMAGE_CLASS,
-                'transition-opacity duration-200',
-                transparent ? 'opacity-95' : 'opacity-100'
-              )}
-            />
+            <div className="relative h-[3.25rem] w-[8.5rem] md:h-[4.5rem] md:w-[11rem]">
+              <Image
+                src={LOGO_SRC_WHITE}
+                alt=""
+                aria-hidden
+                width={LOGO_RENDER.width}
+                height={LOGO_RENDER.height}
+                sizes="(max-width: 768px) 160px, 200px"
+                priority
+                className={cn(
+                  LOGO_IMAGE_CLASS,
+                  'absolute left-0 top-0 transition-opacity duration-300',
+                  transparent ? 'opacity-100' : 'opacity-0'
+                )}
+              />
+              <Image
+                src={LOGO_SRC}
+                alt={SITE_NAME}
+                width={LOGO_RENDER.width}
+                height={LOGO_RENDER.height}
+                sizes="(max-width: 768px) 160px, 200px"
+                priority
+                className={cn(
+                  LOGO_IMAGE_CLASS,
+                  'absolute left-0 top-0 transition-opacity duration-300',
+                  transparent ? 'opacity-0' : 'opacity-100'
+                )}
+              />
+            </div>
           </Link>
 
           <div className="ml-auto hidden md:flex items-center gap-7 shrink-0 self-center">

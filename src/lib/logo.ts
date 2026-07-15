@@ -1,4 +1,5 @@
 export const LOGO_SRC = '/images/olmo-cobo.png'
+export const LOGO_SRC_WHITE = '/images/olmo-cobo-white.png'
 
 export const LOGO_RENDER = {
   width: 220,

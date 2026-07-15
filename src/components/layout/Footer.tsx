@@ -11,7 +11,7 @@ import {
   phoneHref,
   whatsappHref,
 } from '@/lib/contact'
-import { LOGO_IMAGE_CLASS, LOGO_RENDER, LOGO_SRC } from '@/lib/logo'
+import { LOGO_IMAGE_CLASS, LOGO_RENDER, LOGO_SRC_WHITE } from '@/lib/logo'
 
 export function Footer() {
   return (
@@ -20,7 +20,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           <div className="md:col-span-2">
             <Image
-              src={LOGO_SRC}
+              src={LOGO_SRC_WHITE}
               alt={`${AGENT.name} logo`}
               width={LOGO_RENDER.width}
               height={LOGO_RENDER.height}
