@@ -70,7 +70,7 @@ export default function SobreNosotrosPage() {
               {AGENT.fullName}
             </h1>
             <p className="mt-3 text-sm md:text-base tracking-[0.15em] uppercase text-stone-500">
-              Agencia inmobiliaria en Deba, Gipuzkoa
+              Agencia inmobiliaria en Gipuzkoa
             </p>
             {GOOGLE_REVIEW_COUNT > 0 && (
               <p className="mt-6 text-stone-600">

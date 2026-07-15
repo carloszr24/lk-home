@@ -1,7 +1,7 @@
 export const SERVICE_ITEMS = [
   {
     title: 'Gestión inmobiliaria',
-    desc: 'Compra, venta y alquiler de viviendas con un acompañamiento integral y cercano en Deba y alrededores.',
+    desc: 'Compra, venta y alquiler de viviendas con un acompañamiento integral y cercano en Gipuzkoa.',
   },
   {
     title: 'Home staging',
@@ -20,7 +20,7 @@ export const SERVICE_ITEMS = [
 export const WHY_CHOOSE_US = [
   {
     title: 'Experiencia local',
-    desc: 'Conocemos el mercado de Deba y Gipuzkoa con más de 4.300 opiniones y 150 propiedades vendidas.',
+    desc: 'Conocemos el mercado de Gipuzkoa con más de 4.300 opiniones y 150 propiedades vendidas.',
   },
   {
     title: 'Servicio integral',

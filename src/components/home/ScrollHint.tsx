@@ -9,10 +9,10 @@ export function ScrollHint({ className, label = 'Descubre más' }: Props) {
   return (
     <div
       className={cn(
-        'flex flex-col items-center justify-center gap-2 animate-fade-up pointer-events-none',
+        'hero-fade flex flex-col items-center justify-center gap-2 pointer-events-none',
         className
       )}
-      style={{ animationDelay: '0.45s', opacity: 0, animationFillMode: 'forwards' }}
+      style={{ animationDelay: '0.5s' }}
       aria-hidden="true"
     >
       <span className="text-[10px] uppercase tracking-[0.22em] text-center">{label}</span>

@@ -7,22 +7,22 @@ export const AGENT = {
   fullName: SITE_FULL_NAME,
   title: SITE_TAGLINE,
   tagline:
-    'Gestión inmobiliaria, home staging, reformas integrales y limpieza profesional en Deba, Gipuzkoa.',
+    'Compra y venta de viviendas, alquileres y gestión integral de tu propiedad en Gipuzkoa.',
 } as const
 
 export const LEGAL = {
   ownerName: SITE_FULL_NAME,
   legalForm: '',
   taxId: '',
-  address: 'Lersundi Kalea, 31, 20820 Deba, Gipuzkoa',
+  address: 'Lersundi Kalea, 31, 20820 Gipuzkoa',
 } as const
 
 export const OFFICES = {
   primary: {
     label: 'Oficina',
     line1: 'Lersundi Kalea, 31',
-    line2: '20820 Deba, Gipuzkoa',
-    full: 'Lersundi Kalea, 31, 20820 Deba, Gipuzkoa',
+    line2: '20820 Gipuzkoa',
+    full: 'Lersundi Kalea, 31, 20820 Gipuzkoa',
     mapsQuery: 'Lersundi+Kalea+31,+20820+Deba,+Gipuzkoa',
   },
 } as const

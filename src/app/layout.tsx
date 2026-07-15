@@ -26,9 +26,9 @@ const script = Pinyon_Script({
 export const metadata: Metadata = {
   title: `${SITE_NAME} | ${SITE_TAGLINE}`,
   description:
-    'Inmobiliaria en Deba, Gipuzkoa. Gestión inmobiliaria, home staging, reformas integrales y limpieza profesional.',
+    'Inmobiliaria en Gipuzkoa. Gestión inmobiliaria, home staging, reformas integrales y limpieza profesional.',
   keywords:
-    'inmobiliaria deba, agencia inmobiliaria gipuzkoa, home staging, reformas integrales, limpieza profesional, lk home',
+    'inmobiliaria gipuzkoa, agencia inmobiliaria, home staging, reformas integrales, limpieza profesional, lk home',
 }
 
 export default function RootLayout({

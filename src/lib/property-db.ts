@@ -103,9 +103,13 @@ function propertyToRow(property: Property): PropertyRow {
 
 async function ensurePropertiesSeeded(): Promise<PropertyRow[]> {
   const existing = await readJsonFile<PropertyRow[] | null>(PROPERTIES_FILE, null)
-  if (existing && existing.length > 0) return existing
-
   const seeded = DEMO_PROPERTIES.map(propertyToRow)
+
+  if (existing && existing.length > 0) {
+    const hasCurrentCatalog = existing.some((row) => row.id.startsWith('lk'))
+    if (hasCurrentCatalog) return existing
+  }
+
   await writeJsonFile(PROPERTIES_FILE, seeded)
   return seeded
 }

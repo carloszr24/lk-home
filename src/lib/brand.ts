@@ -2,7 +2,7 @@ export const SITE_NAME = (process.env.NEXT_PUBLIC_SITE_NAME ?? 'LK Home').trim()
 
 export const SITE_FULL_NAME = (process.env.NEXT_PUBLIC_SITE_FULL_NAME ?? 'Inmobiliaria LK Home').trim()
 
-export const SITE_TAGLINE = (process.env.NEXT_PUBLIC_SITE_TAGLINE ?? 'Inmobiliaria en Deba').trim()
+export const SITE_TAGLINE = (process.env.NEXT_PUBLIC_SITE_TAGLINE ?? 'Inmobiliaria en Gipuzkoa').trim()
 
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000').trim()
 

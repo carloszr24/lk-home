@@ -23,7 +23,7 @@ export function parseImages(images: string): string[] {
   }
 }
 
-export const PROPERTY_TYPES = ['piso', 'casa', 'local', 'terreno', 'oficina', 'garaje'] as const
+export const PROPERTY_TYPES = ['piso', 'casa', 'duplex', 'local', 'terreno', 'oficina', 'garaje'] as const
 export const PROPERTY_OPERATIONS = ['venta', 'alquiler'] as const
 export const PROPERTY_STATUSES = ['disponible', 'reservado', 'vendido'] as const
 export const PROPERTY_PROVINCES = [
@@ -107,6 +107,7 @@ export const STATUS_BADGE_CLASSES_ADMIN: Record<string, string> = {
 export const TYPE_LABELS: Record<string, string> = {
   piso: 'Piso',
   casa: 'Casa',
+  duplex: 'Dúplex',
   local: 'Local',
   terreno: 'Terreno',
   oficina: 'Oficina',

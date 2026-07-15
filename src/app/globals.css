@@ -79,6 +79,37 @@
   .service-script {
     @apply font-script text-2xl md:text-3xl text-brand-charcoal leading-tight;
   }
+  .hero-fade {
+    opacity: 0;
+    animation: heroFadeUp 0.7s ease forwards;
+  }
+
+  .hero-fade-delay-1 {
+    animation-delay: 0.08s;
+  }
+
+  .hero-fade-delay-2 {
+    animation-delay: 0.16s;
+  }
+
+  .hero-fade-delay-3 {
+    animation-delay: 0.24s;
+  }
+
+  .hero-fade-delay-4 {
+    animation-delay: 0.32s;
+  }
+}
+
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .site-logo {

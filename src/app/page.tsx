@@ -56,55 +56,47 @@ export default async function HomePage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative min-h-[calc(100svh-4.75rem)] md:min-h-[calc(100svh-5.75rem)] flex flex-col items-center justify-center overflow-hidden bg-white pt-8 pb-12 md:pt-12 md:pb-16">
-        <div className="absolute inset-0">
-          <HeroCarousel />
-        </div>
+      <section className="relative isolate overflow-hidden border-b border-stone-200/80 bg-stone-50">
+        <HeroCarousel />
 
-        <div className="relative z-10 flex flex-1 w-full items-center justify-center px-4 min-[400px]:px-6">
-          <div className="text-center max-w-4xl mx-auto w-full">
-            <p className="text-stone-500 text-xs tracking-[0.25em] uppercase mb-4 animate-fade-up">
-              {AGENT.title}
+        <div className="relative z-10 mx-auto flex min-h-[calc(100svh-4.75rem)] w-full max-w-5xl flex-col items-center justify-center px-6 py-16 text-center md:min-h-[calc(100svh-5.75rem)] md:px-10 md:py-20">
+          <p className="hero-fade mb-4 text-xs font-medium uppercase tracking-[0.28em] text-stone-500">
+            {AGENT.title}
+          </p>
+
+          <h1 className="hero-fade hero-fade-delay-1 max-w-3xl font-display text-4xl font-semibold leading-[1.1] tracking-tight text-stone-900 md:text-5xl lg:text-6xl">
+            Tu hogar,
+            <br />
+            <span className="font-script text-[1.05em] font-normal text-brand-charcoal">en buenas manos</span>
+          </h1>
+
+          <p className="hero-fade hero-fade-delay-2 mt-6 max-w-2xl text-base leading-relaxed text-stone-600 md:text-lg">
+            {AGENT.tagline}
+          </p>
+
+          {GOOGLE_REVIEW_COUNT > 0 && (
+            <p className="hero-fade hero-fade-delay-3 mt-5 inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white/80 px-4 py-1.5 text-sm text-stone-600 shadow-sm backdrop-blur-sm">
+              <span className="font-medium text-stone-900">{GOOGLE_RATING}</span>
+              <span className="text-stone-300" aria-hidden="true">·</span>
+              <span>{GOOGLE_REVIEW_COUNT.toLocaleString('es-ES')} opiniones en Google</span>
             </p>
-            <h1 className="font-display text-stone-900 text-balance max-md:tracking-[-0.02em] text-[calc(clamp(2rem,6.5vw+0.25rem,3.2rem)+2pt)] md:text-[calc(clamp(2.5rem,4.8vw+0.9rem,4.5rem)+2pt)] leading-[1.12] md:leading-[1.06] mb-5 md:mb-6 animate-fade-up">
-              Tu inmueble,
-              <span className="hidden md:inline"> </span>
-              <br className="md:hidden" aria-hidden="true" />
-              <span className="font-script font-normal text-brand-charcoal">en las mejores manos</span>
-            </h1>
-            <p
-              className="text-stone-600 text-base sm:text-lg md:text-xl font-normal max-w-[min(100%,22rem)] sm:max-w-2xl mx-auto mb-8 md:mb-9 leading-relaxed text-pretty animate-fade-up"
-              style={{ animationDelay: '0.1s', opacity: 0, animationFillMode: 'forwards' }}
+          )}
+
+          <div className="hero-fade hero-fade-delay-4 mt-10 flex w-full max-w-lg flex-col gap-3 sm:max-w-xl sm:flex-row sm:gap-4">
+            <Link
+              href="/propiedades"
+              className="btn-primary w-full min-h-[3rem] px-8 py-3.5 text-sm tracking-wide sm:flex-1 md:min-h-[3.25rem] md:text-base"
             >
-              {AGENT.tagline}
-            </p>
-            {GOOGLE_REVIEW_COUNT > 0 && (
-              <p
-                className="text-sm text-stone-500 mb-8 animate-fade-up"
-                style={{ animationDelay: '0.15s', opacity: 0, animationFillMode: 'forwards' }}
-              >
-                {GOOGLE_RATING} en Google · {GOOGLE_REVIEW_COUNT.toLocaleString('es-ES')} opiniones
-              </p>
-            )}
-            <div
-              className="flex w-full max-w-xl mx-auto flex-col sm:flex-row gap-3 sm:gap-4 animate-fade-up"
-              style={{ animationDelay: '0.2s', opacity: 0, animationFillMode: 'forwards' }}
-            >
-              <Link
-                href="/propiedades"
-                className="btn-primary w-full sm:flex-1 sm:min-w-0 min-h-[3rem] md:min-h-[3.25rem] px-8 py-3.5 md:py-4 text-sm md:text-base tracking-wide text-center"
-              >
-                Ver propiedades
-              </Link>
-              <ValoracionGratuitaModal
-                triggerLabel="Valoración gratuita"
-                triggerClassName="inline-flex w-full sm:flex-1 sm:min-w-0 min-h-[3rem] md:min-h-[3.25rem] items-center justify-center px-8 py-3.5 md:py-4 text-sm md:text-base tracking-wide font-medium border-2 border-brand-charcoal text-brand-charcoal hover:bg-brand-charcoal hover:text-white transition-colors duration-200"
-              />
-            </div>
+              Ver propiedades
+            </Link>
+            <ValoracionGratuitaModal
+              triggerLabel="Valoración gratuita"
+              triggerClassName="inline-flex w-full min-h-[3rem] items-center justify-center border-2 border-brand-charcoal px-8 py-3.5 text-sm font-medium tracking-wide text-brand-charcoal transition-colors duration-200 hover:bg-brand-charcoal hover:text-white sm:flex-1 md:min-h-[3.25rem] md:text-base"
+            />
           </div>
         </div>
 
-        <ScrollHint className="absolute inset-x-0 bottom-4 z-10 text-stone-400 md:bottom-6" />
+        <ScrollHint className="absolute inset-x-0 bottom-5 z-10 text-stone-400 md:bottom-8" />
       </section>
 
       {/* SERVICES */}
@@ -116,7 +108,7 @@ export default async function HomePage() {
               Todo lo que tu propiedad necesita
             </h2>
             <p className="mt-4 text-sm text-stone-500 max-w-2xl mx-auto leading-relaxed">
-              Gestión, presentación, reforma y limpieza con un equipo local en Deba.
+              Gestión, presentación, reforma y limpieza con un equipo local en Gipuzkoa.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
@@ -181,7 +173,7 @@ export default async function HomePage() {
             ¿Hablamos de tu proyecto?
           </h2>
           <p className="mb-10 text-lg font-light leading-relaxed text-stone-300 max-w-lg">
-            Visítanos en Lersundi Kalea, 31, Deba, o llámanos al 688 76 32 89.
+            Visítanos en Lersundi Kalea, 31, Gipuzkoa, o llámanos al 688 76 32 89.
           </p>
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
