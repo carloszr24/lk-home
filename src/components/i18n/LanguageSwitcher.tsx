@@ -9,22 +9,12 @@ import { cn } from '@/lib/utils'
 
 const FLAG_SIZE = 'h-6 w-6'
 
-function FlagSpain({ className }: { className?: string }) {
-  return (
-    <span
-      className={cn(
-        'inline-flex items-center justify-center rounded-full bg-stone-100 text-sm shadow-sm ring-1 ring-stone-200/80',
-        FLAG_SIZE,
-        className
-      )}
-      aria-hidden
-    >
-      🇪🇸
-    </span>
-  )
+const FLAG_SRC: Record<Locale, string> = {
+  es: '/images/españa.png',
+  eu: '/images/euskadi.png',
 }
 
-function FlagBasque({ className }: { className?: string }) {
+function FlagIcon({ locale, className }: { locale: Locale; className?: string }) {
   return (
     <span
       className={cn(
@@ -34,14 +24,9 @@ function FlagBasque({ className }: { className?: string }) {
       )}
       aria-hidden
     >
-      <Image src="/images/euskadi.png" alt="" fill className="object-cover" sizes="24px" />
+      <Image src={FLAG_SRC[locale]} alt="" fill className="object-cover" sizes="24px" />
     </span>
   )
-}
-
-const FLAGS: Record<Locale, typeof FlagSpain> = {
-  es: FlagSpain,
-  eu: FlagBasque,
 }
 
 export function LanguageSwitcher() {
@@ -52,7 +37,6 @@ export function LanguageSwitcher() {
 
   if (pathname.startsWith('/admin')) return null
 
-  const CurrentFlag = FLAGS[locale]
 
   useEffect(() => {
     const onPointerDown = (event: MouseEvent) => {
@@ -87,7 +71,7 @@ export function LanguageSwitcher() {
           aria-expanded={open}
           aria-haspopup="listbox"
         >
-          <CurrentFlag />
+          <FlagIcon locale={locale} />
           <svg
             viewBox="0 0 20 20"
             fill="currentColor"
@@ -103,21 +87,18 @@ export function LanguageSwitcher() {
         </button>
         {locales
           .filter((l) => l !== locale)
-          .map((l) => {
-            const Flag = FLAGS[l]
-            return (
-              <button
-                key={l}
-                type="button"
-                onClick={() => setLocale(l)}
-                className="rounded-full p-0.5 transition-opacity hover:opacity-80"
-                aria-label={LOCALE_LABELS[l]}
-                title={LOCALE_LABELS[l]}
-              >
-                <Flag />
-              </button>
-            )
-          })}
+          .map((l) => (
+            <button
+              key={l}
+              type="button"
+              onClick={() => setLocale(l)}
+              className="rounded-full p-0.5 transition-opacity hover:opacity-80"
+              aria-label={LOCALE_LABELS[l]}
+              title={LOCALE_LABELS[l]}
+            >
+              <FlagIcon locale={l} />
+            </button>
+          ))}
       </div>
 
       {open && (
@@ -139,7 +120,7 @@ export function LanguageSwitcher() {
                   l === locale && 'bg-stone-50 font-medium text-brand-charcoal'
                 )}
               >
-                {l === 'es' ? <FlagSpain /> : <FlagBasque />}
+                <FlagIcon locale={l} />
                 <span>{dict.language[l]}</span>
               </button>
             </li>
