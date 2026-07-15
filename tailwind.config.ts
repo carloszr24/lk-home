@@ -9,11 +9,10 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-body)', 'system-ui', 'sans-serif'],
-        display: ['var(--font-display)', 'var(--font-body)', 'system-ui', 'sans-serif'],
-        script: ['var(--font-script)', 'cursive'],
-        logo: ['var(--font-display)', '"Times New Roman"', 'Georgia', 'serif'],
-        brand: ['var(--font-script)', 'cursive'],
+        sans: ['var(--font-montserrat)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-montserrat)', 'system-ui', 'sans-serif'],
+        logo: ['var(--font-montserrat)', 'system-ui', 'sans-serif'],
+        brand: ['var(--font-montserrat)', 'system-ui', 'sans-serif'],
       },
       colors: {
         stone: {
@@ -23,9 +22,9 @@ const config: Config = {
           charcoal: '#333333',
           'charcoal-light': '#5c5c5c',
           'charcoal-dark': '#1a1a1a',
-          gold: '#333333',
-          'gold-light': '#5c5c5c',
-          'gold-dark': '#1a1a1a',
+          gold: '#C4A035',
+          'gold-light': '#E0C56A',
+          'gold-dark': '#9A7B1F',
           black: '#1a1a1a',
           white: '#FFFFFF',
           red: '#333333',
@@ -36,9 +35,9 @@ const config: Config = {
           'blue-dark': '#1a1a1a',
         },
         gold: {
-          DEFAULT: '#333333',
-          light: '#5c5c5c',
-          dark: '#1a1a1a',
+          DEFAULT: '#C4A035',
+          light: '#E0C56A',
+          dark: '#9A7B1F',
         },
       },
       animation: {

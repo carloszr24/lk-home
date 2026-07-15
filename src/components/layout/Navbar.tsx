@@ -1,14 +1,15 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { phoneHref } from '@/lib/contact'
-import { HEADER_HEIGHT_CLASS } from '@/lib/logo'
+import { SITE_NAME } from '@/lib/brand'
+import { HEADER_HEIGHT_CLASS, LOGO_IMAGE_CLASS, LOGO_RENDER, LOGO_SRC } from '@/lib/logo'
 import { cn } from '@/lib/utils'
 import { ValoracionGratuitaModal } from '@/components/home/ValoracionGratuitaModal'
 import { SERVICE_ITEMS } from '@/data/services'
-import { SiteLogo } from '@/components/SiteLogo'
 
 const links = [
   { href: '/propiedades', label: 'Propiedades' },
@@ -22,8 +23,18 @@ const navLinkClass =
 export function Navbar() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const [servicesOpen, setServicesOpen] = useState(false)
   const closeTimer = useRef<NodeJS.Timeout | null>(null)
+  const isHome = pathname === '/'
+  const transparent = isHome && !scrolled && !open
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   useEffect(() => {
     return () => {
@@ -50,11 +61,46 @@ export function Navbar() {
   }
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-stone-200/90 shadow-sm">
+    <header
+      className={cn(
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        transparent
+          ? 'bg-transparent border-b border-transparent'
+          : 'bg-white/95 backdrop-blur-md border-b border-stone-200/90 shadow-sm'
+      )}
+    >
       <div className="max-w-7xl mx-auto pl-5 pr-4 md:pl-12 md:pr-10">
         <div className={cn('flex w-full items-center', HEADER_HEIGHT_CLASS)}>
           <Link href="/" className="relative z-10 flex shrink-0 items-center py-3 md:py-4">
-            <SiteLogo priority />
+            <div className="relative h-[2.75rem] w-[8.5rem] md:h-[3.25rem] md:w-[11rem]">
+              <Image
+                src={LOGO_SRC}
+                alt=""
+                aria-hidden
+                width={LOGO_RENDER.width}
+                height={LOGO_RENDER.height}
+                sizes="(max-width: 768px) 160px, 200px"
+                priority
+                className={cn(
+                  LOGO_IMAGE_CLASS,
+                  'absolute left-0 top-0 transition-opacity duration-300 brightness-0 invert',
+                  transparent ? 'opacity-100' : 'opacity-0'
+                )}
+              />
+              <Image
+                src={LOGO_SRC}
+                alt={SITE_NAME}
+                width={LOGO_RENDER.width}
+                height={LOGO_RENDER.height}
+                sizes="(max-width: 768px) 160px, 200px"
+                priority
+                className={cn(
+                  LOGO_IMAGE_CLASS,
+                  'absolute left-0 top-0 transition-opacity duration-300',
+                  transparent ? 'opacity-0' : 'opacity-100'
+                )}
+              />
+            </div>
           </Link>
 
           <div className="ml-auto hidden md:flex items-center gap-7 shrink-0 self-center">
@@ -73,8 +119,12 @@ export function Navbar() {
                         navLinkClass,
                         'gap-1',
                         pathname === link.href || servicesOpen
-                          ? 'text-brand-charcoal'
-                          : 'text-stone-500 hover:text-brand-charcoal'
+                          ? transparent
+                            ? 'text-white'
+                            : 'text-brand-charcoal'
+                          : transparent
+                            ? 'text-stone-200 hover:text-white'
+                            : 'text-stone-500 hover:text-brand-charcoal'
                       )}
                     >
                       {link.label}
@@ -114,7 +164,7 @@ export function Navbar() {
                               href="/sobre-nosotros"
                               className="block rounded-xl border border-stone-200/80 bg-stone-50/50 p-4 transition-colors duration-150 hover:border-stone-300 hover:bg-white"
                             >
-                              <p className="font-script text-lg text-brand-charcoal">{service.title}</p>
+                              <p className="text-sm font-semibold text-brand-charcoal">{service.title}</p>
                               <p className="mt-1.5 text-xs leading-relaxed text-stone-500 line-clamp-3">{service.desc}</p>
                             </Link>
                           ))}
@@ -137,8 +187,12 @@ export function Navbar() {
                     className={cn(
                       navLinkClass,
                       pathname === link.href
-                        ? 'text-brand-charcoal'
-                        : 'text-stone-500 hover:text-brand-charcoal'
+                        ? transparent
+                          ? 'text-white'
+                          : 'text-brand-charcoal'
+                        : transparent
+                          ? 'text-stone-200 hover:text-white'
+                          : 'text-stone-500 hover:text-brand-charcoal'
                     )}
                   >
                     {link.label}
@@ -149,19 +203,42 @@ export function Navbar() {
 
             <ValoracionGratuitaModal
               triggerLabel="Valoración gratuita"
-              triggerClassName="btn-primary text-[11px] uppercase tracking-[0.1em] px-5 py-2.5"
+              triggerClassName={cn(
+                'inline-flex shrink-0 whitespace-nowrap rounded-md text-[11px] uppercase tracking-[0.1em] px-5 py-2.5',
+                transparent
+                  ? 'inline-flex items-center justify-center border border-white/80 text-white hover:bg-white hover:text-stone-900 transition-colors duration-200'
+                  : 'btn-primary'
+              )}
             />
           </div>
 
           <button
-            className="md:hidden ml-auto p-2 text-stone-600"
+            className={cn('md:hidden ml-auto p-2 transition-colors', transparent ? 'text-white' : 'text-stone-600')}
             onClick={() => setOpen(!open)}
             aria-label="Menu"
           >
             <div className="w-5 space-y-1.5">
-              <span className={cn('block h-px bg-stone-900 transition-all duration-300', open && 'rotate-45 translate-y-2')} />
-              <span className={cn('block h-px bg-stone-900 transition-all duration-300', open && 'opacity-0')} />
-              <span className={cn('block h-px bg-stone-900 transition-all duration-300', open && '-rotate-45 -translate-y-2')} />
+              <span
+                className={cn(
+                  'block h-px transition-all duration-300',
+                  transparent ? 'bg-white' : 'bg-stone-900',
+                  open && 'rotate-45 translate-y-2'
+                )}
+              />
+              <span
+                className={cn(
+                  'block h-px transition-all duration-300',
+                  transparent ? 'bg-white' : 'bg-stone-900',
+                  open && 'opacity-0'
+                )}
+              />
+              <span
+                className={cn(
+                  'block h-px transition-all duration-300',
+                  transparent ? 'bg-white' : 'bg-stone-900',
+                  open && '-rotate-45 -translate-y-2'
+                )}
+              />
             </div>
           </button>
         </div>

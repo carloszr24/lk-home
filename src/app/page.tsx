@@ -56,47 +56,60 @@ export default async function HomePage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative isolate overflow-hidden border-b border-stone-200/80">
-        <HeroCarousel />
+      <section className="relative h-svh min-h-[32rem] flex flex-col items-center justify-center overflow-hidden pt-[4.75rem] pb-8 md:pt-[5.75rem] md:pb-10">
+        <div className="absolute inset-0">
+          <HeroCarousel />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/70" />
+        </div>
 
-        <div className="relative z-10 mx-auto flex min-h-[calc(100svh-4.75rem)] w-full max-w-5xl flex-col items-center justify-center px-6 py-16 text-center md:min-h-[calc(100svh-5.75rem)] md:px-10 md:py-20">
-          <p className="hero-fade mb-4 text-xs font-medium uppercase tracking-[0.28em] text-stone-500">
-            {AGENT.title}
-          </p>
-
-          <h1 className="hero-fade hero-fade-delay-1 max-w-3xl font-display text-4xl font-semibold leading-[1.1] tracking-tight text-stone-900 md:text-5xl lg:text-6xl">
-            Tu hogar,
-            <br />
-            <span className="font-script text-[1.05em] font-normal text-brand-charcoal">en buenas manos</span>
-          </h1>
-
-          <p className="hero-fade hero-fade-delay-2 mt-6 max-w-2xl text-base leading-relaxed text-stone-600 md:text-lg">
-            {AGENT.tagline}
-          </p>
-
-          {GOOGLE_REVIEW_COUNT > 0 && (
-            <p className="hero-fade hero-fade-delay-3 mt-5 inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white/80 px-4 py-1.5 text-sm text-stone-600 shadow-sm backdrop-blur-sm">
-              <span className="font-medium text-stone-900">{GOOGLE_RATING}</span>
-              <span className="text-stone-300" aria-hidden="true">·</span>
-              <span>{GOOGLE_REVIEW_COUNT.toLocaleString('es-ES')} opiniones en Google</span>
+        <div className="relative z-10 flex flex-1 w-full items-center justify-center px-4 min-[400px]:px-6 -translate-y-6 md:-translate-y-3">
+          <div className="text-center max-w-5xl mx-auto w-full">
+            <p className="text-gold text-xs tracking-[0.25em] uppercase mb-4 animate-fade-up">
+              {AGENT.title}
             </p>
-          )}
-
-          <div className="hero-fade hero-fade-delay-4 mt-10 flex w-full max-w-lg flex-col gap-3 sm:max-w-xl sm:flex-row sm:gap-4">
-            <Link
-              href="/propiedades"
-              className="btn-primary w-full min-h-[3rem] px-8 py-3.5 text-sm tracking-wide sm:flex-1 md:min-h-[3.25rem] md:text-base"
+            <h1 className="font-display text-white [text-shadow:0_2px_10px_rgba(0,0,0,0.45)] text-balance max-md:tracking-[-0.02em] text-[calc(clamp(2rem,6.5vw+0.25rem,3.2rem)+2pt)] md:text-[calc(clamp(2.5rem,4.8vw+0.9rem,5.2rem)+2pt)] leading-[1.12] md:leading-[1.06] mb-5 md:mb-6 animate-fade-up">
+              Tu hogar,
+              <span className="hidden md:inline"> </span>
+              <br className="md:hidden" aria-hidden="true" />
+              <span className="text-gold [text-shadow:0_2px_10px_rgba(0,0,0,0.5)]">en buenas manos</span>
+            </h1>
+            <p
+              className="text-stone-200 text-base sm:text-lg md:text-xl font-normal max-w-[min(100%,22rem)] sm:max-w-2xl mx-auto mb-5 md:mb-6 leading-relaxed text-pretty animate-fade-up"
+              style={{ animationDelay: '0.1s', opacity: 0, animationFillMode: 'forwards' }}
             >
-              Ver propiedades
-            </Link>
-            <ValoracionGratuitaModal
-              triggerLabel="Valoración gratuita"
-              triggerClassName="inline-flex w-full min-h-[3rem] items-center justify-center border-2 border-brand-charcoal px-8 py-3.5 text-sm font-medium tracking-wide text-brand-charcoal transition-colors duration-200 hover:bg-brand-charcoal hover:text-white sm:flex-1 md:min-h-[3.25rem] md:text-base"
-            />
+              {AGENT.tagline}
+            </p>
+
+            {GOOGLE_REVIEW_COUNT > 0 && (
+              <p
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/25 px-4 py-1.5 text-sm text-stone-200 backdrop-blur-sm animate-fade-up"
+                style={{ animationDelay: '0.15s', opacity: 0, animationFillMode: 'forwards' }}
+              >
+                <span className="font-semibold text-white">{GOOGLE_RATING}</span>
+                <span className="text-stone-400" aria-hidden="true">·</span>
+                <span>{GOOGLE_REVIEW_COUNT.toLocaleString('es-ES')} opiniones en Google</span>
+              </p>
+            )}
+
+            <div
+              className="flex w-full max-w-xl mx-auto flex-col sm:flex-row gap-3 sm:gap-4 mt-8 md:mt-9 animate-fade-up md:-translate-y-2"
+              style={{ animationDelay: '0.2s', opacity: 0, animationFillMode: 'forwards' }}
+            >
+              <Link
+                href="/propiedades"
+                className="btn-gold w-full sm:flex-1 sm:min-w-0 min-h-[3rem] md:min-h-[3.25rem] px-8 py-3.5 md:py-4 text-sm md:text-base tracking-wide text-center border-2 border-transparent box-border"
+              >
+                Ver propiedades
+              </Link>
+              <ValoracionGratuitaModal
+                triggerLabel="Valoración gratuita"
+                triggerClassName="inline-flex w-full sm:flex-1 sm:min-w-0 min-h-[3rem] md:min-h-[3.25rem] items-center justify-center px-8 py-3.5 md:py-4 text-sm md:text-base tracking-wide font-medium border-2 border-gold text-gold box-border hover:bg-gold hover:text-brand-black transition-colors duration-200"
+              />
+            </div>
           </div>
         </div>
 
-        <ScrollHint className="absolute inset-x-0 bottom-5 z-10 text-stone-400 md:bottom-8" />
+        <ScrollHint className="absolute inset-x-0 bottom-4 z-10 text-white/85 md:bottom-2" />
       </section>
 
       {/* SERVICES */}
@@ -144,7 +157,7 @@ export default async function HomePage() {
           <div className="space-y-7">
             <div className="relative min-h-10">
               <h2 className="font-display text-4xl md:text-5xl leading-tight text-center">
-                Propiedades <span className="font-script font-normal text-brand-charcoal">destacadas</span>
+                Propiedades <span className="font-semibold text-brand-charcoal">destacadas</span>
               </h2>
               <div className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2">
                 <Link href="/propiedades" className="btn-outline text-xs shrink-0">

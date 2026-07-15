@@ -13,7 +13,7 @@ export function BrandName({ className }: Props) {
   return (
     <span className={cn('inline-flex items-baseline gap-1', className)}>
       <span className="font-display font-semibold uppercase tracking-wide">{prefix}</span>
-      {suffix && <span className="font-script text-[1.15em] font-normal lowercase">{suffix}</span>}
+      {suffix && <span className="font-display font-semibold lowercase tracking-wide">{suffix}</span>}
     </span>
   )
 }
