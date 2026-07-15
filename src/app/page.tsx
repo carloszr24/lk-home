@@ -56,7 +56,7 @@ export default async function HomePage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative isolate overflow-hidden border-b border-stone-200/80 bg-stone-50">
+      <section className="relative isolate overflow-hidden border-b border-stone-200/80">
         <HeroCarousel />
 
         <div className="relative z-10 mx-auto flex min-h-[calc(100svh-4.75rem)] w-full max-w-5xl flex-col items-center justify-center px-6 py-16 text-center md:min-h-[calc(100svh-5.75rem)] md:px-10 md:py-20">
