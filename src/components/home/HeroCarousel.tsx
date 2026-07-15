@@ -17,7 +17,7 @@ export function HeroCarousel() {
         className="object-cover brightness-[0.92] saturate-[1.05]"
       />
       <div
-        className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/35 to-brand-gold-dark/25"
+        className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/35 to-brand-charcoal-dark/30"
         aria-hidden="true"
       />
     </div>

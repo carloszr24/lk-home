@@ -8,14 +8,7 @@
   --brand-charcoal-dark: #1a1a1a;
   --brand-white: #ffffff;
   --brand-stone: #f5f5f4;
-  /* Backward-compatible tokens */
-  --brand-gold: #c4a035;
-  --brand-gold-light: #e0c56a;
-  --brand-gold-dark: #9a7b1f;
   --brand-black: var(--brand-charcoal-dark);
-  --gold: var(--brand-gold);
-  --gold-light: var(--brand-gold-light);
-  --gold-dark: var(--brand-gold-dark);
   --brand-red: var(--brand-charcoal);
   --brand-red-light: var(--brand-charcoal-light);
   --brand-red-dark: var(--brand-charcoal-dark);
@@ -58,10 +51,6 @@
 
   .btn-outline {
     @apply inline-flex items-center justify-center px-6 py-3 border border-brand-charcoal text-brand-charcoal text-sm font-medium tracking-wide hover:bg-brand-charcoal hover:text-white transition-colors duration-200;
-  }
-
-  .btn-gold {
-    @apply inline-flex items-center justify-center px-6 py-3 bg-gold text-brand-black text-sm font-medium tracking-wide hover:bg-gold-dark hover:text-white transition-colors duration-200;
   }
 
   .section-title {

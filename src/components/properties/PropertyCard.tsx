@@ -67,7 +67,7 @@ export function PropertyCard({ property, variant = 'default', priority = false }
         <div className={cn('p-6', isFeaturedMinimal && 'p-4')}>
           <div className={cn('flex items-start justify-between gap-4', isFeaturedMinimal ? 'mb-4' : 'mb-3')}>
             <h3 className={cn(
-              'font-medium text-stone-900 leading-snug line-clamp-2 group-hover:text-gold transition-colors',
+              'font-medium text-stone-900 leading-snug line-clamp-2 group-hover:text-brand-charcoal transition-colors',
               isFeaturedMinimal ? 'text-base' : 'text-lg'
             )}>
               {property.title}
@@ -110,7 +110,7 @@ export function PropertyCard({ property, variant = 'default', priority = false }
               {formatPrice(property.price, property.operation)}
             </span>
             {!isFeaturedMinimal && (
-              <span className="text-xs uppercase tracking-[0.18em] text-gold group-hover:translate-x-1 transition-transform inline-block">
+              <span className="text-xs uppercase tracking-[0.18em] text-brand-charcoal group-hover:translate-x-1 transition-transform inline-block">
                 Ver →
               </span>
             )}

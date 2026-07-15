@@ -670,7 +670,7 @@ export default function AdminPage() {
                                 Quitar
                               </button>
                               {idx === 0 && (
-                                <span className="absolute bottom-2 left-2 bg-gold text-white text-[10px] px-2 py-1">
+                                <span className="absolute bottom-2 left-2 bg-brand-charcoal text-white text-[10px] px-2 py-1">
                                   Principal
                                 </span>
                               )}

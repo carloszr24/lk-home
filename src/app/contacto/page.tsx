@@ -85,7 +85,7 @@ export default function ContactoPage() {
     <div className={HEADER_OFFSET_CLASS}>
       <div className="bg-brand-black text-white py-20 px-6 md:px-10">
         <div className="max-w-7xl mx-auto">
-          <p className="text-gold text-xs tracking-[0.3em] uppercase mb-4">Contacto</p>
+          <p className="text-stone-400 text-xs tracking-[0.3em] uppercase mb-4">Contacto</p>
           <h1 className="font-display text-5xl md:text-6xl font-light">Estamos aquí para ayudarte</h1>
           <p className="text-stone-400 mt-4 text-lg font-light max-w-md">
             Escríbenos o llámanos. Te responderemos en menos de 24 horas.

@@ -122,7 +122,7 @@ export function PropertyFilters({ availableProvinces }: { availableProvinces: st
             </svg>
           </button>
           {hasFilters && (
-            <button onClick={clearAll} className="text-sm text-gold hover:text-gold-dark transition-colors">
+            <button onClick={clearAll} className="text-sm text-brand-charcoal hover:text-brand-charcoal-dark transition-colors">
               Limpiar
             </button>
           )}

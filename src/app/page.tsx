@@ -8,8 +8,6 @@ import { ValoracionGratuitaModal } from '@/components/home/ValoracionGratuitaMod
 import { BrandName } from '@/components/BrandName'
 import { AGENT } from '@/lib/contact'
 import { SERVICE_ITEMS } from '@/data/services'
-import { GOOGLE_RATING, GOOGLE_REVIEW_COUNT } from '@/data/reviews'
-
 export const dynamic = 'force-dynamic'
 
 function BuildingIcon() {
@@ -64,14 +62,14 @@ export default async function HomePage() {
 
         <div className="relative z-10 flex flex-1 w-full items-center justify-center px-4 min-[400px]:px-6 -translate-y-6 md:-translate-y-3">
           <div className="text-center max-w-5xl mx-auto w-full">
-            <p className="text-gold text-xs tracking-[0.25em] uppercase mb-4 animate-fade-up">
+            <p className="text-white/80 text-xs tracking-[0.25em] uppercase mb-4 animate-fade-up">
               {AGENT.title}
             </p>
             <h1 className="font-display text-white [text-shadow:0_2px_10px_rgba(0,0,0,0.45)] text-balance max-md:tracking-[-0.02em] text-[calc(clamp(2rem,6.5vw+0.25rem,3.2rem)+2pt)] md:text-[calc(clamp(2.5rem,4.8vw+0.9rem,5.2rem)+2pt)] leading-[1.12] md:leading-[1.06] mb-5 md:mb-6 animate-fade-up">
               Tu hogar,
               <span className="hidden md:inline"> </span>
               <br className="md:hidden" aria-hidden="true" />
-              <span className="text-gold [text-shadow:0_2px_10px_rgba(0,0,0,0.5)]">en buenas manos</span>
+              <span className="text-white [text-shadow:0_2px_10px_rgba(0,0,0,0.5)]">en buenas manos</span>
             </h1>
             <p
               className="text-stone-200 text-base sm:text-lg md:text-xl font-normal max-w-[min(100%,22rem)] sm:max-w-2xl mx-auto mb-5 md:mb-6 leading-relaxed text-pretty animate-fade-up"
@@ -80,30 +78,19 @@ export default async function HomePage() {
               {AGENT.tagline}
             </p>
 
-            {GOOGLE_REVIEW_COUNT > 0 && (
-              <p
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/25 px-4 py-1.5 text-sm text-stone-200 backdrop-blur-sm animate-fade-up"
-                style={{ animationDelay: '0.15s', opacity: 0, animationFillMode: 'forwards' }}
-              >
-                <span className="font-semibold text-white">{GOOGLE_RATING}</span>
-                <span className="text-stone-400" aria-hidden="true">·</span>
-                <span>{GOOGLE_REVIEW_COUNT.toLocaleString('es-ES')} opiniones en Google</span>
-              </p>
-            )}
-
             <div
               className="flex w-full max-w-xl mx-auto flex-col sm:flex-row gap-3 sm:gap-4 mt-8 md:mt-9 animate-fade-up md:-translate-y-2"
-              style={{ animationDelay: '0.2s', opacity: 0, animationFillMode: 'forwards' }}
+              style={{ animationDelay: '0.15s', opacity: 0, animationFillMode: 'forwards' }}
             >
               <Link
                 href="/propiedades"
-                className="btn-gold w-full sm:flex-1 sm:min-w-0 min-h-[3rem] md:min-h-[3.25rem] px-8 py-3.5 md:py-4 text-sm md:text-base tracking-wide text-center border-2 border-transparent box-border"
+                className="btn-primary w-full sm:flex-1 sm:min-w-0 min-h-[3rem] md:min-h-[3.25rem] px-8 py-3.5 md:py-4 text-sm md:text-base tracking-wide text-center border-2 border-transparent box-border"
               >
                 Ver propiedades
               </Link>
               <ValoracionGratuitaModal
                 triggerLabel="Valoración gratuita"
-                triggerClassName="inline-flex w-full sm:flex-1 sm:min-w-0 min-h-[3rem] md:min-h-[3.25rem] items-center justify-center px-8 py-3.5 md:py-4 text-sm md:text-base tracking-wide font-medium border-2 border-gold text-gold box-border hover:bg-gold hover:text-brand-black transition-colors duration-200"
+                triggerClassName="inline-flex w-full sm:flex-1 sm:min-w-0 min-h-[3rem] md:min-h-[3.25rem] items-center justify-center px-8 py-3.5 md:py-4 text-sm md:text-base tracking-wide font-medium border-2 border-white/80 text-white box-border hover:bg-white hover:text-brand-charcoal transition-colors duration-200"
               />
             </div>
           </div>

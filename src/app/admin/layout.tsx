@@ -14,7 +14,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <header className="bg-stone-950 text-white px-6 py-4 flex items-center justify-between">
         <div className="flex items-center">
           <span className="font-display text-lg font-medium">
-            <span className="text-gold">{SITE_NAME}</span>
+            <span className="text-brand-charcoal">{SITE_NAME}</span>
             <span className="text-stone-400 text-xs ml-2 font-sans font-normal tracking-widest uppercase">Admin</span>
           </span>
           <AdminNav />
